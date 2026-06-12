@@ -20,7 +20,7 @@ L1 milestone. Each maps to a roadmap phase. v1 ships the 20 P1 (table-stakes) MT
 - [x] **ENG-01**: A Spectral-shaped rule engine runs rules typed as pure synchronous functions `(context) => Finding[]` (no IO, no model)
 - [x] **ENG-02**: Engine supports both per-tool rules and server-aggregate (surface-level) rules
 - [x] **ENG-03**: Rule registry is a startup-time plugin boundary (fresh sealed instance; custom/vendor rules register before seal); `voke.yaml` severity overrides produce a new registry without mutating the default
-- [ ] **ENG-04**: Output is byte-identical across 3 consecutive runs on identical input (determinism enforced at all 7 identified points)
+- [x] **ENG-04**: Output is byte-identical across 3 consecutive runs on identical input (determinism enforced at all 7 identified points)
 
 ### Ingestion
 
@@ -105,7 +105,7 @@ Explicitly excluded (with reasoning) to prevent scope creep.
 | ENG-01 | Phase 2 | Complete |
 | ENG-02 | Phase 2 | Complete |
 | ENG-03 | Phase 2 | Complete |
-| ENG-04 | Phase 2 | Pending |
+| ENG-04 | Phase 2 | Complete |
 | ING-01 | Phase 2 | Complete |
 | ING-02 | Phase 2 | Complete |
 | ING-03 | Phase 2 | Complete |

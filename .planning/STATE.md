@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v0.1
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 02-engine-ingestion-determinism/02-03-PLAN.md
-last_updated: "2026-06-12T19:34:47.842Z"
+stopped_at: Completed 02-engine-ingestion-determinism/02-04-PLAN.md
+last_updated: "2026-06-12T19:41:39.529Z"
 progress:
   total_phases: 6
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 8
-  completed_plans: 7
+  completed_plans: 8
 ---
 
 # Project State
@@ -53,6 +53,7 @@ Plan: 4 of 4
 | Phase 02-engine-ingestion-determinism P01 | 6 | 3 tasks | 9 files |
 | Phase 02-engine-ingestion-determinism P02 | 16 | 3 tasks | 14 files |
 | Phase 02-engine-ingestion-determinism P03 | 6 | 3 tasks | 9 files |
+| Phase 02-engine-ingestion-determinism P04 | 3 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -80,6 +81,8 @@ Recent decisions affecting current work:
 - [Phase 02-engine-ingestion-determinism]: NodeNext module shims: ambient module declarations in src/types/ajv.d.ts for ajv/dist/2020 and ajv-formats (both lack package.json exports)
 - [Phase 02-engine-ingestion-determinism]: Object.freeze(RuleContext) is shallow in Phase 2; deep freeze deferred to Phase 3 per RESEARCH.md open question #3
 - [Phase 02-engine-ingestion-determinism]: network-block stub uses Promise.reject (not synchronous throw) — fetch() always returns Promise; synchronous throw is not awaitable via .rejects.toThrow()
+- [Phase 02-engine-ingestion-determinism]: buildReport sorts snapshot.tools by toolId defensively before building per-tool reports (sort-on-run for shuffle-invariance)
+- [Phase 02-engine-ingestion-determinism]: serializeReportBody strips meta block via destructuring to produce wall-clock-free determinism body (D-02/D-12)
 
 ### Pending Todos
 
@@ -100,6 +103,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-12T19:34:47.839Z
-Stopped at: Completed 02-engine-ingestion-determinism/02-03-PLAN.md
+Last session: 2026-06-12T19:41:39.526Z
+Stopped at: Completed 02-engine-ingestion-determinism/02-04-PLAN.md
 Resume file: None

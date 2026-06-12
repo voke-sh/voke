@@ -13,7 +13,7 @@ Six phases deliver the MTQS v0.1 open specification and its `voke lint` referenc
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: MTQS Specification** - Author the v0.1 spec document, scoring formula, rule registry, and SCOPE.md — gates all linter code (completed 2026-06-12)
-- [ ] **Phase 2: Engine + Ingestion + Determinism** - Build rule engine, MCP ingestion, and bake in all 7 determinism enforcement points; exit criterion is byte-identical output x3
+- [x] **Phase 2: Engine + Ingestion + Determinism** - Build rule engine, MCP ingestion, and bake in all 7 determinism enforcement points; exit criterion is byte-identical output x3 (completed 2026-06-12)
 - [ ] **Phase 3: Rule Implementations** - Implement all 20 v0.1 rules (S01–S08, D01–D03, N01–N03, P01–P02, A01–A06) as pure functions with fixtures
 - [ ] **Phase 4: Scoring + Output + CLI** - Wire the full pipeline; first demoable `voke lint` against the live 229-tool Apideck server
 - [ ] **Phase 5: CI + Publication** - GitHub Action wrapper, spec published at voke.sh/spec, CONTRIBUTING.md + rule PR template, repo goes public
@@ -47,7 +47,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] 02-01-PLAN.md — Scaffold @voke/linter package + canonicalize module (canonical JSON + SHA-256) + Apideck fixture (Wave 0; ING-04)
 - [x] 02-02-PLAN.md — Ingestion layer: data-model types, Ajv2020/depth/external-$ref checks, live MCP client + offline snapshot reader (Wave 1; ING-01/02/03/05)
 - [x] 02-03-PLAN.md — Rule engine: types, sealable registry with overrides, pure frozen-context runner + network-block test infra (Wave 1; ENG-01/02/03)
-- [ ] 02-04-PLAN.md — Report builder (reusing @voke/core scoring) + byte-identical x3 determinism test (Wave 2; ENG-04)
+- [x] 02-04-PLAN.md — Report builder (reusing @voke/core scoring) + byte-identical x3 determinism test (Wave 2; ENG-04)
 
 ### Phase 3: Rule Implementations
 **Goal**: All 20 v0.1 MTQS rules are implemented as pure synchronous functions — each with positive and negative fixtures, each emitting findings with rule ID, severity, location, and fix hint, and with network blocked in all unit tests
@@ -101,7 +101,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. MTQS Specification | 4/4 | Complete   | 2026-06-12 |
-| 2. Engine + Ingestion + Determinism | 1/4 | In Progress|  |
+| 2. Engine + Ingestion + Determinism | 4/4 | Complete   | 2026-06-12 |
 | 3. Rule Implementations | 0/TBD | Not started | - |
 | 4. Scoring + Output + CLI | 0/TBD | Not started | - |
 | 5. CI + Publication | 0/TBD | Not started | - |
