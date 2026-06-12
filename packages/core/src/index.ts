@@ -1,7 +1,7 @@
 export { loadRegistry, loadRegistryFile } from './loadRegistry.js';
 export { parseSpecDoc } from './parseSpecDoc.js';
 export type { ParsedSpecDoc, SpecDocSection } from './parseSpecDoc.js';
-export { penaltyFor, scoreTool, tierFor, applyCaps, serverScore } from './scoring.js';
+export { penaltyFor, scoreTool, tierFor, applyCaps, serverScore, MULT, BASE } from './scoring.js';
 export type { Finding } from './scoring.js';
 export {
   SeveritySchema,
