@@ -95,25 +95,47 @@ Explicitly excluded (with reasoning) to prevent scope creep.
 
 ## Traceability
 
-Populated during roadmap creation.
-
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SPEC-01..05 | TBD | Pending |
-| ENG-01..04 | TBD | Pending |
-| ING-01..05 | TBD | Pending |
-| RULE-01..06 | TBD | Pending |
-| SCORE-01..02 | TBD | Pending |
-| OUT-01..02 | TBD | Pending |
-| CLI-01..03 | TBD | Pending |
-| CI-01..02 | TBD | Pending |
-| PUB-01..04 | TBD | Pending |
+| SPEC-01 | Phase 1 | Pending |
+| SPEC-02 | Phase 1 | Pending |
+| SPEC-03 | Phase 1 | Pending |
+| SPEC-04 | Phase 1 | Pending |
+| SPEC-05 | Phase 1 | Pending |
+| ENG-01 | Phase 2 | Pending |
+| ENG-02 | Phase 2 | Pending |
+| ENG-03 | Phase 2 | Pending |
+| ENG-04 | Phase 2 | Pending |
+| ING-01 | Phase 2 | Pending |
+| ING-02 | Phase 2 | Pending |
+| ING-03 | Phase 2 | Pending |
+| ING-04 | Phase 2 | Pending |
+| ING-05 | Phase 2 | Pending |
+| RULE-01 | Phase 3 | Pending |
+| RULE-02 | Phase 3 | Pending |
+| RULE-03 | Phase 3 | Pending |
+| RULE-04 | Phase 3 | Pending |
+| RULE-05 | Phase 3 | Pending |
+| RULE-06 | Phase 3 | Pending |
+| SCORE-01 | Phase 4 | Pending |
+| SCORE-02 | Phase 4 | Pending |
+| OUT-01 | Phase 4 | Pending |
+| OUT-02 | Phase 4 | Pending |
+| CLI-01 | Phase 4 | Pending |
+| CLI-02 | Phase 4 | Pending |
+| CLI-03 | Phase 4 | Pending |
+| CI-01 | Phase 5 | Pending |
+| CI-02 | Phase 5 | Pending |
+| PUB-01 | Phase 5 | Pending |
+| PUB-02 | Phase 5 | Pending |
+| PUB-03 | Phase 6 | Pending |
+| PUB-04 | Phase 6 | Pending |
 
 **Coverage:**
-- v1 requirements: 31 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 31 ⚠️
+- v1 requirements: 33 total (header said 31; actual count is 33 — CLI-03, CI-01, CI-02 bring it to 33)
+- Mapped to phases: 33/33 ✓
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-06-12*
-*Last updated: 2026-06-12 after initialization*
+*Last updated: 2026-06-12 after roadmap creation*
