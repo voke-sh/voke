@@ -21,3 +21,6 @@ export type { VokeConfig } from './config/types.js';
 
 // Engine registry (engine/registry.ts)
 export { RuleRegistry, createDefaultRegistry } from './engine/registry.js';
+
+// Engine runner (engine/runner.ts)
+export { runRules, RuleExecutionError } from './engine/runner.js';
