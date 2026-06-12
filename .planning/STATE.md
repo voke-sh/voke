@@ -4,11 +4,11 @@ milestone: v0.1
 milestone_name: milestone
 status: unknown
 stopped_at: Phase 2 context gathered
-last_updated: "2026-06-12T18:22:59.232Z"
+last_updated: "2026-06-12T18:55:16.559Z"
 progress:
   total_phases: 6
   completed_phases: 1
-  total_plans: 4
+  total_plans: 8
   completed_plans: 4
 ---
 
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-12)
 
 **Core value:** `voke lint <server>` produces deterministic per-rule findings + a stable score against an explicit published ruleset — same input always yields same output
-**Current focus:** Phase 2 — engine-+-ingestion-+-determinism (next). Phase 1 complete; repo now an npm workspaces monorepo (@voke/core).
+**Current focus:** Phase 02 — engine-ingestion-determinism
 
 ## Current Position
 
-Phase: 2
-Plan: Not started
+Phase: 02 (engine-ingestion-determinism) — EXECUTING
+Plan: 1 of 4
 
 ## Performance Metrics
 
@@ -88,6 +88,7 @@ None yet.
 |---|-------------|------|--------|-----------|
 | 260612-p42 | Restructure repo into npm workspaces monorepo (extract @voke/core) | 2026-06-12 | 8c5086a | [260612-p42-restructure-repo-into-npm-workspaces-mon](./quick/260612-p42-restructure-repo-into-npm-workspaces-mon/) |
 | 260612-pd7 | Remove all em dashes from spec/MTQS-v0.1.md, prose editorial pass | 2026-06-12 | 212acf0 | [260612-pd7-remove-em-dashes-from-spec-mtqs-v0-1-md-](./quick/260612-pd7-remove-em-dashes-from-spec-mtqs-v0-1-md-/) |
+| 260612-rm8 | Restructure §4 scoring formula: §4.0 formula-first, §4.3/§4.4 plain-English leads, §4.4 Rounding/Evaluation Order subheads | 2026-06-12 | ff1f9a0 | [260612-rm8-restructure-scoring-formula-section-of-s](./quick/260612-rm8-restructure-scoring-formula-section-of-s/) |
 
 ## Session Continuity
 
