@@ -62,8 +62,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 5 plans
 - [ ] 03-01-PLAN.md — Schema Correctness rules S01-S08 (Wave 1; RULE-01)
 - [ ] 03-02-PLAN.md — Description D01-D03 + Naming N01-N03 (N03 server-scoped) (Wave 1; RULE-02, RULE-03)
-- [ ] 03-03-PLAN.md — Parameter Semantics rules P01-P02 (Wave 1; RULE-04)
-- [ ] 03-04-PLAN.md — Annotation Transparency rules A01-A06 (incl. A06 cross-constraint) (Wave 1; RULE-05)
+- [x] 03-03-PLAN.md — Parameter Semantics rules P01-P02 (Wave 1; RULE-04)
+- [x] 03-04-PLAN.md — Annotation Transparency rules A01-A06 (incl. A06 cross-constraint) (Wave 1; RULE-05)
 - [ ] 03-05-PLAN.md — Integration: register all 22 rules in createDefaultRegistry + coverage/determinism proof (Wave 2; RULE-06)
 
 ### Phase 4: Scoring + Output + CLI
@@ -107,7 +107,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 |-------|----------------|--------|-----------|
 | 1. MTQS Specification | 4/4 | Complete   | 2026-06-12 |
 | 2. Engine + Ingestion + Determinism | 4/4 | Complete   | 2026-06-12 |
-| 3. Rule Implementations | 0/5 | Not started | - |
+| 3. Rule Implementations | 2/5 | In Progress|  |
 | 4. Scoring + Output + CLI | 0/TBD | Not started | - |
 | 5. CI + Publication | 0/TBD | Not started | - |
 | 6. Launch | 0/TBD | Not started | - |

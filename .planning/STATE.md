@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v0.1
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 02-engine-ingestion-determinism/02-04-PLAN.md
-last_updated: "2026-06-12T19:47:04.572Z"
+stopped_at: Completed 03-rule-implementations/03-03-PLAN.md
+last_updated: "2026-06-12T21:21:26.121Z"
 progress:
   total_phases: 6
   completed_phases: 2
-  total_plans: 8
-  completed_plans: 8
+  total_plans: 13
+  completed_plans: 10
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-12)
 
 **Core value:** `voke lint <server>` produces deterministic per-rule findings + a stable score against an explicit published ruleset — same input always yields same output
-**Current focus:** Phase 02 — engine-ingestion-determinism
+**Current focus:** Phase 03 — rule-implementations
 
 ## Current Position
 
-Phase: 3
-Plan: Not started
+Phase: 03 (rule-implementations) — EXECUTING
+Plan: 3 of 5
 
 ## Performance Metrics
 
@@ -54,6 +54,8 @@ Plan: Not started
 | Phase 02-engine-ingestion-determinism P02 | 16 | 3 tasks | 14 files |
 | Phase 02-engine-ingestion-determinism P03 | 6 | 3 tasks | 9 files |
 | Phase 02-engine-ingestion-determinism P04 | 3 | 2 tasks | 5 files |
+| Phase 03-rule-implementations P04 | 4 | 2 tasks | 5 files |
+| Phase 03-rule-implementations P03 | 4 | 1 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -83,6 +85,11 @@ Recent decisions affecting current work:
 - [Phase 02-engine-ingestion-determinism]: network-block stub uses Promise.reject (not synchronous throw) — fetch() always returns Promise; synchronous throw is not awaitable via .rejects.toThrow()
 - [Phase 02-engine-ingestion-determinism]: buildReport sorts snapshot.tools by toolId defensively before building per-tool reports (sort-on-run for shuffle-invariance)
 - [Phase 02-engine-ingestion-determinism]: serializeReportBody strips meta block via destructuring to produce wall-clock-free determinism body (D-02/D-12)
+- [Phase 03-rule-implementations]: annotations:{} fires A02+A03 (warning) + A04+A05 (info) but not A01 — object presence is the gate
+- [Phase 03-rule-implementations]: A06 uses strict boolean equality (=== true) for both readOnlyHint and destructiveHint, not truthiness
+- [Phase 03-rule-implementations]: fixHints in rule files must be single-line strings matching YAML folded scalar collapsed output from loadRegistryFile
+- [Phase 03-rule-implementations]: P02 heuristic uses two regex patterns (one-of, values:/options:/allowed:) as CLOSED_SET_PATTERNS const — conservative to avoid false positives while ensuring spec failing example fires
+- [Phase 03-rule-implementations]: P01 treats empty string description same as absent description (fires P01); P02 only fires when description is non-empty (P01 covers the absence case)
 
 ### Pending Todos
 
@@ -103,6 +110,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-12T19:41:39.526Z
-Stopped at: Completed 02-engine-ingestion-determinism/02-04-PLAN.md
+Last session: 2026-06-12T21:21:26.118Z
+Stopped at: Completed 03-rule-implementations/03-03-PLAN.md
 Resume file: None
