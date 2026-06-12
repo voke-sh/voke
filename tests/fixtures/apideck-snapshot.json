@@ -1,0 +1,173 @@
+{
+  "snapshotVersion": "1",
+  "mtqsVersion": "0.1",
+  "server": {
+    "url": null,
+    "name": "apideck-fixture",
+    "version": "0.0.0",
+    "protocolVersion": "2026-07-28"
+  },
+  "meta": {
+    "capturedAt": "2026-06-12T00:00:00.000Z"
+  },
+  "tools": [
+    {
+      "toolId": "crm_search_contacts",
+      "name": "crm_search_contacts",
+      "description": "Search CRM contacts by name, email, or phone. Returns up to 50 matching contacts. Use when you need to find an existing contact before creating a new one. Returns id, name, email, and phone fields.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Search query matching against name, email, or phone number"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Max results to return (1-50, default 25)"
+          }
+        },
+        "required": ["query"]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "contentHash": "aff92af09ac1812ba4aab0f7534b3df3372a75fcb2f8896d91402a5b7db24324"
+    },
+    {
+      "toolId": "crm_update_contact",
+      "name": "crm_update_contact",
+      "description": "Update an existing CRM contact's information. Use when you need to modify contact details such as name, email, or phone number. Returns the updated contact object.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "Contact ID to update" },
+          "name": { "type": "string", "description": "Updated display name" },
+          "email": { "type": "string", "format": "email", "description": "Updated email address" }
+        },
+        "required": ["id"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "email": { "type": "string" },
+          "updatedAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "contentHash": "e582b37fafcac07f52957559cfd05f5256088b63dcc9139a59591e82a39d9287"
+    },
+    {
+      "toolId": "hris_list_employees",
+      "name": "hris_list_employees",
+      "description": "List all employees in the HRIS system. Returns a paginated list of employee records including id, name, department, and employment status. Use cursor parameter for pagination.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "cursor": { "type": "string", "description": "Pagination cursor from previous response" },
+          "limit": { "type": "integer", "description": "Number of records per page (1-200, default 50)" },
+          "department": { "type": "string", "description": "Filter by department name" }
+        }
+      },
+      "annotations": {
+        "readOnlyHint": true
+      },
+      "contentHash": "29bea922322d16fa1829fc8aba822a6e891149182b4d9869314ab82b28bced20"
+    },
+    {
+      "toolId": "payment_create_order",
+      "name": "payment_create_order",
+      "description": "Create a new payment order. Accepts either a card payment or a bank transfer. Use when initiating a payment flow for a customer transaction.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "amount": { "type": "integer", "description": "Amount in cents" },
+          "currency": { "type": "string", "description": "ISO 4217 currency code, e.g. USD" },
+          "payment_method": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "type": "string", "enum": ["card"] },
+                  "card_number": { "type": "string" },
+                  "expiry": { "type": "string", "description": "MM/YY format" }
+                },
+                "required": ["type", "card_number", "expiry"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "type": "string", "enum": ["bank_transfer"] },
+                  "routing_number": { "type": "string" },
+                  "account_number": { "type": "string" }
+                },
+                "required": ["type", "routing_number", "account_number"]
+              }
+            ]
+          }
+        },
+        "required": ["amount", "currency", "payment_method"]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      },
+      "contentHash": "d2b037b4bea528954a87962ef1773f52945dfcc084413a9ffe22763ed35c0465"
+    },
+    {
+      "toolId": "search",
+      "name": "search",
+      "description": "search",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {}
+        }
+      },
+      "annotations": {},
+      "contentHash": "be7ed7c85b9d6cb1b900bc09a7541fac1b35c50e63051b05d1c493d2feb2a922"
+    },
+    {
+      "toolId": "vault_create_connection",
+      "name": "vault_create_connection",
+      "description": "Create a new vault connection to a third-party service. Accepts connection credentials and returns a connection ID. Use before calling service-specific APIs that require authentication.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "service_id": { "type": "string", "description": "Target service identifier, e.g. salesforce" },
+          "credentials": { "$ref": "#/$defs/ConnectionCredentials" }
+        },
+        "required": ["service_id", "credentials"],
+        "$defs": {
+          "ConnectionCredentials": {
+            "type": "object",
+            "properties": {
+              "api_key": { "type": "string", "description": "API key or token for the service" },
+              "base_url": { "type": "string", "format": "uri", "description": "Optional custom base URL" }
+            },
+            "required": ["api_key"]
+          }
+        }
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "contentHash": "c06f21d0c97d4d327ff55abe224fa3c7f6780d922bb08d29e9dc17923f49c215"
+    }
+  ]
+}
