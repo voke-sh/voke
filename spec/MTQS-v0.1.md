@@ -1115,6 +1115,7 @@ To ensure scoring determinism across all JavaScript engines (no IEEE 754 floatin
 
 | Rule | Severity | Dimension | Base | Multiplier | `Math.round(base × mult)` |
 |------|----------|-----------|------|-----------|--------------------------|
+| MTQS-D02 | warning | description | 5 | 1.2× | **6** |
 | MTQS-D03 | error | description | 15 | 1.2× | **18** |
 | MTQS-S07 | warning | schema | 5 | 1.5× | **8** |
 | MTQS-S08 | warning | schema | 5 | 1.5× | **8** |
@@ -1122,13 +1123,13 @@ To ensure scoring determinism across all JavaScript engines (no IEEE 754 floatin
 | MTQS-A02 | warning | annotations | 5 | 1.5× | **8** |
 | MTQS-A03 | warning | annotations | 5 | 1.5× | **8** |
 
-**Total deduction:** 18 + 8 + 8 + 6 + 8 + 8 = **56**
+**Total deduction:** 18 + 6 + 8 + 8 + 6 + 8 + 8 = **62**
 
-**Raw score:** 100 − 56 = **44**
+**Raw score:** 100 − 62 = **38**
 
-**Cap check:** MTQS-D03 fires → cap C (≤79). `min(44, 79) = 44`. Cap does not bind (score is already below the cap value).
+**Cap check:** MTQS-D03 fires → cap C (≤79). `min(38, 79) = 38`. Cap does not bind (score is already below the cap value).
 
-**Final score:** **44 — Tier F**
+**Final score:** **38 — Tier F**
 
 _Note: A01, A04, A05 fire as `info` findings (report-only, zero penalty). The `annotations: {}` block means A01 does not fire (annotations object is present); A02 and A03 fire because the hints are absent within the block._
 
@@ -1173,9 +1174,9 @@ _Note: A01, A04, A05 fire as `info` findings (report-only, zero penalty). The `a
 
 Server score = `Math.round(mean(cappedToolScores))`, computed after all per-tool scores are capped, sorted by `toolId`.
 
-For a server with `search` (44) and `crm_search_contacts` (100):
+For a server with `search` (38) and `crm_search_contacts` (100):
 
-`serverScore = Math.round((44 + 100) / 2) = Math.round(72.0) = 72 — Tier C`
+`serverScore = Math.round((38 + 100) / 2) = Math.round(69.0) = 69 — Tier D`
 
 ### 4.5 Server Score Formula
 

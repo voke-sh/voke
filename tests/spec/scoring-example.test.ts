@@ -7,9 +7,9 @@
  * with the implementation.
  *
  * Assertions:
- *   Test 3: "search" tool findings → scoreTool=44, applyCaps=44, tierFor='F'
+ *   Test 3: "search" tool findings → scoreTool=38, applyCaps=38, tierFor='F'
  *   Test 4: "crm_search_contacts" (no findings) → scoreTool=100, tierFor='A'
- *   Test 5: serverScore([44, 100]) === 72
+ *   Test 5: serverScore([38, 100]) === 69
  */
 import { describe, it, expect } from 'vitest';
 import {
@@ -25,7 +25,8 @@ describe('scoring worked example (SPEC-02)', () => {
    * The "search" tool findings from spec/MTQS-v0.1.md §4.4 "Worked Example":
    *
    * name: "search"
-   * description: "search"           → MTQS-D03 error (description = name copy)
+   * description: "search"           → MTQS-D02 warning (description < 20 chars; "search" = 6 chars)
+   *                                 → MTQS-D03 error (description = name copy)
    * inputSchema.properties.q: {}    → MTQS-S08 warning (bare untyped property)
    *                                 → MTQS-P01 warning (no description on 'q')
    * no required array               → MTQS-S07 warning
@@ -34,6 +35,7 @@ describe('scoring worked example (SPEC-02)', () => {
    *   destructiveHint absent        → MTQS-A03 warning
    *
    * Per-finding arithmetic (integer-first, Math.round per finding):
+   *   MTQS-D02 warning description 1.2× → Math.round(5 × 1.2)  = Math.round(6.0)  =  6
    *   MTQS-D03 error   description 1.2× → Math.round(15 × 1.2) = Math.round(18.0) = 18
    *   MTQS-S07 warning schema      1.5× → Math.round(5 × 1.5)  = Math.round(7.5)  =  8
    *   MTQS-S08 warning schema      1.5× → Math.round(5 × 1.5)  = Math.round(7.5)  =  8
@@ -41,10 +43,15 @@ describe('scoring worked example (SPEC-02)', () => {
    *   MTQS-A02 warning annotations 1.5× → Math.round(5 × 1.5)  = Math.round(7.5)  =  8
    *   MTQS-A03 warning annotations 1.5× → Math.round(5 × 1.5)  = Math.round(7.5)  =  8
    *   ─────────────────────────────────────────────────────────────────────────────────
-   *   Total deduction: 18 + 8 + 8 + 6 + 8 + 8 = 56
-   *   Raw score: 100 − 56 = 44
+   *   Total deduction: 6 + 18 + 8 + 8 + 6 + 8 + 8 = 62
+   *   Raw score: 100 − 62 = 38
+   *
+   * Note: MTQS-D02 and MTQS-D03 both fire independently — there is no rule-suppression
+   * logic in MTQS. D02 fires because description length (6) < 20; D03 fires because the
+   * description is a byte-for-byte copy of the name. Each rule fires on its own condition.
    */
   const searchFindings: Finding[] = [
+    { ruleId: 'MTQS-D02', severity: 'warning', dimension: 'description' },
     { ruleId: 'MTQS-D03', severity: 'error', dimension: 'description' },
     { ruleId: 'MTQS-S07', severity: 'warning', dimension: 'schema' },
     { ruleId: 'MTQS-S08', severity: 'warning', dimension: 'schema' },
@@ -55,13 +62,13 @@ describe('scoring worked example (SPEC-02)', () => {
 
   const searchRuleIds = searchFindings.map((f) => f.ruleId);
 
-  it('Test 3: "search" tool — scoreTool=44, applyCaps=44 (D03 cap C=79 does not bind), tierFor=F', () => {
+  it('Test 3: "search" tool — scoreTool=38, applyCaps=38 (D03 cap C=79 does not bind), tierFor=F', () => {
     const raw = scoreTool(searchFindings);
-    expect(raw).toBe(44);
+    expect(raw).toBe(38);
 
-    // D03 triggers cap C (≤79): min(44, 79) = 44 — already below cap, cap does not bind
+    // D03 triggers cap C (≤79): min(38, 79) = 38 — already below cap, cap does not bind
     const capped = applyCaps(raw, searchRuleIds);
-    expect(capped).toBe(44);
+    expect(capped).toBe(38);
 
     expect(tierFor(capped)).toBe('F');
   });
@@ -77,8 +84,8 @@ describe('scoring worked example (SPEC-02)', () => {
     expect(tierFor(capped)).toBe('A');
   });
 
-  it('Test 5: serverScore([44, 100]) — mean of two tool scores rounds to 72', () => {
-    // (44 + 100) / 2 = 72.0 → Math.round(72.0) = 72
-    expect(serverScore([44, 100])).toBe(72);
+  it('Test 5: serverScore([38, 100]) — mean of two tool scores rounds to 69', () => {
+    // (38 + 100) / 2 = 69.0 → Math.round(69.0) = 69
+    expect(serverScore([38, 100])).toBe(69);
   });
 });
