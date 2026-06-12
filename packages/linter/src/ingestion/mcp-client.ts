@@ -159,6 +159,11 @@ export interface IngestLiveOptions {
    * Values are NEVER stored on the returned VokeSnapshot (D-09).
    */
   rawHeaders?: string[];
+  /**
+   * Per-listTools-page timeout in ms; defaults to LIST_TOOLS_TIMEOUT_MS (30000).
+   * Threaded through to fetchAllTools — controls how long each paginated request waits.
+   */
+  timeoutMs?: number;
 }
 
 /**
@@ -177,7 +182,7 @@ export interface IngestLiveOptions {
  * - DepthExceededError (exit 6): any tool inputSchema exceeds DEPTH_HARD_CAP
  */
 export const ingestLive = async (opts: IngestLiveOptions): Promise<VokeSnapshot> => {
-  const { url, rawHeaders = [] } = opts;
+  const { url, rawHeaders = [], timeoutMs = LIST_TOOLS_TIMEOUT_MS } = opts;
 
   // Parse and keep raw headers for transport auth (values are NEVER stored on snapshot)
   const headers = buildHeaders(rawHeaders);
@@ -203,8 +208,8 @@ export const ingestLive = async (opts: IngestLiveOptions): Promise<VokeSnapshot>
     protocolVersion: negotiatedProtocol,
   };
 
-  // Fetch all tools with pagination
-  const rawTools = await fetchAllTools(client);
+  // Fetch all tools with pagination (pass timeoutMs from IngestLiveOptions)
+  const rawTools = await fetchAllTools(client, timeoutMs);
 
   // Map to ToolSnapshot, validate depth, compute contentHash
   const toolSnapshots: ToolSnapshot[] = rawTools.map(tool => {
