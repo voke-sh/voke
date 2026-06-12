@@ -1,6 +1,7 @@
 export { VOKE_VERSION, MTQS_VERSION, versionString } from './version.js';
 export { runLint } from './cli/run-lint.js';
 export type { RunLintOpts, RunLintResult } from './cli/run-lint.js';
+export { buildProgram, resolveLintOpts } from './cli/program.js';
 export { resolveTarget, UsageError } from './cli/resolve-target.js';
 export type { ResolvedTarget, TransportKind } from './cli/resolve-target.js';
 export { formatHuman } from './cli/format-human.js';
