@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v0.1
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 02-engine-ingestion-determinism/02-02-PLAN.md
-last_updated: "2026-06-12T19:24:45.936Z"
+stopped_at: Completed 02-engine-ingestion-determinism/02-03-PLAN.md
+last_updated: "2026-06-12T19:34:47.842Z"
 progress:
   total_phases: 6
   completed_phases: 1
   total_plans: 8
-  completed_plans: 6
+  completed_plans: 7
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-06-12)
 ## Current Position
 
 Phase: 02 (engine-ingestion-determinism) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 
 ## Performance Metrics
 
@@ -52,6 +52,7 @@ Plan: 3 of 4
 | Phase 01-mtqs-specification P03 | 60 | 3 tasks | 3 files |
 | Phase 02-engine-ingestion-determinism P01 | 6 | 3 tasks | 9 files |
 | Phase 02-engine-ingestion-determinism P02 | 16 | 3 tasks | 14 files |
+| Phase 02-engine-ingestion-determinism P03 | 6 | 3 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -77,6 +78,8 @@ Recent decisions affecting current work:
 - [Phase 02-engine-ingestion-determinism]: canonicalJson uses .filter for undefined-omission mirroring JSON.stringify (Pitfall 7 guard); toolContentHash hashes exactly 5 canonical fields D-03
 - [Phase 02-engine-ingestion-determinism]: schemaDepth composition rule: pass current (not nodeDepth) to branches so oneOf/allOf/anyOf adds 0 depth levels (D-05)
 - [Phase 02-engine-ingestion-determinism]: NodeNext module shims: ambient module declarations in src/types/ajv.d.ts for ajv/dist/2020 and ajv-formats (both lack package.json exports)
+- [Phase 02-engine-ingestion-determinism]: Object.freeze(RuleContext) is shallow in Phase 2; deep freeze deferred to Phase 3 per RESEARCH.md open question #3
+- [Phase 02-engine-ingestion-determinism]: network-block stub uses Promise.reject (not synchronous throw) — fetch() always returns Promise; synchronous throw is not awaitable via .rejects.toThrow()
 
 ### Pending Todos
 
@@ -97,6 +100,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-12T19:24:45.934Z
-Stopped at: Completed 02-engine-ingestion-determinism/02-02-PLAN.md
+Last session: 2026-06-12T19:34:47.839Z
+Stopped at: Completed 02-engine-ingestion-determinism/02-03-PLAN.md
 Resume file: None
