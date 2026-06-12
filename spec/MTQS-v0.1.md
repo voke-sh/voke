@@ -1041,6 +1041,30 @@ Each rule section below follows the MTQS rubric template. The `{#MTQS-XXX}` anch
 
 ## 4. Scoring Formula
 
+### 4.0 The Formula
+
+Per tool:
+
+    penalty(finding) = round(basePenalty × dimensionMultiplier)
+    rawScore         = max(0, 100 − Σ penalty(finding))
+    toolScore        = min(rawScore, lowestHardCap)   // caps only lower a grade, never add deductions
+
+Per server:
+
+    serverScore = round(mean(toolScore for every tool))
+
+That is the entire model. Everything below is the value of one variable in these formulas.
+
+| Variable | Defined in |
+|----------|------------|
+| `basePenalty` (15 / 5 / 0) | §4.1 Severity Penalties |
+| `dimensionMultiplier` (1.5× / 1.2× / 1.0×) | §4.2 Dimension Multipliers |
+| `lowestHardCap` | §4.3 Hard Tier Caps |
+| why round per finding | §4.4 Determinism Rules |
+| score to tier (A–F) | §4.6 Tier Table |
+
+**In plain terms.** The linter reports a set of problems for each tool. Every problem has a point cost set by how serious it is, and that cost is weighted up for problems in critical areas like schema and safety. Round each weighted cost to a whole number and subtract the sum from 100. If the tool has a fatal flaw, a hard cap then limits the highest grade it can earn, regardless of the points. The resulting number maps to a letter grade from A to F. A server's grade is the average of its tools' grades.
+
 ### 4.1 Severity Penalties
 
 Base penalties are integers. `info` and `hint` are report-only: they surface as findings with fix hints but never reduce the score (Decision D-02).
@@ -1066,6 +1090,8 @@ Penalties are scaled by a dimension multiplier encoding the D-09 weight tiers. T
 
 ### 4.3 Hard Tier Caps
 
+Some flaws are fatal, not merely costly. A hard cap sets the highest grade a tool can earn regardless of its point total, because a tool that agents cannot call must never score as "good."
+
 Certain critical errors cap the achievable tier regardless of the numeric score. Caps are post-computation overrides applied as `min(rawScore, capValue)`, never modeled as additional point deductions (Pitfall 3 guard).
 
 | Condition | Cap Level | Cap Value | Affected Rule(s) | Rationale |
@@ -1079,7 +1105,11 @@ Certain critical errors cap the achievable tier regardless of the numeric score.
 
 Caps are per-tool, not server-level. Multiple caps in effect: apply `min(rawScore, lowestCap)`.
 
-### 4.4 Integer-First Arithmetic
+### 4.4 Determinism Rules (Rounding and Evaluation Order)
+
+The score must be identical on every machine. Decimal math drifts across CPUs and JavaScript engines; whole-number math does not. So the formula rounds each penalty to a whole number first, then adds only whole numbers.
+
+#### Rounding
 
 To ensure scoring determinism across all JavaScript engines (no IEEE 754 floating-point accumulation differences), the formula uses integer-first arithmetic:
 
@@ -1090,6 +1120,8 @@ To ensure scoring determinism across all JavaScript engines (no IEEE 754 floatin
 5. **Server score rounds once:** `serverScore = Math.round(mean(cappedToolScores))`
 
 **Why this matters:** `Math.round(5 × 1.5) = Math.round(7.5) = 8`. Two such findings sum to `8 + 8 = 16`. Float-summing first: `7.5 + 7.5 = 15.0`, then round → `15`. The per-finding rounding approach avoids this difference. All MTQS-compliant implementations must use per-finding rounding.
+
+#### Evaluation Order
 
 **Fixed evaluation order (required for determinism):**
 
