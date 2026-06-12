@@ -2,16 +2,14 @@
 gsd_state_version: 1.0
 milestone: v0.1
 milestone_name: milestone
-status: planning
-stopped_at: Phase 1 context gathered
-last_updated: "2026-06-12T12:20:12.441Z"
-last_activity: 2026-06-12 — Roadmap created; 33 requirements mapped across 6 phases
+status: unknown
+stopped_at: Completed 01-mtqs-specification/01-01-PLAN.md
+last_updated: "2026-06-12T13:02:58.456Z"
 progress:
   total_phases: 6
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
-  percent: 0
+  total_plans: 4
+  completed_plans: 1
 ---
 
 # Project State
@@ -21,16 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-12)
 
 **Core value:** `voke lint <server>` produces deterministic per-rule findings + a stable score against an explicit published ruleset — same input always yields same output
-**Current focus:** Phase 1 — MTQS Specification
+**Current focus:** Phase 01 — mtqs-specification
 
 ## Current Position
 
-Phase: 1 of 6 (MTQS Specification)
-Plan: 0 of TBD in current phase
-Status: Ready to plan
-Last activity: 2026-06-12 — Roadmap created; 33 requirements mapped across 6 phases
-
-Progress: [░░░░░░░░░░] 0%
+Phase: 01 (mtqs-specification) — EXECUTING
+Plan: 2 of 4
 
 ## Performance Metrics
 
@@ -52,6 +46,7 @@ Progress: [░░░░░░░░░░] 0%
 - Trend: N/A
 
 *Updated after each plan completion*
+| Phase 01-mtqs-specification P01 | 6 | 3 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -64,6 +59,9 @@ Recent decisions affecting current work:
 - Roadmap: Spec-first enforced — no rule code before SPEC-01..05 complete
 - Roadmap: Phase 2 is the highest-risk phase (determinism) — isolated before rules
 - Roadmap: First demoable `voke lint` artifact is Phase 4 exit criterion
+- [Phase 01-mtqs-specification]: id regex tightened to [SDNPA] not [A-Z] to enforce only valid v0.1 dimension letters at build time (Pitfall 5 guard)
+- [Phase 01-mtqs-specification]: Integer-first arithmetic: Math.round per finding then sum integers, not float-sum then round — ensures cross-platform scoring determinism
+- [Phase 01-mtqs-specification]: Hard tier caps implemented as min(rawScore, capValue) post-computation overrides, never additional deductions (Pitfall 3)
 
 ### Pending Todos
 
@@ -76,6 +74,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-12T12:20:12.439Z
-Stopped at: Phase 1 context gathered
-Resume file: .planning/phases/01-mtqs-specification/01-CONTEXT.md
+Last session: 2026-06-12T13:02:58.454Z
+Stopped at: Completed 01-mtqs-specification/01-01-PLAN.md
+Resume file: None
