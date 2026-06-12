@@ -12,7 +12,7 @@ Six phases deliver the MTQS v0.1 open specification and its `voke lint` referenc
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: MTQS Specification** - Author the v0.1 spec document, scoring formula, rule registry, and SCOPE.md — gates all linter code
+- [x] **Phase 1: MTQS Specification** - Author the v0.1 spec document, scoring formula, rule registry, and SCOPE.md — gates all linter code (completed 2026-06-12)
 - [ ] **Phase 2: Engine + Ingestion + Determinism** - Build rule engine, MCP ingestion, and bake in all 7 determinism enforcement points; exit criterion is byte-identical output x3
 - [ ] **Phase 3: Rule Implementations** - Implement all 20 v0.1 rules (S01–S08, D01–D03, N01–N03, P01–P02, A01–A06) as pure functions with fixtures
 - [ ] **Phase 4: Scoring + Output + CLI** - Wire the full pipeline; first demoable `voke lint` against the live 229-tool Apideck server
@@ -96,7 +96,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. MTQS Specification | 3/4 | In Progress|  |
+| 1. MTQS Specification | 4/4 | Complete   | 2026-06-12 |
 | 2. Engine + Ingestion + Determinism | 0/TBD | Not started | - |
 | 3. Rule Implementations | 0/TBD | Not started | - |
 | 4. Scoring + Output + CLI | 0/TBD | Not started | - |
