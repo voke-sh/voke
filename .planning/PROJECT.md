@@ -12,13 +12,11 @@ Voke is an open-source observability platform for MCP servers, built as a layere
 
 ### Validated
 
-(None yet — ship to validate)
+- [x] Author MTQS v0.1 spec (per-dimension rubrics, scoring formula + A–F tiers, rule IDs + severities, extensibility section) — original, justified from primary sources, explicitly NOT Glama-derived — **Validated in Phase 1: MTQS Specification.** 22 rules across 5 dimensions; `spec/MTQS-v0.1.md` + machine-readable `spec/mtqs-v0.1.yaml` registry + `spec/SCOPE.md`; deterministic integer-first scoring; 31 spec tests gate doc↔registry sync, completeness, and no-Glama derivation (SPEC-01..05)
 
 ### Active
 
 <!-- L1 scope. Building toward these. -->
-
-- [ ] Author MTQS v0.1 spec (per-dimension rubrics, scoring formula + A–F tiers, rule IDs + severities, extensibility section) — original, justified from primary sources, explicitly NOT Glama-derived
 - [ ] Rule engine + result type, shaped so L2 (diff) and custom rules slot in later
 - [ ] Tool-surface ingestion: connect via MCP SDK + pull `tools/list`; also read a saved tool dump; target JSON Schema 2020-12
 - [ ] Implement MTQS rules as the reference linter with deterministic scoring
@@ -66,9 +64,10 @@ Voke is an open-source observability platform for MCP servers, built as a layere
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
 | Build L1 first, not the runtime monitor | Lowest-friction, ownable, runs anywhere with no infra; plants a flag on an empty category | — Pending |
-| MTQS is an open spec, linter is reference impl | ESLint/WCAG model; the thing the incumbent structurally cannot do | — Pending |
-| Deterministic, no LLM-as-judge in L1 | Non-determinism in a CI signal is a trust failure; it's the wedge vs Glama | — Pending |
-| TypeScript (to confirm in Phase 1) | Most complete MCP SDK; Actions-native; contributor-friendly | — Pending |
+| MTQS is an open spec, linter is reference impl | ESLint/WCAG model; the thing the incumbent structurally cannot do | ✓ Realized — Phase 1 (spec + YAML registry shipped) |
+| Deterministic, no LLM-as-judge in L1 | Non-determinism in a CI signal is a trust failure; it's the wedge vs Glama | ✓ Locked — Phase 1 (integer-first scoring, no model in spec) |
+| TypeScript (confirmed Phase 1) | Most complete MCP SDK; Actions-native; contributor-friendly | ✓ Confirmed — Phase 1 scaffolded in TS (vitest, zod) |
+| v0.1 rule count is 22, not 20 | Roadmap "20" was an arithmetic error; enumeration 8+6+3+2+3 = 22 | ✓ Corrected in Phase 1 |
 | Target JSON Schema 2020-12 from day one | 2026-07-28 RC tailwind; avoids rework | — Pending |
 | Spectral-style rule format | Native to API-spec linters; clean custom-rule path | — Pending |
 
@@ -90,4 +89,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-06-12 after initialization*
+*Last updated: 2026-06-12 after Phase 1 (MTQS Specification) completion*
