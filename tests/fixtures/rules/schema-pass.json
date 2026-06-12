@@ -1,0 +1,40 @@
+{
+  "toolId": "clean_tool",
+  "contentHash": "abc123clean",
+  "name": "clean_tool",
+  "title": "Clean Tool",
+  "description": "A well-designed tool that passes all schema correctness checks",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "userId": {
+        "type": "string",
+        "description": "The unique user identifier"
+      },
+      "limit": {
+        "type": "integer",
+        "description": "Maximum number of results to return",
+        "minimum": 1,
+        "maximum": 100
+      }
+    },
+    "required": ["userId"],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "users": {
+        "type": "array",
+        "items": { "type": "object" }
+      }
+    },
+    "required": ["users"]
+  },
+  "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+  }
+}

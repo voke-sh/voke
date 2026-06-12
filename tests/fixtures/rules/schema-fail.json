@@ -1,0 +1,132 @@
+{
+  "missingInputSchema": {
+    "toolId": "missing_schema_tool",
+    "contentHash": "hash001",
+    "name": "missing_schema_tool",
+    "description": "Tool with null inputSchema",
+    "inputSchema": null
+  },
+  "arrayTypeInputSchema": {
+    "toolId": "array_type_tool",
+    "contentHash": "hash002",
+    "name": "array_type_tool",
+    "description": "Tool whose inputSchema root type is array",
+    "inputSchema": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "invalidInputSchema": {
+    "toolId": "invalid_schema_tool",
+    "contentHash": "hash003",
+    "name": "invalid_schema_tool",
+    "description": "Tool with a structurally invalid inputSchema (type is a number, not a string)",
+    "inputSchema": {
+      "type": 42,
+      "properties": {}
+    }
+  },
+  "externalRefInputSchema": {
+    "toolId": "external_ref_tool",
+    "contentHash": "hash004",
+    "name": "external_ref_tool",
+    "description": "Tool whose inputSchema references an external URL",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "$ref": "https://example.com/schemas/address.json"
+        }
+      },
+      "required": ["address"]
+    }
+  },
+  "deepInputSchema": {
+    "toolId": "deep_schema_tool",
+    "contentHash": "hash005",
+    "name": "deep_schema_tool",
+    "description": "Tool with excessively deep schema nesting (depth > 5)",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "level1": {
+          "type": "object",
+          "properties": {
+            "level2": {
+              "type": "object",
+              "properties": {
+                "level3": {
+                  "type": "object",
+                  "properties": {
+                    "level4": {
+                      "type": "object",
+                      "properties": {
+                        "level5": {
+                          "type": "object",
+                          "properties": {
+                            "level6": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "required": ["level1"]
+    }
+  },
+  "invalidOutputSchema": {
+    "toolId": "invalid_output_tool",
+    "contentHash": "hash006",
+    "name": "invalid_output_tool",
+    "description": "Tool with invalid outputSchema (required is a string, not an array)",
+    "inputSchema": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    },
+    "outputSchema": {
+      "type": "object",
+      "properties": {},
+      "required": "must-be-an-array-not-a-string"
+    }
+  },
+  "propertiesWithoutRequired": {
+    "toolId": "no_required_tool",
+    "contentHash": "hash007",
+    "name": "no_required_tool",
+    "description": "Tool with properties defined but no required array",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "The user ID"
+        }
+      }
+    }
+  },
+  "barePropertySchema": {
+    "toolId": "bare_prop_tool",
+    "contentHash": "hash008",
+    "name": "bare_prop_tool",
+    "description": "Tool with a bare {} property schema",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "user_id": {},
+        "name": {
+          "type": "string",
+          "description": "The user name"
+        }
+      },
+      "required": ["user_id"]
+    }
+  }
+}
