@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Engine + Ingestion + Determinism** - Build rule engine, MCP ingestion, and bake in all 7 determinism enforcement points; exit criterion is byte-identical output x3 (completed 2026-06-12)
 - [ ] **Phase 3: Rule Implementations** - Implement all 20 v0.1 rules (S01–S08, D01–D03, N01–N03, P01–P02, A01–A06) as pure functions with fixtures
 - [ ] **Phase 4: Scoring + Output + CLI** - Wire the full pipeline; first demoable `voke lint` against the live 229-tool Apideck server
-- [ ] **Phase 5: CI + Publication** - GitHub Action wrapper, spec published at voke.sh/spec, CONTRIBUTING.md + rule PR template, repo goes public
+- [ ] **Phase 5: CI + Publication** - stdio transport (hermetic CI + local dev loop), GitHub Action wrapper, spec published at voke.sh/spec, CONTRIBUTING.md + rule PR template, repo goes public
 - [ ] **Phase 6: Launch** - Blog post + live Apideck demo run; `voke lint https://mcp.apideck.dev/mcp` green and reproducible is the DoD
 
 ## Phase Details
@@ -79,14 +79,15 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: TBD
 
 ### Phase 5: CI + Publication
-**Goal**: The linter is usable from a GitHub Action with a one-line YAML config, the MTQS spec is publicly versioned at voke.sh/spec, and the repo is ready for external contribution before going public
+**Goal**: The linter ingests stdio MCP servers (hermetic CI + local dev loop), is usable from a GitHub Action with a one-line YAML config, the MTQS spec is publicly versioned at voke.sh/spec, and the repo is ready for external contribution before going public
 **Depends on**: Phase 4
-**Requirements**: CI-01, CI-02, PUB-01, PUB-02
+**Requirements**: ING-06, CI-01, CI-02, PUB-01, PUB-02
 **Success Criteria** (what must be TRUE):
-  1. A GitHub Action workflow using `uses: voke-sh/voke` with a `min-score` input runs `voke lint` in CI and fails the build when the score falls below threshold
-  2. Copy-pasting the README's quickstart snippet into a new repo's workflow file produces a working CI lint job without modification
-  3. MTQS v0.1 spec is live at voke.sh/spec (or its public repo equivalent), versioned, and accepts pull requests
-  4. CONTRIBUTING.md and a rule PR template exist in the repo; both are linked from the README; SCOPE.md is linked from CONTRIBUTING.md
+  1. `voke lint -- <cmd>` launches a stdio MCP server as a subprocess, retrieves the same canonicalized tool surface as live/offline modes, and tears the subprocess down deterministically (no orphan process, byte-identical output x3)
+  2. A GitHub Action workflow using `uses: voke-sh/voke` with a `min-score` input runs `voke lint` in CI and fails the build when the score falls below threshold
+  3. Copy-pasting the README's quickstart snippet into a new repo's workflow file produces a working CI lint job without modification
+  4. MTQS v0.1 spec is live at voke.sh/spec (or its public repo equivalent), versioned, and accepts pull requests
+  5. CONTRIBUTING.md and a rule PR template exist in the repo; both are linked from the README; SCOPE.md is linked from CONTRIBUTING.md
 **Plans**: TBD
 
 ### Phase 6: Launch
