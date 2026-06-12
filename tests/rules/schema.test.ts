@@ -2,8 +2,16 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { schemaRules } from '../../packages/linter/src/rules/schema.js';
 import type { RuleContext, RuleDefinition } from '../../packages/linter/src/engine/types.js';
 import type { ToolSnapshot } from '../../packages/linter/src/ingestion/types.js';
-import schemaPassFixture from '../fixtures/rules/schema-pass.json';
-import schemaFailFixture from '../fixtures/rules/schema-fail.json';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+
+const fixturesDir = resolve(process.cwd(), 'tests/fixtures/rules');
+const schemaPassFixture = JSON.parse(
+  readFileSync(resolve(fixturesDir, 'schema-pass.json'), 'utf8'),
+) as unknown;
+const schemaFailFixture = JSON.parse(
+  readFileSync(resolve(fixturesDir, 'schema-fail.json'), 'utf8'),
+) as unknown;
 
 // ────────────────────────────────────────────────────────────────────
 // Helpers
