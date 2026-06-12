@@ -2,7 +2,7 @@
 
 ## Overview
 
-Six phases deliver the MTQS v0.1 open specification and its `voke lint` reference linter. The journey is spec-first: Phase 1 writes the spec document that gates all code. Phase 2 builds the deterministic engine and ingestion layer — the highest-risk technical phase, isolated before any rules touch it. Phase 3 implements all 20 v0.1 rules as pure functions. Phase 4 wires the full pipeline into a working CLI (`voke lint` against a live server). Phase 5 ships the GitHub Action, publishes the spec, and prepares the repo for public contribution. Phase 6 executes the launch: live Apideck run, second server, blog post.
+Six phases deliver the MTQS v0.1 open specification and its `voke lint` reference linter. The journey is spec-first: Phase 1 writes the spec document that gates all code. Phase 2 builds the deterministic engine and ingestion layer — the highest-risk technical phase, isolated before any rules touch it. Phase 3 implements all 22 v0.1 rules as pure functions. Phase 4 wires the full pipeline into a working CLI (`voke lint` against a live server). Phase 5 ships the GitHub Action, publishes the spec, and prepares the repo for public contribution. Phase 6 executes the launch: live Apideck run, second server, blog post.
 
 ## Phases
 
@@ -50,7 +50,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] 02-04-PLAN.md — Report builder (reusing @voke/core scoring) + byte-identical x3 determinism test (Wave 2; ENG-04)
 
 ### Phase 3: Rule Implementations
-**Goal**: All 20 v0.1 MTQS rules are implemented as pure synchronous functions — each with positive and negative fixtures, each emitting findings with rule ID, severity, location, and fix hint, and with network blocked in all unit tests
+**Goal**: All 22 v0.1 MTQS rules are implemented as pure synchronous functions — each with positive and negative fixtures, each emitting findings with rule ID, severity, location, and fix hint, and with network blocked in all unit tests
 **Depends on**: Phase 2
 **Requirements**: RULE-01, RULE-02, RULE-03, RULE-04, RULE-05, RULE-06
 **Success Criteria** (what must be TRUE):
@@ -59,7 +59,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Annotation rules (A01–A06 including the A06 cross-constraint) have fixtures; A06 specifically fires when `readOnlyHint:true` + `destructiveHint:true` are both set
   4. Every rule emits a finding that includes rule ID, severity, the path to the offending location, and a human-readable fix hint
   5. All rule unit tests run with network blocked — no rule implementation makes any IO call
-**Plans**: TBD
+**Plans**: 5 plans
+- [ ] 03-01-PLAN.md — Schema Correctness rules S01-S08 (Wave 1; RULE-01)
+- [ ] 03-02-PLAN.md — Description D01-D03 + Naming N01-N03 (N03 server-scoped) (Wave 1; RULE-02, RULE-03)
+- [ ] 03-03-PLAN.md — Parameter Semantics rules P01-P02 (Wave 1; RULE-04)
+- [ ] 03-04-PLAN.md — Annotation Transparency rules A01-A06 (incl. A06 cross-constraint) (Wave 1; RULE-05)
+- [ ] 03-05-PLAN.md — Integration: register all 22 rules in createDefaultRegistry + coverage/determinism proof (Wave 2; RULE-06)
 
 ### Phase 4: Scoring + Output + CLI
 **Goal**: `voke lint <server-or-file>` works end-to-end and produces a human-readable + machine-readable report with per-rule findings, per-tool scores, and a server-level score + A–F tier; the first live run against the 229-tool Apideck server produces a meaningful, reproducible score
@@ -102,7 +107,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 |-------|----------------|--------|-----------|
 | 1. MTQS Specification | 4/4 | Complete   | 2026-06-12 |
 | 2. Engine + Ingestion + Determinism | 4/4 | Complete   | 2026-06-12 |
-| 3. Rule Implementations | 0/TBD | Not started | - |
+| 3. Rule Implementations | 0/5 | Not started | - |
 | 4. Scoring + Output + CLI | 0/TBD | Not started | - |
 | 5. CI + Publication | 0/TBD | Not started | - |
 | 6. Launch | 0/TBD | Not started | - |
