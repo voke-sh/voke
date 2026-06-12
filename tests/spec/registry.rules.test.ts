@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import { resolve } from 'node:path';
-import { loadRegistryFile } from '../../spec/helpers/loadRegistry.js';
-import type { RuleRegistryEntry } from '../../spec/registry-types.js';
+import { loadRegistryFile } from '@voke/core';
+import type { RuleRegistryEntry } from '@voke/core';
 
 // Resolve the registry path relative to the repo root (process.cwd() under vitest run)
 const REGISTRY_PATH = resolve(process.cwd(), 'spec/mtqs-v0.1.yaml');

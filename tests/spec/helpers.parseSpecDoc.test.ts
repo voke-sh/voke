@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseSpecDoc } from '../../spec/helpers/parseSpecDoc.js';
+import { parseSpecDoc } from '@voke/core';
 
 describe('parseSpecDoc', () => {
   it('Test 1: extracts anchors including MTQS-S01 from a markdown section heading', () => {

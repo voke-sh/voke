@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { loadRegistry } from '../../spec/helpers/loadRegistry.js';
+import { loadRegistry } from '@voke/core';
 
 // Minimal valid YAML entry for reuse
 const VALID_ENTRY_YAML = `

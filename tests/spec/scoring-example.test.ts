@@ -17,8 +17,8 @@ import {
   tierFor,
   applyCaps,
   serverScore,
-} from '../../spec/helpers/scoring.js';
-import type { Finding } from '../../spec/helpers/scoring.js';
+} from '@voke/core';
+import type { Finding } from '@voke/core';
 
 describe('scoring worked example (SPEC-02)', () => {
   /**

@@ -11,8 +11,7 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { parseSpecDoc } from '../../spec/helpers/parseSpecDoc.js';
-import { loadRegistryFile } from '../../spec/helpers/loadRegistry.js';
+import { parseSpecDoc, loadRegistryFile } from '@voke/core';
 
 // Resolve paths relative to the repo root (tests run from repo root via vitest)
 const REPO_ROOT = resolve(import.meta.dirname, '..', '..');

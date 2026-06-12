@@ -5,8 +5,8 @@ import {
   tierFor,
   applyCaps,
   serverScore,
-} from '../../spec/helpers/scoring.js';
-import type { Finding } from '../../spec/helpers/scoring.js';
+} from '@voke/core';
+import type { Finding } from '@voke/core';
 
 describe('scoring helpers', () => {
   it('Test 3: single error in schema dimension yields score 77 (penalty=23, round(15*1.5)=23)', () => {
