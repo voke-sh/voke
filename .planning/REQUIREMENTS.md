@@ -24,11 +24,11 @@ L1 milestone. Each maps to a roadmap phase. v1 ships the 20 P1 (table-stakes) MT
 
 ### Ingestion
 
-- [ ] **ING-01**: Connect to a live streamable-HTTP MCP server via the MCP SDK and pull the full `tools/list` surface with pagination
-- [ ] **ING-02**: Auth via static bearer token / custom header
-- [ ] **ING-03**: Read a saved tool dump (snapshot) offline instead of connecting
+- [x] **ING-01**: Connect to a live streamable-HTTP MCP server via the MCP SDK and pull the full `tools/list` surface with pagination
+- [x] **ING-02**: Auth via static bearer token / custom header
+- [x] **ING-03**: Read a saved tool dump (snapshot) offline instead of connecting
 - [x] **ING-04**: Ingested surface is canonicalized — tools sorted by stable `toolId`, per-tool `contentHash` (SHA-256 of canonical JSON) computed — leaving the data model L2-diff-ready
-- [ ] **ING-05**: External `$ref` is never auto-dereferenced (no outbound HTTP); schema depth is bounded; full JSON Schema 2020-12 (`oneOf`/`anyOf`/`allOf`/conditionals) is accepted
+- [x] **ING-05**: External `$ref` is never auto-dereferenced (no outbound HTTP); schema depth is bounded; full JSON Schema 2020-12 (`oneOf`/`anyOf`/`allOf`/conditionals) is accepted
 
 ### Rules
 
@@ -106,11 +106,11 @@ Explicitly excluded (with reasoning) to prevent scope creep.
 | ENG-02 | Phase 2 | Pending |
 | ENG-03 | Phase 2 | Pending |
 | ENG-04 | Phase 2 | Pending |
-| ING-01 | Phase 2 | Pending |
-| ING-02 | Phase 2 | Pending |
-| ING-03 | Phase 2 | Pending |
+| ING-01 | Phase 2 | Complete |
+| ING-02 | Phase 2 | Complete |
+| ING-03 | Phase 2 | Complete |
 | ING-04 | Phase 2 | Complete |
-| ING-05 | Phase 2 | Pending |
+| ING-05 | Phase 2 | Complete |
 | RULE-01 | Phase 3 | Pending |
 | RULE-02 | Phase 3 | Pending |
 | RULE-03 | Phase 3 | Pending |

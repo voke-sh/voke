@@ -45,7 +45,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   5. External `$ref` in a tool schema never triggers an outbound HTTP call and a test fixture with an external `$ref` asserts this; schema depth is bounded and full JSON Schema 2020-12 composition is accepted
 **Plans**: 4 plans
 - [x] 02-01-PLAN.md — Scaffold @voke/linter package + canonicalize module (canonical JSON + SHA-256) + Apideck fixture (Wave 0; ING-04)
-- [ ] 02-02-PLAN.md — Ingestion layer: data-model types, Ajv2020/depth/external-$ref checks, live MCP client + offline snapshot reader (Wave 1; ING-01/02/03/05)
+- [x] 02-02-PLAN.md — Ingestion layer: data-model types, Ajv2020/depth/external-$ref checks, live MCP client + offline snapshot reader (Wave 1; ING-01/02/03/05)
 - [ ] 02-03-PLAN.md — Rule engine: types, sealable registry with overrides, pure frozen-context runner + network-block test infra (Wave 1; ENG-01/02/03)
 - [ ] 02-04-PLAN.md — Report builder (reusing @voke/core scoring) + byte-identical x3 determinism test (Wave 2; ENG-04)
 

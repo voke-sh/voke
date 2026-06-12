@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v0.1
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 02-engine-ingestion-determinism/02-01-PLAN.md
-last_updated: "2026-06-12T19:06:04.691Z"
+stopped_at: Completed 02-engine-ingestion-determinism/02-02-PLAN.md
+last_updated: "2026-06-12T19:24:45.936Z"
 progress:
   total_phases: 6
   completed_phases: 1
   total_plans: 8
-  completed_plans: 5
+  completed_plans: 6
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-06-12)
 ## Current Position
 
 Phase: 02 (engine-ingestion-determinism) — EXECUTING
-Plan: 2 of 4
+Plan: 3 of 4
 
 ## Performance Metrics
 
@@ -51,6 +51,7 @@ Plan: 2 of 4
 | Phase 01-mtqs-specification P02 | 3 | 2 tasks | 3 files |
 | Phase 01-mtqs-specification P03 | 60 | 3 tasks | 3 files |
 | Phase 02-engine-ingestion-determinism P01 | 6 | 3 tasks | 9 files |
+| Phase 02-engine-ingestion-determinism P02 | 16 | 3 tasks | 14 files |
 
 ## Accumulated Context
 
@@ -74,6 +75,8 @@ Recent decisions affecting current work:
 - [Phase 01-mtqs-specification]: D02 and D03 fire independently in MTQS — no rule-suppression logic; each rule fires on its own condition (search worked example corrected: deduction 62, raw 38, server 69/Tier D)
 - [Phase 01-mtqs-specification]: MTQS-D02 worked-example correction applied post human review: description length check fires independently of description=name check; both D02 and D03 fire for 'search' tool
 - [Phase 02-engine-ingestion-determinism]: canonicalJson uses .filter for undefined-omission mirroring JSON.stringify (Pitfall 7 guard); toolContentHash hashes exactly 5 canonical fields D-03
+- [Phase 02-engine-ingestion-determinism]: schemaDepth composition rule: pass current (not nodeDepth) to branches so oneOf/allOf/anyOf adds 0 depth levels (D-05)
+- [Phase 02-engine-ingestion-determinism]: NodeNext module shims: ambient module declarations in src/types/ajv.d.ts for ajv/dist/2020 and ajv-formats (both lack package.json exports)
 
 ### Pending Todos
 
@@ -94,6 +97,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-12T19:06:04.689Z
-Stopped at: Completed 02-engine-ingestion-determinism/02-01-PLAN.md
+Last session: 2026-06-12T19:24:45.934Z
+Stopped at: Completed 02-engine-ingestion-determinism/02-02-PLAN.md
 Resume file: None
