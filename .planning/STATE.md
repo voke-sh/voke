@@ -87,9 +87,10 @@ None yet.
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 260612-p42 | Restructure repo into npm workspaces monorepo (extract @voke/core) | 2026-06-12 | 8c5086a | [260612-p42-restructure-repo-into-npm-workspaces-mon](./quick/260612-p42-restructure-repo-into-npm-workspaces-mon/) |
+| 260612-pd7 | Remove all em dashes from spec/MTQS-v0.1.md, prose editorial pass | 2026-06-12 | 212acf0 | [260612-pd7-remove-em-dashes-from-spec-mtqs-v0-1-md-](./quick/260612-pd7-remove-em-dashes-from-spec-mtqs-v0-1-md-/) |
 
 ## Session Continuity
 
-Last session: 2026-06-12T13:31:27.385Z
-Stopped at: Completed 01-mtqs-specification/01-03-PLAN.md
+Last session: 2026-06-12T17:25:34Z
+Stopped at: Completed quick task 260612-pd7 — remove em dashes from MTQS v0.1 spec
 Resume file: None
