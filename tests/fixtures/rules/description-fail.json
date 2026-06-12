@@ -1,0 +1,23 @@
+[
+  {
+    "toolId": "no_description_tool",
+    "contentHash": "abc123",
+    "name": "no_description_tool",
+    "description": "",
+    "inputSchema": { "type": "object", "properties": {}, "required": [] }
+  },
+  {
+    "toolId": "short_description_tool",
+    "contentHash": "abc124",
+    "name": "short_description_tool",
+    "description": "Short",
+    "inputSchema": { "type": "object", "properties": {}, "required": [] }
+  },
+  {
+    "toolId": "search",
+    "contentHash": "abc125",
+    "name": "search",
+    "description": "search",
+    "inputSchema": { "type": "object", "properties": {}, "required": [] }
+  }
+]
