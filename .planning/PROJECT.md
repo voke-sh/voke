@@ -13,12 +13,12 @@ Voke is an open-source observability platform for MCP servers, built as a layere
 ### Validated
 
 - [x] Author MTQS v0.1 spec (per-dimension rubrics, scoring formula + A–F tiers, rule IDs + severities, extensibility section) — original, justified from primary sources, explicitly NOT Glama-derived — **Validated in Phase 1: MTQS Specification.** 22 rules across 5 dimensions; `spec/MTQS-v0.1.md` + machine-readable `spec/mtqs-v0.1.yaml` registry + `spec/SCOPE.md`; deterministic integer-first scoring; 31 spec tests gate doc↔registry sync, completeness, and no-Glama derivation (SPEC-01..05)
+- [x] Rule engine + result type, shaped so L2 (diff) and custom rules slot in later — **Validated in Phase 2: Engine + Ingestion + Determinism.** Pure `(ctx)=>Finding[]` rules on a frozen `RuleContext`; sealing `RuleRegistry` with `applyOverrides` returning a new registry; per-tool vs server-scoped routing; fail-on-throw `RuleExecutionError`; network-block test proves purity (ENG-01..03, D-14)
+- [x] Tool-surface ingestion: connect via MCP SDK + pull `tools/list`; also read a saved tool dump; target JSON Schema 2020-12 — **Validated in Phase 2: Engine + Ingestion + Determinism.** Streamable-HTTP + SSE fallback, paginated `fetchAllTools` (fail-fast on partial page), header auth + masking; offline snapshot reader with zero SDK/network; Ajv2020 validity + depth cap (32) + external-`$ref` detection with no IO; canonicalize (sorted-key JSON, SHA-256 content hash). Determinism proof: byte-identical x3 + shuffle-invariant on Apideck fixture (`tests/engine/determinism.test.ts`). 163 tests green (ENG-04, ING-01..05, D-12)
 
 ### Active
 
 <!-- L1 scope. Building toward these. -->
-- [ ] Rule engine + result type, shaped so L2 (diff) and custom rules slot in later
-- [ ] Tool-surface ingestion: connect via MCP SDK + pull `tools/list`; also read a saved tool dump; target JSON Schema 2020-12
 - [ ] Implement MTQS rules as the reference linter with deterministic scoring
 - [ ] `voke lint` CLI: per-rule findings + per-tool + server score + tier; `--min-score` exit code
 - [ ] GitHub Action wrapper + YAML config + README that doubles as the demo
@@ -68,6 +68,7 @@ Voke is an open-source observability platform for MCP servers, built as a layere
 | Deterministic, no LLM-as-judge in L1 | Non-determinism in a CI signal is a trust failure; it's the wedge vs Glama | ✓ Locked — Phase 1 (integer-first scoring, no model in spec) |
 | TypeScript (confirmed Phase 1) | Most complete MCP SDK; Actions-native; contributor-friendly | ✓ Confirmed — Phase 1 scaffolded in TS (vitest, zod) |
 | v0.1 rule count is 22, not 20 | Roadmap "20" was an arithmetic error; enumeration 8+6+3+2+3 = 22 | ✓ Corrected in Phase 1 |
+| Determinism proven by byte-identical x3 + shuffle-invariant test on a committed real-server fixture | The wedge vs Glama must be demonstrable, not asserted; sort-on-run + meta-strip + canonicalJson is the mechanism | ✓ Realized — Phase 2 (`tests/engine/determinism.test.ts`) |
 | Target JSON Schema 2020-12 from day one | 2026-07-28 RC tailwind; avoids rework | — Pending |
 | Spectral-style rule format | Native to API-spec linters; clean custom-rule path | — Pending |
 
@@ -89,4 +90,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-06-12 after Phase 1 (MTQS Specification) completion*
+*Last updated: 2026-06-12 after Phase 2 (Engine + Ingestion + Determinism) completion*
