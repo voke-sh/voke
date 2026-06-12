@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v0.1
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 01-mtqs-specification/01-04-PLAN.md
-last_updated: "2026-06-12T13:08:52.611Z"
+stopped_at: Completed 01-mtqs-specification/01-02-PLAN.md
+last_updated: "2026-06-12T13:09:46.766Z"
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 4
-  completed_plans: 2
+  completed_plans: 3
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-06-12)
 ## Current Position
 
 Phase: 01 (mtqs-specification) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 
 ## Performance Metrics
 
@@ -48,6 +48,7 @@ Plan: 3 of 4
 *Updated after each plan completion*
 | Phase 01-mtqs-specification P01 | 6 | 3 tasks | 11 files |
 | Phase 01-mtqs-specification P04 | 2 | 2 tasks | 2 files |
+| Phase 01-mtqs-specification P02 | 3 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -66,6 +67,8 @@ Recent decisions affecting current work:
 - [Phase 01-mtqs-specification]: Hard employer-conflict line documented in SCOPE.md: Voke is a read-only observer, never a gateway or proxy
 - [Phase 01-mtqs-specification]: LLM-as-judge explicitly excluded from MTQS L1 with ICC-score rationale (0.62-0.90 not sufficient for CI gate)
 - [Phase 01-mtqs-specification]: Scope-creep PR rule: primary source citation required, never Glama (documented in SCOPE.md §4)
+- [Phase 01-mtqs-specification]: 22 rules in MTQS v0.1 (not 20) — plan had arithmetic error; all 22 IDs explicitly enumerated are correct
+- [Phase 01-mtqs-specification]: MTQS-N03 is the only server-scoped rule; dimension weights locked: schema=1.5, annotations=1.5, description=1.2, parameters=1.2, naming=1.0
 
 ### Pending Todos
 
@@ -78,6 +81,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-12T13:08:52.609Z
-Stopped at: Completed 01-mtqs-specification/01-04-PLAN.md
+Last session: 2026-06-12T13:09:46.763Z
+Stopped at: Completed 01-mtqs-specification/01-02-PLAN.md
 Resume file: None
