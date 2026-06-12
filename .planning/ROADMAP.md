@@ -43,7 +43,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. A saved tool dump (snapshot file) can be read offline without any network call; the engine reaches the same state as a live connection on identical data
   4. Ingested tools are sorted by stable `toolId`, each with a SHA-256 `contentHash`; the data model is structurally ready for L2 diff (no changes needed to ingestion for diffing)
   5. External `$ref` in a tool schema never triggers an outbound HTTP call and a test fixture with an external `$ref` asserts this; schema depth is bounded and full JSON Schema 2020-12 composition is accepted
-**Plans**: TBD
+**Plans**: 4 plans
+- [ ] 02-01-PLAN.md — Scaffold @voke/linter package + canonicalize module (canonical JSON + SHA-256) + Apideck fixture (Wave 0; ING-04)
+- [ ] 02-02-PLAN.md — Ingestion layer: data-model types, Ajv2020/depth/external-$ref checks, live MCP client + offline snapshot reader (Wave 1; ING-01/02/03/05)
+- [ ] 02-03-PLAN.md — Rule engine: types, sealable registry with overrides, pure frozen-context runner + network-block test infra (Wave 1; ENG-01/02/03)
+- [ ] 02-04-PLAN.md — Report builder (reusing @voke/core scoring) + byte-identical x3 determinism test (Wave 2; ENG-04)
 
 ### Phase 3: Rule Implementations
 **Goal**: All 20 v0.1 MTQS rules are implemented as pure synchronous functions — each with positive and negative fixtures, each emitting findings with rule ID, severity, location, and fix hint, and with network blocked in all unit tests
@@ -97,7 +101,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. MTQS Specification | 4/4 | Complete   | 2026-06-12 |
-| 2. Engine + Ingestion + Determinism | 0/TBD | Not started | - |
+| 2. Engine + Ingestion + Determinism | 0/4 | Planned | - |
 | 3. Rule Implementations | 0/TBD | Not started | - |
 | 4. Scoring + Output + CLI | 0/TBD | Not started | - |
 | 5. CI + Publication | 0/TBD | Not started | - |
