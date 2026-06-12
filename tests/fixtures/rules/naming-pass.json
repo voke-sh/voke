@@ -1,0 +1,9 @@
+[
+  {
+    "toolId": "crm_search_contacts",
+    "contentHash": "abc123",
+    "name": "crm_search_contacts",
+    "description": "Search CRM contacts by name, email, or phone. Returns matching records.",
+    "inputSchema": { "type": "object", "properties": {}, "required": [] }
+  }
+]

@@ -1,0 +1,23 @@
+[
+  {
+    "toolId": "search",
+    "contentHash": "abc123",
+    "name": "search",
+    "description": "First search tool.",
+    "inputSchema": { "type": "object", "properties": {}, "required": [] }
+  },
+  {
+    "toolId": "search_v2",
+    "contentHash": "abc124",
+    "name": "search",
+    "description": "Second search tool with same name.",
+    "inputSchema": { "type": "object", "properties": {}, "required": [] }
+  },
+  {
+    "toolId": "get_user",
+    "contentHash": "abc125",
+    "name": "get_user",
+    "description": "Get a user by ID from the system.",
+    "inputSchema": { "type": "object", "properties": {}, "required": [] }
+  }
+]

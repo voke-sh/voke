@@ -1,0 +1,16 @@
+[
+  {
+    "toolId": "search_for_contacts_in_the_crm_system_using_multiple_criteria_including_name_email_phone_and_company_with_pagination_support_and_sorting_options",
+    "contentHash": "abc123",
+    "name": "search_for_contacts_in_the_crm_system_using_multiple_criteria_including_name_email_phone_and_company_with_pagination_support_and_sorting_options",
+    "description": "Search contacts with many criteria.",
+    "inputSchema": { "type": "object", "properties": {}, "required": [] }
+  },
+  {
+    "toolId": "search contacts, all",
+    "contentHash": "abc124",
+    "name": "search contacts, all",
+    "description": "Search all contacts in the system.",
+    "inputSchema": { "type": "object", "properties": {}, "required": [] }
+  }
+]
