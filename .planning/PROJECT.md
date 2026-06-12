@@ -15,12 +15,12 @@ Voke is an open-source observability platform for MCP servers, built as a layere
 - [x] Author MTQS v0.1 spec (per-dimension rubrics, scoring formula + A–F tiers, rule IDs + severities, extensibility section) — original, justified from primary sources, explicitly NOT Glama-derived — **Validated in Phase 1: MTQS Specification.** 22 rules across 5 dimensions; `spec/MTQS-v0.1.md` + machine-readable `spec/mtqs-v0.1.yaml` registry + `spec/SCOPE.md`; deterministic integer-first scoring; 31 spec tests gate doc↔registry sync, completeness, and no-Glama derivation (SPEC-01..05)
 - [x] Rule engine + result type, shaped so L2 (diff) and custom rules slot in later — **Validated in Phase 2: Engine + Ingestion + Determinism.** Pure `(ctx)=>Finding[]` rules on a frozen `RuleContext`; sealing `RuleRegistry` with `applyOverrides` returning a new registry; per-tool vs server-scoped routing; fail-on-throw `RuleExecutionError`; network-block test proves purity (ENG-01..03, D-14)
 - [x] Tool-surface ingestion: connect via MCP SDK + pull `tools/list`; also read a saved tool dump; target JSON Schema 2020-12 — **Validated in Phase 2: Engine + Ingestion + Determinism.** Streamable-HTTP + SSE fallback, paginated `fetchAllTools` (fail-fast on partial page), header auth + masking; offline snapshot reader with zero SDK/network; Ajv2020 validity + depth cap (32) + external-`$ref` detection with no IO; canonicalize (sorted-key JSON, SHA-256 content hash). Determinism proof: byte-identical x3 + shuffle-invariant on Apideck fixture (`tests/engine/determinism.test.ts`). 163 tests green (ENG-04, ING-01..05, D-12)
+- [x] Implement MTQS rules as the reference linter — **Validated in Phase 3: Rule Implementations.** All 22 v0.1 rules as pure synchronous `(ctx)=>Finding[]` functions across 5 dimension modules (S01–S08, D01–D03, N01–N03, P01–P02, A01–A06); each with positive + negative fixtures; `createDefaultRegistry()` seals exactly 22 rules with bidirectional doc↔registry parity vs `spec/mtqs-v0.1.yaml`; full surface reproduces spec §4.4 worked-example (search=38/F, crm_search_contacts=100/A, server=69/D); N03 sole server-scoped rule; A06 cross-constraint; network blocked in all rule tests, no IO. 500 tests green (RULE-01..06)
 
 ### Active
 
 <!-- L1 scope. Building toward these. -->
-- [ ] Implement MTQS rules as the reference linter with deterministic scoring
-- [ ] `voke lint` CLI: per-rule findings + per-tool + server score + tier; `--min-score` exit code
+- [ ] `voke lint` CLI: per-rule findings + per-tool + server score + tier; `--min-score` exit code (deterministic scoring lands here in Phase 4)
 - [ ] GitHub Action wrapper + YAML config + README that doubles as the demo
 - [ ] Publish spec at voke.sh/spec (versioned, public repo, PRs open); linter declares which MTQS version it implements
 - [ ] Launch blog post: run live against the 229-tool Apideck server + ≥1 other public server
@@ -90,4 +90,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-06-12 after Phase 2 (Engine + Ingestion + Determinism) completion*
+*Last updated: 2026-06-12 after Phase 3 (Rule Implementations) completion*
