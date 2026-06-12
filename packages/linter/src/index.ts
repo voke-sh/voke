@@ -5,3 +5,16 @@ export type { IngestLiveOptions } from './ingestion/mcp-client.js';
 export type { ToolSnapshot, VokeSnapshot, ServerIdentity } from './ingestion/types.js';
 export { readSnapshot } from './ingestion/snapshot-reader.js';
 export { writeSnapshot } from './ingestion/snapshot-writer.js';
+
+// Engine types (engine/types.ts)
+export type {
+  RuleTarget,
+  FindingLocation,
+  Finding,
+  RuleContext,
+  RuleFunction,
+  RuleDefinition,
+} from './engine/types.js';
+
+// Config type stub (config/types.ts)
+export type { VokeConfig } from './config/types.js';
