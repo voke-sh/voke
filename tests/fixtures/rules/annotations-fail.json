@@ -1,0 +1,30 @@
+{
+  "noAnnotations": {
+    "toolId": "write_file",
+    "contentHash": "abc123fail1",
+    "name": "write_file",
+    "description": "Writes content to a file on the local filesystem",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": { "type": "string", "description": "File path" },
+        "content": { "type": "string", "description": "Content to write" }
+      },
+      "required": ["path", "content"]
+    }
+  },
+  "emptyAnnotations": {
+    "toolId": "list_files",
+    "contentHash": "abc123fail2",
+    "name": "list_files",
+    "description": "Lists files in a directory",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": { "type": "string", "description": "Directory path" }
+      },
+      "required": ["path"]
+    },
+    "annotations": {}
+  }
+}

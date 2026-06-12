@@ -1,0 +1,17 @@
+{
+  "toolId": "delete_and_read",
+  "contentHash": "abc123contra",
+  "name": "delete_and_read",
+  "description": "Contradictory annotations: claims to be read-only but also destructive",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "id": { "type": "string", "description": "Resource ID" }
+    },
+    "required": ["id"]
+  },
+  "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": true
+  }
+}

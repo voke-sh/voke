@@ -1,0 +1,22 @@
+{
+  "toolId": "read_file",
+  "contentHash": "abc123pass",
+  "name": "read_file",
+  "description": "Reads the contents of a file from the local filesystem",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "path": {
+        "type": "string",
+        "description": "The absolute path to the file to read"
+      }
+    },
+    "required": ["path"]
+  },
+  "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+  }
+}
