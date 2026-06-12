@@ -1,0 +1,25 @@
+{
+  "toolId": "get_user",
+  "contentHash": "abc123",
+  "name": "get_user",
+  "description": "Retrieve a user record by ID. Returns id, name, email, and role fields.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "user_id": {
+        "type": "string",
+        "description": "UUID of the user whose profile to retrieve. Format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      },
+      "include_deleted": {
+        "type": "boolean",
+        "description": "When true, includes soft-deleted user records in the response. Default: false."
+      },
+      "status": {
+        "type": "string",
+        "enum": ["active", "inactive", "pending"],
+        "description": "Filter contacts by account status"
+      }
+    },
+    "required": ["user_id"]
+  }
+}

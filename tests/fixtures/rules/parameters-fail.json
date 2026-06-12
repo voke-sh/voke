@@ -1,0 +1,32 @@
+{
+  "p01_failing": {
+    "toolId": "get_user",
+    "contentHash": "def456",
+    "name": "get_user",
+    "description": "Retrieve a user record by ID.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "user_id": { "type": "string" },
+        "include_deleted": { "type": "boolean" }
+      },
+      "required": ["user_id"]
+    }
+  },
+  "p02_failing": {
+    "toolId": "list_contacts",
+    "contentHash": "ghi789",
+    "name": "list_contacts",
+    "description": "List contacts filtered by status.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "description": "Filter by status. One of: active, inactive, pending."
+        }
+      },
+      "required": []
+    }
+  }
+}
