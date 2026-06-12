@@ -1,3 +1,4 @@
+export { VOKE_VERSION, MTQS_VERSION, versionString } from './version.js';
 export { canonicalJson } from './canonicalize/canonical-json.js';
 export { sha256, toolContentHash, surfaceContentHash } from './canonicalize/hash.js';
 export { ingestLive, maskHeaders } from './ingestion/mcp-client.js';
