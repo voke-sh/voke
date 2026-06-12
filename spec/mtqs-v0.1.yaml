@@ -1,0 +1,331 @@
+# MCP Tool Quality Specification (MTQS) v0.1 Rule Registry
+#
+# This file is the single source of truth for all 20 MTQS v0.1 rules.
+# Rule IDs, severities, dimensions, weights, fix hints, and source citations
+# are locked here before any prose is written.
+#
+# Format: every entry validated at build time against RuleRegistryEntrySchema (Zod).
+# Source: spec/registry-types.ts
+
+rules:
+  # ─── Dimension: schema (weight: 1.5, Tier 1) ─────────────────────────────
+  # 8 rules: MTQS-S01 through MTQS-S08
+
+  - id: MTQS-S01
+    severity: error
+    dimension: schema
+    scope: per-tool
+    weight: 1.5
+    description: >
+      inputSchema must be present and non-null; every tool must declare
+      its argument schema so agents know what to send.
+    fixHint: >
+      Add "inputSchema": {"type": "object", "properties": {}, "additionalProperties": false}
+      for tools that take no parameters. The MCP spec mandates a valid JSON Schema object.
+    source: "https://modelcontextprotocol.io/specification/draft/basic/index#json-schema-usage"
+    mtqsVersion: "0.1"
+
+  - id: MTQS-S02
+    severity: error
+    dimension: schema
+    scope: per-tool
+    weight: 1.5
+    description: >
+      inputSchema root must have type set to object; MCP tool arguments
+      are always passed as a JSON object, not an array or scalar.
+    fixHint: >
+      Set the top-level "type" field of inputSchema to "object".
+      Tool arguments are always key-value pairs, not a bare array or primitive.
+    source: "https://modelcontextprotocol.io/specification/draft/basic/index#json-schema-usage"
+    mtqsVersion: "0.1"
+
+  - id: MTQS-S03
+    severity: error
+    dimension: schema
+    scope: per-tool
+    weight: 1.5
+    description: >
+      inputSchema must be structurally valid JSON Schema 2020-12; unknown
+      top-level keywords or malformed $ref values cause client validation failure.
+    fixHint: >
+      Validate inputSchema against the JSON Schema 2020-12 meta-schema.
+      Common errors: unknown keywords, incorrect type values, malformed $ref.
+    source: "https://json-schema.org/draft/2020-12"
+    mtqsVersion: "0.1"
+
+  - id: MTQS-S04
+    severity: error
+    dimension: schema
+    scope: per-tool
+    weight: 1.5
+    description: >
+      No unresolved external $ref URIs may appear in inputSchema or outputSchema;
+      MCP implementations must not auto-dereference network URIs.
+    fixHint: >
+      Move all schema definitions into $defs within the schema object and use
+      local $ref values (e.g. "#/$defs/MyType"). Do not reference external URLs.
+    source: "https://modelcontextprotocol.io/specification/draft/basic/index#json-schema-usage"
+    mtqsVersion: "0.1"
+
+  - id: MTQS-S05
+    severity: warning
+    dimension: schema
+    scope: per-tool
+    weight: 1.5
+    description: >
+      Schema nesting depth should not exceed 5 levels (MTQS-RECOMMENDED, not
+      MCP-mandated); deeply nested schemas are expensive to validate and error-prone.
+    fixHint: >
+      Flatten deeply nested schemas using $defs for reuse. The MCP spec SHOULD
+      bound schema depth to prevent denial-of-service; MTQS recommends 5 levels max.
+    source: "https://modelcontextprotocol.io/specification/draft/basic/index#json-schema-usage"
+    mtqsVersion: "0.1"
+
+  - id: MTQS-S06
+    severity: error
+    dimension: schema
+    scope: per-tool
+    weight: 1.5
+    description: >
+      outputSchema, if present, must be structurally valid JSON Schema 2020-12;
+      an invalid output schema breaks client-side response validation.
+    fixHint: >
+      Validate outputSchema against the JSON Schema 2020-12 meta-schema just as
+      you would inputSchema. Remove or correct any unknown keywords or malformed $ref.
+    source: "https://json-schema.org/draft/2020-12"
+    mtqsVersion: "0.1"
+
+  - id: MTQS-S07
+    severity: warning
+    dimension: schema
+    scope: per-tool
+    weight: 1.5
+    description: >
+      A required array should be present whenever properties is defined, even if
+      empty; omitting it leaves required/optional semantics implicit.
+    fixHint: >
+      Add "required": [] or list the mandatory fields explicitly. JSON Schema
+      best practice requires explicit required/optional declaration for clarity.
+    source: "https://json-schema.org/draft/2020-12"
+    mtqsVersion: "0.1"
+
+  - id: MTQS-S08
+    severity: warning
+    dimension: schema
+    scope: per-tool
+    weight: 1.5
+    description: >
+      No property in inputSchema.properties should use a bare {} untyped schema;
+      every property must have at least a type keyword or a $ref.
+    fixHint: >
+      Specify "type" or a composition keyword (oneOf, anyOf, $ref) for every
+      property. Bare {} schemas give agents no type information and fail 2020-12 best practice.
+    source: "https://json-schema.org/draft/2020-12"
+    mtqsVersion: "0.1"
+
+  # ─── Dimension: description (weight: 1.2, Tier 2) ────────────────────────
+  # 3 rules: MTQS-D01 through MTQS-D03
+
+  - id: MTQS-D01
+    severity: error
+    dimension: description
+    scope: per-tool
+    weight: 1.2
+    description: >
+      description field must be present and non-empty; without a description
+      agents cannot determine what the tool does or when to invoke it.
+    fixHint: >
+      Add a description explaining what the tool does, when to use it, and what
+      it returns. Prompt-engineering tool descriptions dramatically reduces agent error rates.
+    source: "https://www.anthropic.com/engineering/writing-tools-for-agents"
+    mtqsVersion: "0.1"
+
+  - id: MTQS-D02
+    severity: warning
+    dimension: description
+    scope: per-tool
+    weight: 1.2
+    description: Tool description must be at least 20 characters long.
+    fixHint: >
+      Expand the description to cover what the tool does, when to use it, and
+      what it returns. Single-word or single-phrase descriptions rarely provide
+      agents enough context for correct selection.
+    source: "https://www.anthropic.com/engineering/writing-tools-for-agents"
+    mtqsVersion: "0.1"
+
+  - id: MTQS-D03
+    severity: error
+    dimension: description
+    scope: per-tool
+    weight: 1.2
+    description: >
+      description must not be a byte-for-byte copy of the tool name; copying
+      the name adds no information and prevents agents from understanding the tool.
+    fixHint: >
+      Replace the name-copy with a real description of what the tool does and
+      returns. A description equal to the name is the Unclear Purpose smell.
+    source: "https://www.anthropic.com/engineering/writing-tools-for-agents"
+    mtqsVersion: "0.1"
+
+  # ─── Dimension: naming (weight: 1.0, Tier 3) ─────────────────────────────
+  # 3 rules: MTQS-N01 through MTQS-N03
+
+  - id: MTQS-N01
+    severity: error
+    dimension: naming
+    scope: per-tool
+    weight: 1.0
+    description: >
+      Tool name must be present, non-empty, and between 1 and 128 characters;
+      names over 128 characters violate the MCP spec (SEP-986 recommends 1-64).
+    fixHint: >
+      Keep the tool name between 1 and 64 characters (SEP-986 recommendation) and
+      at most 128 characters (MCP spec limit). Names over 128 chars will be rejected by clients.
+    source: "https://modelcontextprotocol.io/seps/986-specify-format-for-tool-names"
+    mtqsVersion: "0.1"
+
+  - id: MTQS-N02
+    severity: error
+    dimension: naming
+    scope: per-tool
+    weight: 1.0
+    description: >
+      Tool name must contain only allowed characters: letters, digits, underscore,
+      dash, dot, and forward-slash; no spaces or commas permitted.
+    fixHint: >
+      Rename using only [A-Za-z0-9_\-./] characters. Use underscore or dash as
+      word separators. Spaces and commas cause parsing failures in many MCP clients.
+    source: "https://modelcontextprotocol.io/seps/986-specify-format-for-tool-names"
+    mtqsVersion: "0.1"
+
+  - id: MTQS-N03
+    severity: error
+    dimension: naming
+    scope: server
+    weight: 1.0
+    description: >
+      Tool names must be unique within a server; duplicate names cause
+      non-deterministic tool dispatch and confuse agents.
+    fixHint: >
+      Rename one of the colliding tools to uniquely identify it within the server.
+      Use namespace prefixes (e.g., crm_search vs files_search) to avoid collisions.
+    source: "https://modelcontextprotocol.io/seps/986-specify-format-for-tool-names"
+    mtqsVersion: "0.1"
+
+  # ─── Dimension: parameters (weight: 1.2, Tier 2) ─────────────────────────
+  # 2 rules: MTQS-P01 through MTQS-P02
+
+  - id: MTQS-P01
+    severity: warning
+    dimension: parameters
+    scope: per-tool
+    weight: 1.2
+    description: >
+      Every property in inputSchema.properties must have a non-empty description;
+      opaque parameters are the most prevalent smell at 84.3% of tools.
+    fixHint: >
+      Add a "description" to each parameter explaining its meaning, type constraints,
+      and valid values. Use descriptive names like user_id instead of bare user.
+    source: "https://www.anthropic.com/engineering/writing-tools-for-agents"
+    mtqsVersion: "0.1"
+
+  - id: MTQS-P02
+    severity: warning
+    dimension: parameters
+    scope: per-tool
+    weight: 1.2
+    description: >
+      Properties whose values are drawn from a finite known set of strings should
+      use an enum; free-text strings cause agents to hallucinate invalid values.
+    fixHint: >
+      Replace free-text string parameters like "status" or "format" with
+      "enum": ["value1", "value2", ...] to constrain the valid value set.
+    source: "https://www.anthropic.com/engineering/writing-tools-for-agents"
+    mtqsVersion: "0.1"
+
+  # ─── Dimension: annotations (weight: 1.5, Tier 1) ────────────────────────
+  # 6 rules: MTQS-A01 through MTQS-A06
+
+  - id: MTQS-A01
+    severity: info
+    dimension: annotations
+    scope: per-tool
+    weight: 1.5
+    description: >
+      annotations object should be present; unannotated tools default to the
+      most-risky posture (readOnly=false, destructive=true, idempotent=false).
+    fixHint: >
+      Add "annotations": {} and set at minimum readOnlyHint and destructiveHint.
+      Unannotated tools default to the most restrictive risk posture.
+    source: "https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/main/schema/draft/schema.ts"
+    mtqsVersion: "0.1"
+
+  - id: MTQS-A02
+    severity: warning
+    dimension: annotations
+    scope: per-tool
+    weight: 1.5
+    description: >
+      readOnlyHint should be explicitly set as a boolean; the default is false,
+      so an unset field signals the tool may modify its environment.
+    fixHint: >
+      Set "readOnlyHint": true if the tool only reads data; false if it writes.
+      Do not leave the agent to assume the worst (default is false = may modify).
+    source: "https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/main/schema/draft/schema.ts"
+    mtqsVersion: "0.1"
+
+  - id: MTQS-A03
+    severity: warning
+    dimension: annotations
+    scope: per-tool
+    weight: 1.5
+    description: >
+      destructiveHint should be explicitly set as a boolean; the default is true,
+      so an unset field signals the tool may perform destructive updates.
+    fixHint: >
+      Set "destructiveHint": false for additive operations (create/append);
+      true for delete/overwrite. Default is true, meaning destructive assumed.
+    source: "https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/main/schema/draft/schema.ts"
+    mtqsVersion: "0.1"
+
+  - id: MTQS-A04
+    severity: info
+    dimension: annotations
+    scope: per-tool
+    weight: 1.5
+    description: >
+      idempotentHint should be explicitly set as a boolean to inform agents
+      whether it is safe to retry the tool with the same arguments.
+    fixHint: >
+      Set "idempotentHint": true if repeated calls with the same args produce
+      no additional effect (safe to retry on failure). Default is false.
+    source: "https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/main/schema/draft/schema.ts"
+    mtqsVersion: "0.1"
+
+  - id: MTQS-A05
+    severity: info
+    dimension: annotations
+    scope: per-tool
+    weight: 1.5
+    description: >
+      openWorldHint should be explicitly set as a boolean to clarify whether
+      the tool interacts with external entities beyond its local environment.
+    fixHint: >
+      Set "openWorldHint": false for closed-domain tools (local file, internal DB);
+      true for tools touching external APIs or the internet. Default is true.
+    source: "https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/main/schema/draft/schema.ts"
+    mtqsVersion: "0.1"
+
+  - id: MTQS-A06
+    severity: error
+    dimension: annotations
+    scope: per-tool
+    weight: 1.5
+    description: >
+      When readOnlyHint is true, destructiveHint must not also be true;
+      a read-only tool cannot be destructive.
+    fixHint: >
+      Set destructiveHint: false (or omit it) when readOnlyHint: true.
+      The MCP schema notes destructiveHint is only meaningful when readOnlyHint == false.
+    source: "https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/main/schema/draft/schema.ts"
+    mtqsVersion: "0.1"
