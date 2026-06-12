@@ -64,7 +64,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] 03-02-PLAN.md — Description D01-D03 + Naming N01-N03 (N03 server-scoped) (Wave 1; RULE-02, RULE-03)
 - [x] 03-03-PLAN.md — Parameter Semantics rules P01-P02 (Wave 1; RULE-04)
 - [x] 03-04-PLAN.md — Annotation Transparency rules A01-A06 (incl. A06 cross-constraint) (Wave 1; RULE-05)
-- [ ] 03-05-PLAN.md — Integration: register all 22 rules in createDefaultRegistry + coverage/determinism proof (Wave 2; RULE-06)
+- [x] 03-05-PLAN.md — Integration: register all 22 rules in createDefaultRegistry + coverage/determinism proof (Wave 2; RULE-06)
 
 ### Phase 4: Scoring + Output + CLI
 **Goal**: `voke lint <server-or-file>` works end-to-end and produces a human-readable + machine-readable report with per-rule findings, per-tool scores, and a server-level score + A–F tier; the first live run against the 229-tool Apideck server produces a meaningful, reproducible score
