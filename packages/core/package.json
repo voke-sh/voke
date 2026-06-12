@@ -1,0 +1,20 @@
+{
+  "name": "@voke/core",
+  "version": "0.0.0",
+  "description": "Voke MTQS core: deterministic registry loading, spec-doc parsing, and scoring helpers",
+  "type": "module",
+  "private": true,
+  "engines": { "node": ">=22" },
+  "exports": { ".": { "types": "./src/index.ts", "import": "./src/index.ts" } },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9"
+  }
+}

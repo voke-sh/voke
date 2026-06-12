@@ -1,7 +1,7 @@
 import { load } from 'js-yaml';
 import { readFileSync } from 'node:fs';
-import { RuleRegistrySchema } from '../registry-types.js';
-import type { RuleRegistryEntry } from '../registry-types.js';
+import { RuleRegistrySchema } from './registry-types.js';
+import type { RuleRegistryEntry } from './registry-types.js';
 
 /**
  * Parse a YAML string and return validated typed registry entries.

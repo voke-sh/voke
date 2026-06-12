@@ -1,4 +1,4 @@
-import type { Severity, DimensionId } from '../registry-types.js';
+import type { Severity, DimensionId } from './registry-types.js';
 
 /**
  * Deterministic scoring helpers for MTQS v0.1.
