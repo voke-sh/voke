@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v0.1
 milestone_name: milestone
-status: unknown
-stopped_at: Completed 01-mtqs-specification/01-03-PLAN.md
+status: planning
+stopped_at: Completed quick task 260612-p42 — npm workspaces restructure (@voke/core extracted)
 last_updated: "2026-06-12T13:36:58.513Z"
 progress:
   total_phases: 6
@@ -19,7 +19,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-12)
 
 **Core value:** `voke lint <server>` produces deterministic per-rule findings + a stable score against an explicit published ruleset — same input always yields same output
-**Current focus:** Phase 01 — mtqs-specification
+**Current focus:** Phase 2 — engine-+-ingestion-+-determinism (next). Phase 1 complete; repo now an npm workspaces monorepo (@voke/core).
 
 ## Current Position
 
@@ -81,6 +81,12 @@ None yet.
 
 - Phase 2 research flag: depth-bound algorithm + oneOf-branch threshold for 2020-12 constraints needs a short spike before implementing ING-05
 - Phase 2 research flag: confirm ajv Ajv2020 handles unevaluatedProperties/unevaluatedItems correctly
+
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 260612-p42 | Restructure repo into npm workspaces monorepo (extract @voke/core) | 2026-06-12 | 8c5086a | [260612-p42-restructure-repo-into-npm-workspaces-mon](./quick/260612-p42-restructure-repo-into-npm-workspaces-mon/) |
 
 ## Session Continuity
 
