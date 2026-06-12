@@ -9,8 +9,12 @@
     "outDir": "dist",
     "rootDir": "src",
     "skipLibCheck": true,
-    "types": ["node"]
+    "types": ["node"],
+    "paths": {
+      "ajv/dist/2020": ["../../node_modules/ajv/dist/2020"],
+      "ajv-formats": ["../../node_modules/ajv-formats/dist/index"]
+    }
   },
   "references": [{ "path": "../core" }],
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts", "src/**/*.d.ts"]
 }

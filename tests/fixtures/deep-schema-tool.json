@@ -1,0 +1,209 @@
+{
+  "toolId": "deep_schema_tool",
+  "name": "deep_schema_tool",
+  "description": "Tool with 40-level nested inputSchema — exceeds DEPTH_HARD_CAP of 32",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "nested": {
+        "type": "object",
+        "properties": {
+          "nested": {
+            "type": "object",
+            "properties": {
+              "nested": {
+                "type": "object",
+                "properties": {
+                  "nested": {
+                    "type": "object",
+                    "properties": {
+                      "nested": {
+                        "type": "object",
+                        "properties": {
+                          "nested": {
+                            "type": "object",
+                            "properties": {
+                              "nested": {
+                                "type": "object",
+                                "properties": {
+                                  "nested": {
+                                    "type": "object",
+                                    "properties": {
+                                      "nested": {
+                                        "type": "object",
+                                        "properties": {
+                                          "nested": {
+                                            "type": "object",
+                                            "properties": {
+                                              "nested": {
+                                                "type": "object",
+                                                "properties": {
+                                                  "nested": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                      "nested": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                          "nested": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                              "nested": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                  "nested": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                      "nested": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                          "nested": {
+                                                                            "type": "object",
+                                                                            "properties": {
+                                                                              "nested": {
+                                                                                "type": "object",
+                                                                                "properties": {
+                                                                                  "nested": {
+                                                                                    "type": "object",
+                                                                                    "properties": {
+                                                                                      "nested": {
+                                                                                        "type": "object",
+                                                                                        "properties": {
+                                                                                          "nested": {
+                                                                                            "type": "object",
+                                                                                            "properties": {
+                                                                                              "nested": {
+                                                                                                "type": "object",
+                                                                                                "properties": {
+                                                                                                  "nested": {
+                                                                                                    "type": "object",
+                                                                                                    "properties": {
+                                                                                                      "nested": {
+                                                                                                        "type": "object",
+                                                                                                        "properties": {
+                                                                                                          "nested": {
+                                                                                                            "type": "object",
+                                                                                                            "properties": {
+                                                                                                              "nested": {
+                                                                                                                "type": "object",
+                                                                                                                "properties": {
+                                                                                                                  "nested": {
+                                                                                                                    "type": "object",
+                                                                                                                    "properties": {
+                                                                                                                      "nested": {
+                                                                                                                        "type": "object",
+                                                                                                                        "properties": {
+                                                                                                                          "nested": {
+                                                                                                                            "type": "object",
+                                                                                                                            "properties": {
+                                                                                                                              "nested": {
+                                                                                                                                "type": "object",
+                                                                                                                                "properties": {
+                                                                                                                                  "nested": {
+                                                                                                                                    "type": "object",
+                                                                                                                                    "properties": {
+                                                                                                                                      "nested": {
+                                                                                                                                        "type": "object",
+                                                                                                                                        "properties": {
+                                                                                                                                          "nested": {
+                                                                                                                                            "type": "object",
+                                                                                                                                            "properties": {
+                                                                                                                                              "nested": {
+                                                                                                                                                "type": "object",
+                                                                                                                                                "properties": {
+                                                                                                                                                  "nested": {
+                                                                                                                                                    "type": "object",
+                                                                                                                                                    "properties": {
+                                                                                                                                                      "nested": {
+                                                                                                                                                        "type": "object",
+                                                                                                                                                        "properties": {
+                                                                                                                                                          "nested": {
+                                                                                                                                                            "type": "object",
+                                                                                                                                                            "properties": {
+                                                                                                                                                              "nested": {
+                                                                                                                                                                "type": "object",
+                                                                                                                                                                "properties": {
+                                                                                                                                                                  "nested": {
+                                                                                                                                                                    "type": "string"
+                                                                                                                                                                  }
+                                                                                                                                                                }
+                                                                                                                                                              }
+                                                                                                                                                            }
+                                                                                                                                                          }
+                                                                                                                                                        }
+                                                                                                                                                      }
+                                                                                                                                                    }
+                                                                                                                                                  }
+                                                                                                                                                }
+                                                                                                                                              }
+                                                                                                                                            }
+                                                                                                                                          }
+                                                                                                                                        }
+                                                                                                                                      }
+                                                                                                                                    }
+                                                                                                                                  }
+                                                                                                                                }
+                                                                                                                              }
+                                                                                                                            }
+                                                                                                                          }
+                                                                                                                        }
+                                                                                                                      }
+                                                                                                                    }
+                                                                                                                  }
+                                                                                                                }
+                                                                                                              }
+                                                                                                            }
+                                                                                                          }
+                                                                                                        }
+                                                                                                      }
+                                                                                                    }
+                                                                                                  }
+                                                                                                }
+                                                                                              }
+                                                                                            }
+                                                                                          }
+                                                                                        }
+                                                                                      }
+                                                                                    }
+                                                                                  }
+                                                                                }
+                                                                              }
+                                                                            }
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "contentHash": "0000000000000000000000000000000000000000000000000000000000000000"
+}

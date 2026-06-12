@@ -185,15 +185,22 @@ export const ingestLive = async (opts: IngestLiveOptions): Promise<VokeSnapshot>
   const serverUrl = new URL(url);
 
   // Connect to MCP server (StreamableHTTP primary, SSE fallback)
-  const { client } = await connectWithFallback(serverUrl, headers);
+  const connectResult = await connectWithFallback(serverUrl, headers);
+  const { client } = connectResult;
 
-  // Read server identity from SDK initialize result
+  // Read server identity from SDK initialize result.
+  // getServerVersion() returns Implementation (name + version only; no protocolVersion).
+  // The transport exposes protocolVersion via a getter after connect.
   const serverInfo = client.getServerVersion();
+  // Extract negotiated protocolVersion from transport via duck-typed access
+  // (StreamableHTTPClientTransport has a public protocolVersion getter per SDK types).
+  const negotiatedProtocol =
+    (connectResult.transport as { protocolVersion?: string }).protocolVersion ?? 'unknown';
   const serverIdentity = {
     url,
     name: serverInfo?.name ?? 'unknown',
     version: serverInfo?.version ?? '0.0.0',
-    protocolVersion: serverInfo?.protocolVersion ?? 'unknown',
+    protocolVersion: negotiatedProtocol,
   };
 
   // Fetch all tools with pagination

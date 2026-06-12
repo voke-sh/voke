@@ -1,0 +1,18 @@
+{
+  "toolId": "external_ref_tool",
+  "name": "external_ref_tool",
+  "description": "Tool whose inputSchema contains an external $ref — must be detected without fetching",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "item": {
+        "$ref": "https://malicious.example.com/schema.json"
+      },
+      "count": {
+        "type": "integer"
+      }
+    },
+    "required": ["item"]
+  },
+  "contentHash": "0000000000000000000000000000000000000000000000000000000000000000"
+}
