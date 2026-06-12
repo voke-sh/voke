@@ -77,7 +77,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. `voke lint --min-score 80 <server>` exits with a non-zero code when the server scores below 80 and exits 0 when it scores at or above 80
   5. `voke --version` prints the tool version and the MTQS version the linter implements; bearer tokens in `--header` arguments are masked in all output
 **Plans**: 3 plans
-- [ ] 04-01-PLAN.md — Leaf modules: version source-of-truth + extensible target resolver + human/JSON formatters (Wave 1; SCORE-01/02, OUT-01/02)
+- [x] 04-01-PLAN.md — Leaf modules: version source-of-truth + extensible target resolver + human/JSON formatters (Wave 1; SCORE-01/02, OUT-01/02)
 - [ ] 04-02-PLAN.md — CLI wiring: runLint orchestrator + commander program + bin entrypoint + tsup build + exit-code map + masking (Wave 2; CLI-01/02/03)
 - [ ] 04-03-PLAN.md — End-to-end determinism x3 + acceptance tests + live Apideck checkpoint (Wave 3; all 7 req IDs)
 
@@ -112,6 +112,6 @@ Decimal phases appear between their surrounding integers in numeric order.
 | 1. MTQS Specification | 4/4 | Complete   | 2026-06-12 |
 | 2. Engine + Ingestion + Determinism | 4/4 | Complete   | 2026-06-12 |
 | 3. Rule Implementations | 4/5 | In Progress|  |
-| 4. Scoring + Output + CLI | 0/3 | Not started | - |
+| 4. Scoring + Output + CLI | 1/3 | In Progress|  |
 | 5. CI + Publication | 0/TBD | Not started | - |
 | 6. Launch | 0/TBD | Not started | - |

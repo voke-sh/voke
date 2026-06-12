@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v0.1
 milestone_name: milestone
 status: unknown
-stopped_at: Phase 4 context gathered
-last_updated: "2026-06-12T22:21:04.962Z"
+stopped_at: Completed 04-scoring-output-cli/04-01-PLAN.md
+last_updated: "2026-06-12T23:04:12.309Z"
 progress:
   total_phases: 6
   completed_phases: 3
-  total_plans: 13
-  completed_plans: 13
+  total_plans: 16
+  completed_plans: 14
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-12)
 
 **Core value:** `voke lint <server>` produces deterministic per-rule findings + a stable score against an explicit published ruleset — same input always yields same output
-**Current focus:** Phase 03 — rule-implementations
+**Current focus:** Phase 04 — scoring-output-cli
 
 ## Current Position
 
-Phase: 4
-Plan: Not started
+Phase: 04 (scoring-output-cli) — EXECUTING
+Plan: 2 of 3
 
 ## Performance Metrics
 
@@ -59,6 +59,7 @@ Plan: Not started
 | Phase 03-rule-implementations P02 | 324 | 2 tasks | 9 files |
 | Phase 03-rule-implementations P01 | 7 | 2 tasks | 4 files |
 | Phase 03-rule-implementations P05 | 5 | 2 tasks | 6 files |
+| Phase 04-scoring-output-cli P01 | 6 | 3 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -97,6 +98,9 @@ Recent decisions affecting current work:
 - [Phase 03-rule-implementations]: MTQS-N03 is target:'server' — only server-scoped rule in v0.1; location.tool='' for server findings
 - [Phase 03-rule-implementations]: S03/S06 fire on type-field mismatches (type:42) not unknown keywords — JSON Schema 2020-12 allows extra keywords per spec with strict:false
 - [Phase 03-rule-implementations]: allRules defined as static array spread; fixHint parity uses .trim() on both sides; registry-coverage test uses dynamic for-loop over all 22 YAML entries for automatic new-rule coverage; full-surface test reads crm_search_contacts from committed fixture
+- [Phase 04-scoring-output-cli]: UsageError kept in resolve-target.ts (not errors.ts) to avoid parallel wave conflicts in Phase 4 Wave 1
+- [Phase 04-scoring-output-cli]: MULT and BASE exported from @voke/core barrel (previously missing, required by format-human)
+- [Phase 04-scoring-output-cli]: Dimension weights always formatted to one decimal place (toFixed(1)) for consistent CLI output
 
 ### Pending Todos
 
@@ -117,6 +121,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-12T22:21:04.959Z
-Stopped at: Phase 4 context gathered
-Resume file: .planning/phases/04-scoring-output-cli/04-CONTEXT.md
+Last session: 2026-06-12T23:04:12.306Z
+Stopped at: Completed 04-scoring-output-cli/04-01-PLAN.md
+Resume file: None

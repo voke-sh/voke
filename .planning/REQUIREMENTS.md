@@ -43,9 +43,9 @@ L1 milestone. Each maps to a roadmap phase. v1 ships the 20 P1 (table-stakes) MT
 ### Scoring & Output
 
 - [ ] **SCORE-01**: Findings aggregate deterministically into per-dimension → per-tool → server scores + A–F tier using published weights
-- [ ] **SCORE-02**: Linter declares which MTQS version it implements (`MTQS_VERSION` in `--version`)
-- [ ] **OUT-01**: Human-readable formatter prints per-rule findings + per-tool + server score + tier
-- [ ] **OUT-02**: JSON formatter emits the full `LintReport` (also usable as a saved snapshot)
+- [x] **SCORE-02**: Linter declares which MTQS version it implements (`MTQS_VERSION` in `--version`)
+- [x] **OUT-01**: Human-readable formatter prints per-rule findings + per-tool + server score + tier
+- [x] **OUT-02**: JSON formatter emits the full `LintReport` (also usable as a saved snapshot)
 
 ### CLI & CI
 
@@ -120,9 +120,9 @@ Explicitly excluded (with reasoning) to prevent scope creep.
 | RULE-05 | Phase 3 | Complete |
 | RULE-06 | Phase 3 | Complete |
 | SCORE-01 | Phase 4 | Pending |
-| SCORE-02 | Phase 4 | Pending |
-| OUT-01 | Phase 4 | Pending |
-| OUT-02 | Phase 4 | Pending |
+| SCORE-02 | Phase 4 | Complete |
+| OUT-01 | Phase 4 | Complete |
+| OUT-02 | Phase 4 | Complete |
 | CLI-01 | Phase 4 | Pending |
 | CLI-02 | Phase 4 | Pending |
 | CLI-03 | Phase 4 | Pending |
