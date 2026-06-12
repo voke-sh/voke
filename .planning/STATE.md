@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v0.1
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 03-rule-implementations/03-03-PLAN.md
-last_updated: "2026-06-12T21:21:26.121Z"
+stopped_at: Completed 03-rule-implementations/03-02-PLAN.md
+last_updated: "2026-06-12T21:23:05.404Z"
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 13
-  completed_plans: 10
+  completed_plans: 12
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-06-12)
 ## Current Position
 
 Phase: 03 (rule-implementations) — EXECUTING
-Plan: 3 of 5
+Plan: 5 of 5
 
 ## Performance Metrics
 
@@ -56,6 +56,7 @@ Plan: 3 of 5
 | Phase 02-engine-ingestion-determinism P04 | 3 | 2 tasks | 5 files |
 | Phase 03-rule-implementations P04 | 4 | 2 tasks | 5 files |
 | Phase 03-rule-implementations P03 | 4 | 1 tasks | 4 files |
+| Phase 03-rule-implementations P02 | 324 | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -90,6 +91,8 @@ Recent decisions affecting current work:
 - [Phase 03-rule-implementations]: fixHints in rule files must be single-line strings matching YAML folded scalar collapsed output from loadRegistryFile
 - [Phase 03-rule-implementations]: P02 heuristic uses two regex patterns (one-of, values:/options:/allowed:) as CLOSED_SET_PATTERNS const — conservative to avoid false positives while ensuring spec failing example fires
 - [Phase 03-rule-implementations]: P01 treats empty string description same as absent description (fires P01); P02 only fires when description is non-empty (P01 covers the absence case)
+- [Phase 03-rule-implementations]: D02 and D03 fire independently in MTQS — no rule-suppression; search tool fires both
+- [Phase 03-rule-implementations]: MTQS-N03 is target:'server' — only server-scoped rule in v0.1; location.tool='' for server findings
 
 ### Pending Todos
 
@@ -110,6 +113,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-12T21:21:26.118Z
-Stopped at: Completed 03-rule-implementations/03-03-PLAN.md
+Last session: 2026-06-12T21:22:51.973Z
+Stopped at: Completed 03-rule-implementations/03-02-PLAN.md
 Resume file: None
