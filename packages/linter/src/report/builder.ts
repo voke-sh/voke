@@ -38,8 +38,15 @@ export const buildReport = (
     findingsByToolId.get(toolId)!.push(finding);
   }
 
-  // Build per-tool reports — snapshot.tools already sorted by toolId (D-03)
-  const toolReports: ToolReport[] = snapshot.tools.map(tool => {
+  // Sort tools ascending by toolId before building reports (determinism #1/#5).
+  // snapshot.tools should already be sorted by ingestion, but buildReport re-sorts
+  // defensively so that a shuffled snapshot produces identical output (sort-on-run).
+  const sortedTools = [...snapshot.tools].sort((a, b) =>
+    a.toolId.localeCompare(b.toolId, 'en', { sensitivity: 'variant' }),
+  );
+
+  // Build per-tool reports using the deterministically-sorted surface
+  const toolReports: ToolReport[] = sortedTools.map(tool => {
     const toolFindings = findingsByToolId.get(tool.toolId) ?? [];
 
     // Map runtime findings to CoreFinding shape for @voke/core scoring
