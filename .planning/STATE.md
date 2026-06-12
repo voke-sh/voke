@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v0.1
 milestone_name: milestone
-status: planning
-stopped_at: Completed quick task 260612-p42 — npm workspaces restructure (@voke/core extracted)
-last_updated: "2026-06-12T13:36:58.513Z"
+status: unknown
+stopped_at: Phase 2 context gathered
+last_updated: "2026-06-12T18:22:59.232Z"
 progress:
   total_phases: 6
   completed_phases: 1
@@ -91,6 +91,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-12T17:25:34Z
-Stopped at: Completed quick task 260612-pd7 — remove em dashes from MTQS v0.1 spec
-Resume file: None
+Last session: 2026-06-12T18:22:59.230Z
+Stopped at: Phase 2 context gathered
+Resume file: .planning/phases/02-engine-ingestion-determinism/02-CONTEXT.md
