@@ -96,7 +96,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. MTQS Specification | 1/4 | In Progress|  |
+| 1. MTQS Specification | 2/4 | In Progress|  |
 | 2. Engine + Ingestion + Determinism | 0/TBD | Not started | - |
 | 3. Rule Implementations | 0/TBD | Not started | - |
 | 4. Scoring + Output + CLI | 0/TBD | Not started | - |

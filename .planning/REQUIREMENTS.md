@@ -13,7 +13,7 @@ L1 milestone. Each maps to a roadmap phase. v1 ships the 20 P1 (table-stakes) MT
 - [ ] **SPEC-02**: Spec defines the scoring formula with published per-dimension weights and A–F tier boundaries
 - [ ] **SPEC-03**: Spec defines stable rule IDs + severities (error / warning / info / hint) for all 20 v0.1 rules
 - [x] **SPEC-04**: A machine-readable rule registry (one entry per rule) is the single source of truth shared by spec and linter; a build check fails on any rule-in-code without a registry entry
-- [ ] **SPEC-05**: SCOPE.md documents the L1 boundary (no LLM-in-loop; no gateway/proxy) to prevent scope creep
+- [x] **SPEC-05**: SCOPE.md documents the L1 boundary (no LLM-in-loop; no gateway/proxy) to prevent scope creep
 
 ### Engine
 
@@ -101,7 +101,7 @@ Explicitly excluded (with reasoning) to prevent scope creep.
 | SPEC-02 | Phase 1 | Pending |
 | SPEC-03 | Phase 1 | Pending |
 | SPEC-04 | Phase 1 | Complete |
-| SPEC-05 | Phase 1 | Pending |
+| SPEC-05 | Phase 1 | Complete |
 | ENG-01 | Phase 2 | Pending |
 | ENG-02 | Phase 2 | Pending |
 | ENG-03 | Phase 2 | Pending |

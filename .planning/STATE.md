@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v0.1
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 01-mtqs-specification/01-01-PLAN.md
-last_updated: "2026-06-12T13:02:58.456Z"
+stopped_at: Completed 01-mtqs-specification/01-04-PLAN.md
+last_updated: "2026-06-12T13:08:52.611Z"
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 4
-  completed_plans: 1
+  completed_plans: 2
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-06-12)
 ## Current Position
 
 Phase: 01 (mtqs-specification) — EXECUTING
-Plan: 2 of 4
+Plan: 3 of 4
 
 ## Performance Metrics
 
@@ -47,6 +47,7 @@ Plan: 2 of 4
 
 *Updated after each plan completion*
 | Phase 01-mtqs-specification P01 | 6 | 3 tasks | 11 files |
+| Phase 01-mtqs-specification P04 | 2 | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -62,6 +63,9 @@ Recent decisions affecting current work:
 - [Phase 01-mtqs-specification]: id regex tightened to [SDNPA] not [A-Z] to enforce only valid v0.1 dimension letters at build time (Pitfall 5 guard)
 - [Phase 01-mtqs-specification]: Integer-first arithmetic: Math.round per finding then sum integers, not float-sum then round — ensures cross-platform scoring determinism
 - [Phase 01-mtqs-specification]: Hard tier caps implemented as min(rawScore, capValue) post-computation overrides, never additional deductions (Pitfall 3)
+- [Phase 01-mtqs-specification]: Hard employer-conflict line documented in SCOPE.md: Voke is a read-only observer, never a gateway or proxy
+- [Phase 01-mtqs-specification]: LLM-as-judge explicitly excluded from MTQS L1 with ICC-score rationale (0.62-0.90 not sufficient for CI gate)
+- [Phase 01-mtqs-specification]: Scope-creep PR rule: primary source citation required, never Glama (documented in SCOPE.md §4)
 
 ### Pending Todos
 
@@ -74,6 +78,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-12T13:02:58.454Z
-Stopped at: Completed 01-mtqs-specification/01-01-PLAN.md
+Last session: 2026-06-12T13:08:52.609Z
+Stopped at: Completed 01-mtqs-specification/01-04-PLAN.md
 Resume file: None
