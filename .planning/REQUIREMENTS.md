@@ -32,9 +32,9 @@ L1 milestone. Each maps to a roadmap phase. v1 ships the 20 P1 (table-stakes) MT
 
 ### Rules
 
-- [ ] **RULE-01**: Schema-correctness rules (S01–S08) implemented with positive + negative fixtures
-- [ ] **RULE-02**: Description-floor rules (D01–D03) implemented with fixtures
-- [ ] **RULE-03**: Naming rules (N01–N03) implemented with fixtures
+- [x] **RULE-01**: Schema-correctness rules (S01–S08) implemented with positive + negative fixtures
+- [x] **RULE-02**: Description-floor rules (D01–D03) implemented with fixtures
+- [x] **RULE-03**: Naming rules (N01–N03) implemented with fixtures
 - [x] **RULE-04**: Parameter-semantics rules (P01–P02) implemented with fixtures
 - [x] **RULE-05**: Annotation rules (A01–A06, incl. cross-constraint) implemented with fixtures
 - [x] **RULE-06**: Every rule emits a finding with rule ID, severity, location, and fix hint; network is blocked in rule unit tests
@@ -111,9 +111,9 @@ Explicitly excluded (with reasoning) to prevent scope creep.
 | ING-03 | Phase 2 | Complete |
 | ING-04 | Phase 2 | Complete |
 | ING-05 | Phase 2 | Complete |
-| RULE-01 | Phase 3 | Pending |
-| RULE-02 | Phase 3 | Pending |
-| RULE-03 | Phase 3 | Pending |
+| RULE-01 | Phase 3 | Complete |
+| RULE-02 | Phase 3 | Complete |
+| RULE-03 | Phase 3 | Complete |
 | RULE-04 | Phase 3 | Complete |
 | RULE-05 | Phase 3 | Complete |
 | RULE-06 | Phase 3 | Complete |

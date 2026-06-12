@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v0.1
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 03-rule-implementations/03-02-PLAN.md
-last_updated: "2026-06-12T21:23:05.404Z"
+stopped_at: Completed 03-rule-implementations/03-01-PLAN.md
+last_updated: "2026-06-12T21:23:26.614Z"
 progress:
   total_phases: 6
   completed_phases: 2
@@ -57,6 +57,7 @@ Plan: 5 of 5
 | Phase 03-rule-implementations P04 | 4 | 2 tasks | 5 files |
 | Phase 03-rule-implementations P03 | 4 | 1 tasks | 4 files |
 | Phase 03-rule-implementations P02 | 324 | 2 tasks | 9 files |
+| Phase 03-rule-implementations P01 | 7 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -93,6 +94,7 @@ Recent decisions affecting current work:
 - [Phase 03-rule-implementations]: P01 treats empty string description same as absent description (fires P01); P02 only fires when description is non-empty (P01 covers the absence case)
 - [Phase 03-rule-implementations]: D02 and D03 fire independently in MTQS — no rule-suppression; search tool fires both
 - [Phase 03-rule-implementations]: MTQS-N03 is target:'server' — only server-scoped rule in v0.1; location.tool='' for server findings
+- [Phase 03-rule-implementations]: S03/S06 fire on type-field mismatches (type:42) not unknown keywords — JSON Schema 2020-12 allows extra keywords per spec with strict:false
 
 ### Pending Todos
 
@@ -113,6 +115,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-12T21:22:51.973Z
-Stopped at: Completed 03-rule-implementations/03-02-PLAN.md
+Last session: 2026-06-12T21:23:26.612Z
+Stopped at: Completed 03-rule-implementations/03-01-PLAN.md
 Resume file: None
