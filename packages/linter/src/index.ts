@@ -18,3 +18,6 @@ export type {
 
 // Config type stub (config/types.ts)
 export type { VokeConfig } from './config/types.js';
+
+// Engine registry (engine/registry.ts)
+export { RuleRegistry, createDefaultRegistry } from './engine/registry.js';
