@@ -1,5 +1,6 @@
 import type { Severity } from '@voke/core';
 import type { RuleDefinition } from './types.js';
+import { allRules } from '../rules/index.js';
 
 /**
  * RuleRegistry — the startup-time plugin boundary for the MTQS rule engine (ENG-03).
@@ -82,6 +83,8 @@ export class RuleRegistry {
  */
 export const createDefaultRegistry = (): RuleRegistry => {
   const registry = new RuleRegistry();
-  // Phase 3: import MTQS rules here e.g. `import './rules/index.js'`
+  for (const def of allRules) {
+    registry.register(def);
+  }
   return registry.seal();
 };

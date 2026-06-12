@@ -168,8 +168,8 @@ describe('createDefaultRegistry', () => {
     expect(() => reg.register(makeRule('MTQS-S01'))).toThrow('Registry sealed');
   });
 
-  it('returns an empty registry in Phase 2 (Phase 3 will register rules)', () => {
+  it('returns a registry with all 22 MTQS v0.1 rules (Phase 3)', () => {
     const reg = createDefaultRegistry();
-    expect(reg.list()).toHaveLength(0);
+    expect(reg.list()).toHaveLength(22);
   });
 });

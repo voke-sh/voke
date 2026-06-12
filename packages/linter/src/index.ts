@@ -30,3 +30,13 @@ export type { LintReport, ToolReport, Tier } from './report/types.js';
 
 // Report builder (report/builder.ts)
 export { buildReport, serializeReportBody } from './report/builder.js';
+
+// Rule aggregator (rules/index.ts)
+export { allRules } from './rules/index.js';
+
+// Dimension rule arrays — direct consumption without the full aggregated set
+export { schemaRules } from './rules/schema.js';
+export { descriptionRules } from './rules/description.js';
+export { namingRules } from './rules/naming.js';
+export { parameterRules } from './rules/parameters.js';
+export { annotationRules } from './rules/annotations.js';
