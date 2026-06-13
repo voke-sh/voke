@@ -3,7 +3,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: 'MTQS',
   description: 'MCP Tool Quality Specification',
-  base: '/',
+  base: '/voke/',
   themeConfig: {
     nav: [
       { text: 'Spec', link: '/spec/' },
