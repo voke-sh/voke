@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v0.1
 milestone_name: milestone
 status: unknown
-stopped_at: Phase 5 context gathered
-last_updated: "2026-06-13T12:58:03.983Z"
+stopped_at: "Phase 05-03: checkpoint:human-action (Task 3 — Enable GitHub Pages + DNS)"
+last_updated: "2026-06-13T18:31:12.778Z"
 progress:
   total_phases: 6
   completed_phases: 4
-  total_plans: 16
-  completed_plans: 16
+  total_plans: 20
+  completed_plans: 17
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-12)
 
 **Core value:** `voke lint <server>` produces deterministic per-rule findings + a stable score against an explicit published ruleset — same input always yields same output
-**Current focus:** Phase 04 — scoring-output-cli
+**Current focus:** Phase 05 — ci-publication
 
 ## Current Position
 
-Phase: 5
-Plan: Not started
+Phase: 05 (ci-publication) — EXECUTING
+Plan: 1 of 4
 
 ## Performance Metrics
 
@@ -62,6 +62,7 @@ Plan: Not started
 | Phase 04-scoring-output-cli P01 | 6 | 3 tasks | 11 files |
 | Phase 04 P03 | 179 | 2 tasks | 2 files |
 | Phase 04-scoring-output-cli P03 | 10 | 3 tasks | 2 files |
+| Phase 05-ci-publication P03 | 3 | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -108,6 +109,7 @@ Recent decisions affecting current work:
 - [Phase 04]: SC#4 gate threshold computed dynamically from live JSON run — keeps test robust against future fixture changes
 - [Phase 04]: Masking PRIMARY test uses schemeless host to trigger D-06 UsageError (exit 3) before network — exercises real header-in-scope code path
 - [Phase 04]: Live Apideck server at mcp.apideck.dev/mcp is a proxy exposing 4 meta-tools (not 229) — voke correctly ingests all server-exposed tools; determinism and scoring hold regardless of tool count
+- [Phase 05-ci-publication]: VitePress base set to '/' for custom domain (voke.sh); CNAME in docs/public/ persists through re-deploys; spec files copied at build time, never symlinked
 
 ### Pending Todos
 
@@ -128,6 +130,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-13T12:58:03.979Z
-Stopped at: Phase 5 context gathered
-Resume file: .planning/phases/05-ci-publication/05-CONTEXT.md
+Last session: 2026-06-13T18:31:12.776Z
+Stopped at: Phase 05-03: checkpoint:human-action (Task 3 — Enable GitHub Pages + DNS)
+Resume file: None

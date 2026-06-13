@@ -95,7 +95,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 4 plans
 - [ ] 05-01-PLAN.md — stdio ingestion: StdioClientTransport + dash-dash/--env + exit codes 8/9 + byte-identical x3 (Wave 1; ING-06)
 - [ ] 05-02-PLAN.md — npm publish prep (@voke-sh/voke) + composite action.yml + publish/ci workflows (Wave 1; CI-01)
-- [ ] 05-03-PLAN.md — VitePress spec site at voke.sh/spec + GitHub Pages deploy workflow (Wave 1; PUB-01)
+- [x] 05-03-PLAN.md — VitePress spec site at voke.sh/spec + GitHub Pages deploy workflow (Wave 1; PUB-01)
 - [ ] 05-04-PLAN.md — Apache-2.0 LICENSE + Action-first README + CONTRIBUTING + rule PR template (Wave 2; CI-02, PUB-02)
 
 ### Phase 6: Launch
@@ -118,5 +118,5 @@ Decimal phases appear between their surrounding integers in numeric order.
 | 2. Engine + Ingestion + Determinism | 4/4 | Complete   | 2026-06-12 |
 | 3. Rule Implementations | 4/5 | In Progress|  |
 | 4. Scoring + Output + CLI | 3/3 | Complete   | 2026-06-13 |
-| 5. CI + Publication | 0/4 | Not started | - |
+| 5. CI + Publication | 1/4 | In Progress|  |
 | 6. Launch | 0/TBD | Not started | - |

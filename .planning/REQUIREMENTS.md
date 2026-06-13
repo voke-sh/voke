@@ -57,7 +57,7 @@ L1 milestone. Each maps to a roadmap phase. v1 ships the 20 P1 (table-stakes) MT
 
 ### Publication & Launch
 
-- [ ] **PUB-01**: MTQS spec is published and versioned at voke.sh/spec in a public repo accepting PRs
+- [x] **PUB-01**: MTQS spec is published and versioned at voke.sh/spec in a public repo accepting PRs
 - [ ] **PUB-02**: CONTRIBUTING.md + a rule PR template exist before the repo goes public
 - [ ] **PUB-03**: Launch blog post tells the "no open standard for MCP tool quality — here is one" story
 - [ ] **PUB-04**: `voke lint https://mcp.apideck.dev/mcp` runs green and reproducibly against the 229-tool Apideck server + ≥1 other public server (the launch DoD)
@@ -128,7 +128,7 @@ Explicitly excluded (with reasoning) to prevent scope creep.
 | CLI-03 | Phase 4 | Complete |
 | CI-01 | Phase 5 | Pending |
 | CI-02 | Phase 5 | Pending |
-| PUB-01 | Phase 5 | Pending |
+| PUB-01 | Phase 5 | Complete |
 | PUB-02 | Phase 5 | Pending |
 | PUB-03 | Phase 6 | Pending |
 | PUB-04 | Phase 6 | Pending |
