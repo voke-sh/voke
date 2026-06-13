@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v0.1
 milestone_name: milestone
 status: unknown
-stopped_at: "Checkpoint 04-scoring-output-cli/04-03-PLAN.md Task 3: human-verify live Apideck run"
-last_updated: "2026-06-13T07:42:00.072Z"
+stopped_at: Completed 04-scoring-output-cli/04-03-PLAN.md (Phase 4 complete)
+last_updated: "2026-06-13T08:04:08.137Z"
 progress:
   total_phases: 6
   completed_phases: 4
@@ -61,6 +61,7 @@ Plan: 3 of 3
 | Phase 03-rule-implementations P05 | 5 | 2 tasks | 6 files |
 | Phase 04-scoring-output-cli P01 | 6 | 3 tasks | 11 files |
 | Phase 04 P03 | 179 | 2 tasks | 2 files |
+| Phase 04-scoring-output-cli P03 | 10 | 3 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -106,6 +107,7 @@ Recent decisions affecting current work:
 - [Phase 04]: JSON determinism uses deepEqual on meta-stripped parsed objects (not string compare) — string compare would fail on generatedAt by design (D-10)
 - [Phase 04]: SC#4 gate threshold computed dynamically from live JSON run — keeps test robust against future fixture changes
 - [Phase 04]: Masking PRIMARY test uses schemeless host to trigger D-06 UsageError (exit 3) before network — exercises real header-in-scope code path
+- [Phase 04]: Live Apideck server at mcp.apideck.dev/mcp is a proxy exposing 4 meta-tools (not 229) — voke correctly ingests all server-exposed tools; determinism and scoring hold regardless of tool count
 
 ### Pending Todos
 
@@ -126,6 +128,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-13T07:42:00.069Z
-Stopped at: Checkpoint 04-scoring-output-cli/04-03-PLAN.md Task 3: human-verify live Apideck run
+Last session: 2026-06-13T08:04:08.134Z
+Stopped at: Completed 04-scoring-output-cli/04-03-PLAN.md (Phase 4 complete)
 Resume file: None

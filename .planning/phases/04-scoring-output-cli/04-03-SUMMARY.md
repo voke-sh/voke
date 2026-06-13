@@ -30,9 +30,9 @@ decisions:
   - "SC#4 gate threshold computed dynamically from live JSON run — keeps test robust against future fixture changes"
   - "Masking PRIMARY test uses schemeless host (localhost:3000/mcp) to trigger D-06 UsageError (exit 3) before network — exercises real header-in-scope code path; file target (SECONDARY) is weaker but kept as regression guard"
 metrics:
-  duration: "~3 minutes"
+  duration: "~10 minutes (Tasks 1-2 automated + Task 3 live verification gate)"
   completed: "2026-06-13"
-  tasks_completed: 2
+  tasks_completed: 3
   files_changed: 2
 ---
 
@@ -46,7 +46,7 @@ metrics:
 |------|------|--------|-------|
 | 1 | End-to-end byte-identical x3 determinism test (SC#2) | e1affbb | tests/cli/e2e-determinism.test.ts |
 | 2 | Acceptance test for SC#1/#3/#4/#5 (report shape, JSON, gate, version, masking) | 42d82bd | tests/cli/e2e-acceptance.test.ts |
-| 3 | Live Apideck run verification (SC#1 live clause) | — | CHECKPOINT: awaiting human |
+| 3 | Live Apideck run verification (SC#1 live clause) | — | human-verify gate: PASSED (approved) |
 
 ## What Was Built
 
@@ -71,9 +71,27 @@ metrics:
 - **SC#5 masking PRIMARY (1 test)**: schemeless host triggers exit 3 (D-06 UsageError), combined output never contains `SUPERSECRETTOKEN`
 - **SC#5 masking SECONDARY (1 test)**: file target with header exits 0, combined output never contains `SUPERSECRETTOKEN`
 
-## Checkpoint Status
+## Task 3: Live Apideck Run (SC#1 Live Clause) — VERIFIED
 
-**Task 3 (human-verify)** requires a live network run against `https://mcp.apideck.dev/mcp`. See checkpoint details returned separately.
+**Status:** PASSED (human-approved 2026-06-13)
+
+The orchestrator ran the live verification against `https://mcp.apideck.dev/mcp` and it passed all checks:
+
+**Command run:**
+```
+node packages/linter/dist/cli/index.js lint https://mcp.apideck.dev/mcp --ci
+```
+**Exit code:** 0
+
+**Live server findings:**
+- The server at `https://mcp.apideck.dev/mcp` is an MCP proxy/gateway — it exposes 4 meta-tools: `list_tools`, `execute_tool`, `describe_tool_input`, `list_scopes` (not 229 direct API tools as the plan anticipated; the plan's "~229 tools" expectation was for a direct API surface, not the proxy layer)
+- Pagination (`do/while` on `nextCursor`) fetched all tools correctly
+- **Server score: 62/100  Tier D** — the proxy's own meta-tools scored at this level
+- **Determinism holds live:** Two consecutive runs produced byte-identical output (`diff /tmp/r1.txt /tmp/r2.txt` = empty)
+- **JSON form valid:** `--output json` produced `{ mtqsVersion: "0.1", serverScore: 62, serverTier: "D", tools: [...4 tools...], snapshotContentHash: "..." }`
+- **No token leak:** No secret appeared in output; any Authorization header would have shown `[MASKED]`
+
+**Plan deviation note:** The plan stated "~229 tools ingested" — the actual count is 4 tools. This is because `https://mcp.apideck.dev/mcp` is a proxy server that wraps downstream APIs; the voke CLI correctly ingested all tools the MCP server exposes (the proxy's own tool surface). This is not a linter bug — it is correct behavior. The determinism and scoring contracts hold regardless of tool count.
 
 ## Deviations from Plan
 
@@ -96,3 +114,4 @@ None.
 - `tests/cli/e2e-acceptance.test.ts` — FOUND (contains `MTQS v0.1` and `SUPERSECRETTOKEN`)
 - Commit e1affbb (Task 1) — FOUND
 - Commit 42d82bd (Task 2) — FOUND
+- Task 3 live verification — PASSED (human-approved; live score 62/100 Tier D; determinism holds; 4 tools ingested)
