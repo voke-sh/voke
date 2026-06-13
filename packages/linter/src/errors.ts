@@ -8,6 +8,8 @@
  *   5 = rule execution threw (RuleExecutionError — belongs to engine, Plan 03)
  *   6 = depth exceeded (inputSchema exceeded hard safety cap, D-04)
  *   7 = config parse error (ConfigError — belongs to config, Plan 03)
+ *   8 = stdio subprocess launch failure
+ *   9 = stdio teardown failure
  *
  * These are distinct exit codes so CI scripts can distinguish "server unreachable"
  * from "score too low" from "linter bug" — directly actionable.
@@ -82,5 +84,34 @@ export class DepthExceededError extends VokeError {
       6,
     );
     this.name = 'DepthExceededError';
+  }
+}
+
+/**
+ * Thrown when the stdio subprocess fails to launch (e.g. command not found).
+ * Exit code 8. Check the command exists and is executable.
+ */
+export class StdioLaunchError extends VokeError {
+  constructor(command: string, cause: unknown) {
+    super(
+      `Failed to launch stdio server '${command}': ${String(cause)}. ` +
+        `Check the command exists and is executable.`,
+      8,
+    );
+    this.name = 'StdioLaunchError';
+  }
+}
+
+/**
+ * Thrown when the stdio subprocess fails to tear down cleanly after ingestion.
+ * Exit code 9. The subprocess may have already exited or is unresponsive.
+ */
+export class StdioTeardownError extends VokeError {
+  constructor(command: string, cause: unknown) {
+    super(
+      `Failed to cleanly stop stdio server '${command}': ${String(cause)}.`,
+      9,
+    );
+    this.name = 'StdioTeardownError';
   }
 }

@@ -13,12 +13,14 @@
  */
 
 /** The kind of transport to use for the resolved target. */
-export type TransportKind = 'live' | 'file';
+export type TransportKind = 'live' | 'file' | 'stdio';
 
 /** Resolved target with its transport kind. */
 export interface ResolvedTarget {
   kind: TransportKind;
   target: string;
+  /** Only present when kind === 'stdio'. Contains the command + args for StdioClientTransport. */
+  stdioArgs?: string[];
 }
 
 /**
