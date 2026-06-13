@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v0.1
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 05-ci-publication-01-PLAN.md (ING-06 stdio ingestion)
-last_updated: "2026-06-13T18:38:16.283Z"
+stopped_at: Completed 05-ci-publication-04-PLAN.md (LICENSE, README, CONTRIBUTING, rule PR template)
+last_updated: "2026-06-13T19:49:10.008Z"
 progress:
   total_phases: 6
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 20
-  completed_plans: 19
+  completed_plans: 20
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-06-12)
 ## Current Position
 
 Phase: 05 (ci-publication) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 
 ## Performance Metrics
 
@@ -65,6 +65,7 @@ Plan: 3 of 4
 | Phase 05-ci-publication P03 | 3 | 2 tasks | 8 files |
 | Phase 05 P02 | 3 | 2 tasks | 5 files |
 | Phase 05-ci-publication P01 | 9m | 3 tasks | 8 files |
+| Phase 05-ci-publication P04 | 4 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -119,6 +120,9 @@ Recent decisions affecting current work:
 - [Phase 05-ci-publication]: Pre-split process.argv at '--' before commander sees it — simpler than passThroughOptions; avoids scheme misdetection
 - [Phase 05-ci-publication]: StdioClientTransport receives only opts.extraEnv, not process.env — SDK merges getDefaultEnvironment() automatically (Pitfall 3 guard)
 - [Phase 05-ci-publication]: server.url=null for stdio ingestion — no URL available for subprocess transport
+- [Phase 05-ci-publication]: README uses @v0 tag (not @v1) -- v0.x releases move the v0 moving tag; @v1 does not exist until 1.0.0 release
+- [Phase 05-ci-publication]: Rule PR template makes NOT-Glama a checkbox item -- impossible to overlook vs prose
+- [Phase 05-ci-publication]: Spec URL in README uses voke-sh.github.io/voke/spec/ interim with voke.sh/spec noted as target domain
 
 ### Pending Todos
 
@@ -139,6 +143,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-13T18:38:16.281Z
-Stopped at: Completed 05-ci-publication-01-PLAN.md (ING-06 stdio ingestion)
+Last session: 2026-06-13T19:49:10.005Z
+Stopped at: Completed 05-ci-publication-04-PLAN.md (LICENSE, README, CONTRIBUTING, rule PR template)
 Resume file: None

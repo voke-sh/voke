@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Engine + Ingestion + Determinism** - Build rule engine, MCP ingestion, and bake in all 7 determinism enforcement points; exit criterion is byte-identical output x3 (completed 2026-06-12)
 - [ ] **Phase 3: Rule Implementations** - Implement all 20 v0.1 rules (S01âS08, D01âD03, N01âN03, P01âP02, A01âA06) as pure functions with fixtures
 - [x] **Phase 4: Scoring + Output + CLI** - Wire the full pipeline; first demoable `voke lint` against the live Apideck MCP server (completed 2026-06-13 — server is a 4-tool proxy surface; scored 62/100 Tier D, reproducible)
-- [ ] **Phase 5: CI + Publication** - stdio transport (hermetic CI + local dev loop), GitHub Action wrapper, spec published at voke.sh/spec, CONTRIBUTING.md + rule PR template, repo goes public
+- [x] **Phase 5: CI + Publication** - stdio transport (hermetic CI + local dev loop), GitHub Action wrapper, spec published at voke.sh/spec, CONTRIBUTING.md + rule PR template, repo goes public (completed 2026-06-13)
 - [ ] **Phase 6: Launch** - Blog post + live Apideck demo run; `voke lint https://mcp.apideck.dev/mcp` green and reproducible is the DoD
 
 ## Phase Details
@@ -96,7 +96,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] 05-01-PLAN.md — stdio ingestion: StdioClientTransport + dash-dash/--env + exit codes 8/9 + byte-identical x3 (Wave 1; ING-06)
 - [x] 05-02-PLAN.md — npm publish prep (@voke-sh/voke) + composite action.yml + publish/ci workflows (Wave 1; CI-01)
 - [x] 05-03-PLAN.md — VitePress spec site at voke.sh/spec + GitHub Pages deploy workflow (Wave 1; PUB-01)
-- [ ] 05-04-PLAN.md — Apache-2.0 LICENSE + Action-first README + CONTRIBUTING + rule PR template (Wave 2; CI-02, PUB-02)
+- [x] 05-04-PLAN.md — Apache-2.0 LICENSE + Action-first README + CONTRIBUTING + rule PR template (Wave 2; CI-02, PUB-02)
 
 ### Phase 6: Launch
 **Goal**: `voke lint https://mcp.apideck.dev/mcp` runs green and reproducibly against the Apideck MCP server (4-tool proxy surface) and at least one other public MCP server; the launch blog post is live
@@ -118,5 +118,5 @@ Decimal phases appear between their surrounding integers in numeric order.
 | 2. Engine + Ingestion + Determinism | 4/4 | Complete   | 2026-06-12 |
 | 3. Rule Implementations | 4/5 | In Progress|  |
 | 4. Scoring + Output + CLI | 3/3 | Complete   | 2026-06-13 |
-| 5. CI + Publication | 3/4 | In Progress|  |
+| 5. CI + Publication | 4/4 | Complete   | 2026-06-13 |
 | 6. Launch | 0/TBD | Not started | - |
