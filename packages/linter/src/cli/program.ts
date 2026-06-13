@@ -34,11 +34,12 @@ import type { RunLintOpts } from './run-lint.js';
  * - --min-score must be an integer 0-100 (throws UsageError if out of range)
  * - --timeout must be a positive integer (throws UsageError if invalid)
  * - color: disabled if --ci, NO_COLOR env var, or --no-color flag is set (D-03/D-16)
+ * - --env: each entry must be KEY=VAL (throws UsageError if missing '=')
  *
  * This function has no side effects and performs no IO. It is the unit-testable
  * boundary between commander's parsed options and the runLint pipeline.
  *
- * @param target - the positional <target> argument
+ * @param target - the positional [target] argument (may be empty string if stdio mode)
  * @param opts - the raw commander option object (typed loosely for test flexibility)
  * @returns validated RunLintOpts ready for runLint
  * @throws UsageError (exitCode=3) on invalid flag values
@@ -81,6 +82,20 @@ export const resolveLintOpts = (
   // Headers: commander variadic option; default to []
   const headers = (opts['header'] as string[] | undefined) ?? [];
 
+  // --env: parse KEY=VAL entries into extraEnv record (D-09 masking in output)
+  const rawEnvEntries = (opts['env'] as string[] | undefined) ?? [];
+  let extraEnv: Record<string, string> | undefined;
+  if (rawEnvEntries.length > 0) {
+    extraEnv = {};
+    for (const kv of rawEnvEntries) {
+      const eqIdx = kv.indexOf('=');
+      if (eqIdx === -1) {
+        throw new UsageError(`--env must be KEY=VAL, got: '${kv}'`);
+      }
+      extraEnv[kv.slice(0, eqIdx)] = kv.slice(eqIdx + 1);
+    }
+  }
+
   return {
     target,
     output,
@@ -90,6 +105,7 @@ export const resolveLintOpts = (
     verbose: Boolean(opts['verbose']),
     color,
     saveSnapshot: opts['saveSnapshot'] as string | undefined,
+    extraEnv,
   };
 };
 
@@ -105,10 +121,14 @@ export const resolveLintOpts = (
  * The program is structured as:
  *   voke [options]
  *     --version / -v: print "voke X.Y.Z (MTQS v0.1)" (D-08)
- *   voke lint <target> [flags...]
+ *   voke lint [target] [flags...] [-- <cmd> [args...]]
  *     D-07 flags: --output, -H/--header, --timeout, --min-score, --ci, --no-color, --save-snapshot, --verbose
+ *     ING-06 flags: --env KEY=VAL (repeatable; values masked in output, D-09)
+ *
+ * @param stdioArgs - pre-split args after '--' in process.argv (see cli/index.ts).
+ *   When set and non-empty, lint target becomes optional and stdio mode is used.
  */
-export const buildProgram = (): Command => {
+export const buildProgram = (stdioArgs?: string[]): Command => {
   const program = new Command();
 
   program
@@ -116,10 +136,17 @@ export const buildProgram = (): Command => {
     .description('Deterministic MCP tool quality linter (MTQS v0.1)')
     .version(versionString(), '-v, --version', 'Print voke version and MTQS version');
 
+  // Collect helper for repeatable options
+  const collect = (val: string, acc: string[]): string[] => {
+    acc.push(val);
+    return acc;
+  };
+
   program
     .command('lint')
-    .description('Lint an MCP server (live URL or saved snapshot file)')
-    .argument('<target>', 'MCP server URL (http/https) or path to a saved snapshot JSON file')
+    .description('Lint an MCP server (live URL, saved snapshot, or -- subprocess)')
+    // Target is optional when stdio mode active (stdioArgs provided by caller)
+    .argument('[target]', 'MCP server URL (http/https) or path to a saved snapshot JSON file')
     .option('--output <format>', 'output format: human | json', 'human')
     .option('-H, --header <header...>', 'HTTP header "Key: Value" (repeatable); used for bearer auth', [])
     .option('--timeout <ms>', 'per-request timeout in milliseconds', '30000')
@@ -128,12 +155,32 @@ export const buildProgram = (): Command => {
     .option('--no-color', 'disable color output')
     .option('--save-snapshot <path>', 'also write the raw VokeSnapshot (re-lint input) to this path')
     .option('--verbose', 'print full per-finding detail under each failing tool', false)
-    .action(async (target: string, opts: Record<string, unknown>) => {
-      // Resolve and validate options (throws UsageError on invalid flags)
-      const runLintOpts = resolveLintOpts(target, opts);
+    .option(
+      '--env <KEY=VAL>',
+      'extra env var for stdio subprocess (repeatable; values masked in output)',
+      collect,
+      [] as string[],
+    )
+    .action(async (target: string | undefined, opts: Record<string, unknown>) => {
+      const isStdio = stdioArgs !== undefined && stdioArgs.length > 0;
 
-      // Diagnostic: if headers are provided, only echo masked values (D-15/16)
-      // (No actual echo in the happy path — this is a hook for future --verbose diagnostic)
+      if (!isStdio && !target) {
+        throw new UsageError(
+          'Missing required argument: <target>. ' +
+            'Provide an MCP server URL, snapshot file path, or use -- <cmd> for stdio mode.',
+        );
+      }
+
+      // Resolve and validate options (throws UsageError on invalid flags)
+      const runLintOpts = resolveLintOpts(target ?? '', opts);
+
+      // Wire stdio args into the opts (bypasses resolveTarget in runLint)
+      if (isStdio) {
+        runLintOpts.stdioArgs = stdioArgs;
+      }
+
+      // Diagnostic: if extraEnv is provided in verbose mode, echo masked values (D-09)
+      // (masked via maskHeaders — raw values NEVER echoed)
 
       // Run the full pipeline
       const result = await runLint(runLintOpts);

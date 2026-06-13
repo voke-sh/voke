@@ -18,7 +18,15 @@ import { VokeError } from '../errors.js';
 import { UsageError } from './resolve-target.js';
 
 const main = async (): Promise<void> => {
-  await buildProgram().parseAsync(process.argv);
+  // Pre-split process.argv at '--' (ING-06: stdio passthrough).
+  // This must happen BEFORE commander parses so that -- and everything after it
+  // is removed from argv (commander doesn't understand our use of --).
+  // Reference: RESEARCH Open Question 4 — pre-split is simpler than passThroughOptions.
+  const dashIdx = process.argv.indexOf('--');
+  const stdioArgs = dashIdx !== -1 ? process.argv.slice(dashIdx + 1) : undefined;
+  const cleanArgv = dashIdx !== -1 ? process.argv.slice(0, dashIdx) : process.argv;
+
+  await buildProgram(stdioArgs).parseAsync(cleanArgv);
 };
 
 main().catch((err: unknown) => {

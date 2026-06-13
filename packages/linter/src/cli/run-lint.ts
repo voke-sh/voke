@@ -16,6 +16,7 @@
  */
 import { resolveTarget } from './resolve-target.js';
 import { ingestLive } from '../ingestion/mcp-client.js';
+import { ingestStdio } from '../ingestion/stdio-client.js';
 import { readSnapshot } from '../ingestion/snapshot-reader.js';
 import { writeSnapshot } from '../ingestion/snapshot-writer.js';
 import { createDefaultRegistry } from '../engine/registry.js';
@@ -46,6 +47,16 @@ export interface RunLintOpts {
   color: boolean;
   /** If set: also write the raw VokeSnapshot to this path (D-11 — distinct from LintReport). */
   saveSnapshot?: string;
+  /**
+   * If set and non-empty: launch an MCP subprocess via StdioClientTransport instead of
+   * resolveTarget. stdioArgs[0] is the command; the rest are args. Bypasses resolveTarget.
+   */
+  stdioArgs?: string[];
+  /**
+   * Extra environment variables for the stdio subprocess (from --env KEY=VAL).
+   * Values are NEVER echoed in output (D-09/Pitfall 4).
+   */
+  extraEnv?: Record<string, string>;
 }
 
 /**
@@ -77,20 +88,32 @@ export interface RunLintResult {
  * @throws RuleExecutionError — rule fn threw (internal error)
  */
 export const runLint = async (opts: RunLintOpts): Promise<RunLintResult> => {
-  // 1. Resolve target (throws UsageError on bad target — propagates to program catch)
-  const resolved = resolveTarget(opts.target);
+  let snapshot;
 
-  // 2. Ingest: live or file
-  //    Live: timeout threaded as timeoutMs (W1 — opts.timeout is never dropped)
-  //    File: readSnapshot is synchronous and makes no network calls
-  const snapshot =
-    resolved.kind === 'live'
-      ? await ingestLive({
-          url: resolved.target,
-          rawHeaders: opts.headers,
-          timeoutMs: opts.timeout,
-        })
-      : readSnapshot(resolved.target);
+  if (opts.stdioArgs !== undefined && opts.stdioArgs.length > 0) {
+    // Stdio path: bypass resolveTarget — launch subprocess directly
+    snapshot = await ingestStdio({
+      command: opts.stdioArgs[0],
+      args: opts.stdioArgs.slice(1),
+      extraEnv: opts.extraEnv,
+      timeoutMs: opts.timeout,
+    });
+  } else {
+    // 1. Resolve target (throws UsageError on bad target — propagates to program catch)
+    const resolved = resolveTarget(opts.target);
+
+    // 2. Ingest: live or file
+    //    Live: timeout threaded as timeoutMs (W1 — opts.timeout is never dropped)
+    //    File: readSnapshot is synchronous and makes no network calls
+    snapshot =
+      resolved.kind === 'live'
+        ? await ingestLive({
+            url: resolved.target,
+            rawHeaders: opts.headers,
+            timeoutMs: opts.timeout,
+          })
+        : readSnapshot(resolved.target);
+  }
 
   // 3. Optionally write raw VokeSnapshot (D-11 — distinct artifact from LintReport)
   //    VokeSnapshot has: snapshotVersion, mtqsVersion, server, meta.capturedAt, tools[]
