@@ -4,3 +4,6 @@ dist-types/
 coverage/
 *.log
 *.tsbuildinfo
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+docs/spec/v0.1/
