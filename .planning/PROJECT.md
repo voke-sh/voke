@@ -16,14 +16,14 @@ Voke is an open-source observability platform for MCP servers, built as a layere
 - [x] Rule engine + result type, shaped so L2 (diff) and custom rules slot in later — **Validated in Phase 2: Engine + Ingestion + Determinism.** Pure `(ctx)=>Finding[]` rules on a frozen `RuleContext`; sealing `RuleRegistry` with `applyOverrides` returning a new registry; per-tool vs server-scoped routing; fail-on-throw `RuleExecutionError`; network-block test proves purity (ENG-01..03, D-14)
 - [x] Tool-surface ingestion: connect via MCP SDK + pull `tools/list`; also read a saved tool dump; target JSON Schema 2020-12 — **Validated in Phase 2: Engine + Ingestion + Determinism.** Streamable-HTTP + SSE fallback, paginated `fetchAllTools` (fail-fast on partial page), header auth + masking; offline snapshot reader with zero SDK/network; Ajv2020 validity + depth cap (32) + external-`$ref` detection with no IO; canonicalize (sorted-key JSON, SHA-256 content hash). Determinism proof: byte-identical x3 + shuffle-invariant on Apideck fixture (`tests/engine/determinism.test.ts`). 163 tests green (ENG-04, ING-01..05, D-12)
 - [x] Implement MTQS rules as the reference linter — **Validated in Phase 3: Rule Implementations.** All 22 v0.1 rules as pure synchronous `(ctx)=>Finding[]` functions across 5 dimension modules (S01–S08, D01–D03, N01–N03, P01–P02, A01–A06); each with positive + negative fixtures; `createDefaultRegistry()` seals exactly 22 rules with bidirectional doc↔registry parity vs `spec/mtqs-v0.1.yaml`; full surface reproduces spec §4.4 worked-example (search=38/F, crm_search_contacts=100/A, server=69/D); N03 sole server-scoped rule; A06 cross-constraint; network blocked in all rule tests, no IO. 500 tests green (RULE-01..06)
+- [x] `voke lint` CLI: per-rule findings + per-tool + server score + tier; `--min-score` exit code — **Validated in Phase 4: Scoring + Output + CLI.** Full pipeline `resolveTarget → ingest(live|file) → runRules(createDefaultRegistry()) → buildReport → format`; commander program with `--min-score`/`--output`/`--ci`/`--header`/`--timeout`, D-13 exit-code map (gate 0/1, ingest 2/4/6, usage 3, internal 70), header/token masking (D-15/16); human formatter (uncolored banner, fixed-order weights, below-A tool table) + canonical JSON (D-10); self-contained `dist/cli/index.js` binary (tsup bundles @voke/core). Live `voke lint https://mcp.apideck.dev/mcp` → 62/100 Tier D, byte-identical across runs. 604 tests green (SCORE-01/02, OUT-01/02, CLI-01/02/03)
 
 ### Active
 
 <!-- L1 scope. Building toward these. -->
-- [ ] `voke lint` CLI: per-rule findings + per-tool + server score + tier; `--min-score` exit code (deterministic scoring lands here in Phase 4)
 - [ ] GitHub Action wrapper + YAML config + README that doubles as the demo
 - [ ] Publish spec at voke.sh/spec (versioned, public repo, PRs open); linter declares which MTQS version it implements
-- [ ] Launch blog post: run live against the 229-tool Apideck server + ≥1 other public server
+- [ ] Launch blog post: run live against the Apideck MCP server (4-tool proxy surface) + ≥1 other public server
 
 ### Out of Scope
 
@@ -46,7 +46,7 @@ Voke is an open-source observability platform for MCP servers, built as a layere
 - **Rule format (PRD §6.4):** model on Spectral (id, severity, `given` target, `then`/function assertion) — native-feeling to anyone who has linted an API spec; clean path to custom/vendor rules.
 - **Candidate dimensions (PRD §6.3):** Description-as-prompt; Parameter semantics; Naming & namespacing; Behavioral transparency (annotations); Output & token efficiency; Schema correctness; Surface coherence (server-level). Finalized in the spec doc.
 - **Tailwind (PRD §11):** MCP RC (announced May 21 2026, targets 2026-07-28) lifts input/outputSchema to full JSON Schema 2020-12, mandates no auto-deref of external `$ref`, bounded schema depth — all mechanical MTQS rules. Every production server must migrate; nothing checks if the migrated surface is still good. Target JSON Schema 2020-12 from day one.
-- **Reputational ROI (PRD §12):** Author holds AsyncAPI TSC seat; Apideck 229-tool reference server is the proof artifact. The largest payoff is an owned open standard + conference/API-Days artifacts, not MRR.
+- **Reputational ROI (PRD §12):** Author holds AsyncAPI TSC seat; the Apideck MCP server (a proxy exposing 4 meta-tools) is the proof artifact. The largest payoff is an owned open standard + conference/API-Days artifacts, not MRR.
 - **Competitors:** Glama (closed LLM-judge, no rules repo, can't gate a PR); mcpx (remote-API grading, URL-vs-URL diff); Optic (the L2 model — archived Jan 2026, seat empty); mcpindex (in-path enforcement, different use case); health-monitors (L3-only).
 
 ## Constraints
@@ -90,4 +90,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-06-12 after Phase 3 (Rule Implementations) completion*
+*Last updated: 2026-06-13 after Phase 4 (Scoring + Output + CLI) completion*

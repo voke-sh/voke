@@ -42,16 +42,16 @@ L1 milestone. Each maps to a roadmap phase. v1 ships the 20 P1 (table-stakes) MT
 
 ### Scoring & Output
 
-- [ ] **SCORE-01**: Findings aggregate deterministically into per-dimension → per-tool → server scores + A–F tier using published weights
+- [x] **SCORE-01**: Findings aggregate deterministically into per-dimension → per-tool → server scores + A–F tier using published weights
 - [x] **SCORE-02**: Linter declares which MTQS version it implements (`MTQS_VERSION` in `--version`)
 - [x] **OUT-01**: Human-readable formatter prints per-rule findings + per-tool + server score + tier
 - [x] **OUT-02**: JSON formatter emits the full `LintReport` (also usable as a saved snapshot)
 
 ### CLI & CI
 
-- [ ] **CLI-01**: `voke lint <server-url-or-file>` runs the full ruleset and prints findings + scores
-- [ ] **CLI-02**: `--min-score <threshold>` sets the exit code so a build fails below threshold
-- [ ] **CLI-03**: CLI supports `--header`, `--timeout`, and reading from a saved dump; bearer tokens are masked in output
+- [x] **CLI-01**: `voke lint <server-url-or-file>` runs the full ruleset and prints findings + scores
+- [x] **CLI-02**: `--min-score <threshold>` sets the exit code so a build fails below threshold
+- [x] **CLI-03**: CLI supports `--header`, `--timeout`, and reading from a saved dump; bearer tokens are masked in output
 - [ ] **CI-01**: A GitHub Action wrapper + YAML config runs `voke lint` in CI and fails the build below threshold
 - [ ] **CI-02**: README doubles as the demo (copy-paste runnable)
 
@@ -119,13 +119,13 @@ Explicitly excluded (with reasoning) to prevent scope creep.
 | RULE-04 | Phase 3 | Complete |
 | RULE-05 | Phase 3 | Complete |
 | RULE-06 | Phase 3 | Complete |
-| SCORE-01 | Phase 4 | Pending |
+| SCORE-01 | Phase 4 | Complete |
 | SCORE-02 | Phase 4 | Complete |
 | OUT-01 | Phase 4 | Complete |
 | OUT-02 | Phase 4 | Complete |
-| CLI-01 | Phase 4 | Pending |
-| CLI-02 | Phase 4 | Pending |
-| CLI-03 | Phase 4 | Pending |
+| CLI-01 | Phase 4 | Complete |
+| CLI-02 | Phase 4 | Complete |
+| CLI-03 | Phase 4 | Complete |
 | CI-01 | Phase 5 | Pending |
 | CI-02 | Phase 5 | Pending |
 | PUB-01 | Phase 5 | Pending |

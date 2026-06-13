@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: MTQS Specification** - Author the v0.1 spec document, scoring formula, rule registry, and SCOPE.md â gates all linter code (completed 2026-06-12)
 - [x] **Phase 2: Engine + Ingestion + Determinism** - Build rule engine, MCP ingestion, and bake in all 7 determinism enforcement points; exit criterion is byte-identical output x3 (completed 2026-06-12)
 - [ ] **Phase 3: Rule Implementations** - Implement all 20 v0.1 rules (S01âS08, D01âD03, N01âN03, P01âP02, A01âA06) as pure functions with fixtures
-- [x] **Phase 4: Scoring + Output + CLI** - Wire the full pipeline; first demoable `voke lint` against the live 229-tool Apideck server (completed 2026-06-13)
+- [x] **Phase 4: Scoring + Output + CLI** - Wire the full pipeline; first demoable `voke lint` against the live Apideck MCP server (completed 2026-06-13 — server is a 4-tool proxy surface; scored 62/100 Tier D, reproducible)
 - [ ] **Phase 5: CI + Publication** - stdio transport (hermetic CI + local dev loop), GitHub Action wrapper, spec published at voke.sh/spec, CONTRIBUTING.md + rule PR template, repo goes public
 - [ ] **Phase 6: Launch** - Blog post + live Apideck demo run; `voke lint https://mcp.apideck.dev/mcp` green and reproducible is the DoD
 
@@ -67,7 +67,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] 03-05-PLAN.md â Integration: register all 22 rules in createDefaultRegistry + coverage/determinism proof (Wave 2; RULE-06)
 
 ### Phase 4: Scoring + Output + CLI
-**Goal**: `voke lint <server-or-file>` works end-to-end and produces a human-readable + machine-readable report with per-rule findings, per-tool scores, and a server-level score + AâF tier; the first live run against the 229-tool Apideck server produces a meaningful, reproducible score
+**Goal**: `voke lint <server-or-file>` works end-to-end and produces a human-readable + machine-readable report with per-rule findings, per-tool scores, and a server-level score + AâF tier; the first live run against the Apideck MCP server produces a meaningful, reproducible score (note: the live server is a proxy exposing 4 meta-tools, not 229 individual tools — voke lints the MCP surface, not the underlying Unify API op-count)
 **Depends on**: Phase 3
 **Requirements**: SCORE-01, SCORE-02, OUT-01, OUT-02, CLI-01, CLI-02, CLI-03
 **Success Criteria** (what must be TRUE):
@@ -94,7 +94,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: TBD
 
 ### Phase 6: Launch
-**Goal**: `voke lint https://mcp.apideck.dev/mcp` runs green and reproducibly against the 229-tool Apideck server and at least one other public MCP server; the launch blog post is live
+**Goal**: `voke lint https://mcp.apideck.dev/mcp` runs green and reproducibly against the Apideck MCP server (4-tool proxy surface) and at least one other public MCP server; the launch blog post is live
 **Depends on**: Phase 5
 **Requirements**: PUB-03, PUB-04
 **Success Criteria** (what must be TRUE):
