@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { sha256, toolContentHash, surfaceContentHash, canonicalJson } from '@voke/linter';
+import { sha256, toolContentHash, surfaceContentHash, canonicalJson } from '@voke-sh/voke';
 
 describe('sha256', () => {
   it('produces a deterministic 64-char hex digest', () => {

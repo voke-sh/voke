@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { canonicalJson } from '@voke/linter';
+import { canonicalJson } from '@voke-sh/voke';
 
 describe('canonicalJson', () => {
   it('produces identical output for same object with keys in different insertion orders', () => {

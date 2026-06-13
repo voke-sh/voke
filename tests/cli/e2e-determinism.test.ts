@@ -24,7 +24,7 @@ beforeAll(() => {
   if (!existsSync(BIN)) {
     throw new Error(
       `Built CLI binary not found at: ${BIN}\n` +
-        'Build the CLI first: npm --workspace @voke/linter run build',
+        'Build the CLI first: npm --workspace @voke-sh/voke run build',
     );
   }
 });
