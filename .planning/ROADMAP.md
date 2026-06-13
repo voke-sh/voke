@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: MTQS Specification** - Author the v0.1 spec document, scoring formula, rule registry, and SCOPE.md â gates all linter code (completed 2026-06-12)
 - [x] **Phase 2: Engine + Ingestion + Determinism** - Build rule engine, MCP ingestion, and bake in all 7 determinism enforcement points; exit criterion is byte-identical output x3 (completed 2026-06-12)
 - [ ] **Phase 3: Rule Implementations** - Implement all 20 v0.1 rules (S01âS08, D01âD03, N01âN03, P01âP02, A01âA06) as pure functions with fixtures
-- [ ] **Phase 4: Scoring + Output + CLI** - Wire the full pipeline; first demoable `voke lint` against the live 229-tool Apideck server
+- [x] **Phase 4: Scoring + Output + CLI** - Wire the full pipeline; first demoable `voke lint` against the live 229-tool Apideck server (completed 2026-06-13)
 - [ ] **Phase 5: CI + Publication** - stdio transport (hermetic CI + local dev loop), GitHub Action wrapper, spec published at voke.sh/spec, CONTRIBUTING.md + rule PR template, repo goes public
 - [ ] **Phase 6: Launch** - Blog post + live Apideck demo run; `voke lint https://mcp.apideck.dev/mcp` green and reproducible is the DoD
 
@@ -79,7 +79,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 3 plans
 - [x] 04-01-PLAN.md — Leaf modules: version source-of-truth + extensible target resolver + human/JSON formatters (Wave 1; SCORE-01/02, OUT-01/02)
 - [x] 04-02-PLAN.md — CLI wiring: runLint orchestrator + commander program + bin entrypoint + tsup build + exit-code map + masking (Wave 2; CLI-01/02/03)
-- [ ] 04-03-PLAN.md — End-to-end determinism x3 + acceptance tests + live Apideck checkpoint (Wave 3; all 7 req IDs)
+- [x] 04-03-PLAN.md — End-to-end determinism x3 + acceptance tests + live Apideck checkpoint (Wave 3; all 7 req IDs)
 
 ### Phase 5: CI + Publication
 **Goal**: The linter ingests stdio MCP servers (hermetic CI + local dev loop), is usable from a GitHub Action with a one-line YAML config, the MTQS spec is publicly versioned at voke.sh/spec, and the repo is ready for external contribution before going public
@@ -112,6 +112,6 @@ Decimal phases appear between their surrounding integers in numeric order.
 | 1. MTQS Specification | 4/4 | Complete   | 2026-06-12 |
 | 2. Engine + Ingestion + Determinism | 4/4 | Complete   | 2026-06-12 |
 | 3. Rule Implementations | 4/5 | In Progress|  |
-| 4. Scoring + Output + CLI | 1/3 | In Progress|  |
+| 4. Scoring + Output + CLI | 3/3 | Complete   | 2026-06-13 |
 | 5. CI + Publication | 0/TBD | Not started | - |
 | 6. Launch | 0/TBD | Not started | - |

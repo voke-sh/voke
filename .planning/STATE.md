@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v0.1
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 04-scoring-output-cli/04-01-PLAN.md
-last_updated: "2026-06-12T23:04:12.309Z"
+stopped_at: "Checkpoint 04-scoring-output-cli/04-03-PLAN.md Task 3: human-verify live Apideck run"
+last_updated: "2026-06-13T07:42:00.072Z"
 progress:
   total_phases: 6
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 16
-  completed_plans: 14
+  completed_plans: 16
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-06-12)
 ## Current Position
 
 Phase: 04 (scoring-output-cli) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 
 ## Performance Metrics
 
@@ -60,6 +60,7 @@ Plan: 2 of 3
 | Phase 03-rule-implementations P01 | 7 | 2 tasks | 4 files |
 | Phase 03-rule-implementations P05 | 5 | 2 tasks | 6 files |
 | Phase 04-scoring-output-cli P01 | 6 | 3 tasks | 11 files |
+| Phase 04 P03 | 179 | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -101,6 +102,10 @@ Recent decisions affecting current work:
 - [Phase 04-scoring-output-cli]: UsageError kept in resolve-target.ts (not errors.ts) to avoid parallel wave conflicts in Phase 4 Wave 1
 - [Phase 04-scoring-output-cli]: MULT and BASE exported from @voke/core barrel (previously missing, required by format-human)
 - [Phase 04-scoring-output-cli]: Dimension weights always formatted to one decimal place (toFixed(1)) for consistent CLI output
+- [Phase 04]: Guard built binary with beforeAll existsSync check to give clear error if Plan 02 build not run
+- [Phase 04]: JSON determinism uses deepEqual on meta-stripped parsed objects (not string compare) — string compare would fail on generatedAt by design (D-10)
+- [Phase 04]: SC#4 gate threshold computed dynamically from live JSON run — keeps test robust against future fixture changes
+- [Phase 04]: Masking PRIMARY test uses schemeless host to trigger D-06 UsageError (exit 3) before network — exercises real header-in-scope code path
 
 ### Pending Todos
 
@@ -121,6 +126,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-12T23:04:12.306Z
-Stopped at: Completed 04-scoring-output-cli/04-01-PLAN.md
+Last session: 2026-06-13T07:42:00.069Z
+Stopped at: Checkpoint 04-scoring-output-cli/04-03-PLAN.md Task 3: human-verify live Apideck run
 Resume file: None
