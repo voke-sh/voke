@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v0.1
 milestone_name: milestone
 status: unknown
-stopped_at: "Phase 05-03: checkpoint:human-action (Task 3 — Enable GitHub Pages + DNS)"
-last_updated: "2026-06-13T18:31:12.778Z"
+stopped_at: "Completed 05-02: Tasks 1-2 done; Task 3 is human-action checkpoint awaiting npm org + NPM_TOKEN"
+last_updated: "2026-06-13T18:32:11.386Z"
 progress:
   total_phases: 6
   completed_phases: 4
   total_plans: 20
-  completed_plans: 17
+  completed_plans: 18
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-06-12)
 ## Current Position
 
 Phase: 05 (ci-publication) — EXECUTING
-Plan: 1 of 4
+Plan: 2 of 4
 
 ## Performance Metrics
 
@@ -63,6 +63,7 @@ Plan: 1 of 4
 | Phase 04 P03 | 179 | 2 tasks | 2 files |
 | Phase 04-scoring-output-cli P03 | 10 | 3 tasks | 2 files |
 | Phase 05-ci-publication P03 | 3 | 2 tasks | 8 files |
+| Phase 05 P02 | 3 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -110,6 +111,10 @@ Recent decisions affecting current work:
 - [Phase 04]: Masking PRIMARY test uses schemeless host to trigger D-06 UsageError (exit 3) before network — exercises real header-in-scope code path
 - [Phase 04]: Live Apideck server at mcp.apideck.dev/mcp is a proxy exposing 4 meta-tools (not 229) — voke correctly ingests all server-exposed tools; determinism and scoring hold regardless of tool count
 - [Phase 05-ci-publication]: VitePress base set to '/' for custom domain (voke.sh); CNAME in docs/public/ persists through re-deploys; spec files copied at build time, never symlinked
+- [Phase 05]: Published as @voke-sh/voke (scoped) because unscoped voke is taken on npm (v1.0.2 exists)
+- [Phase 05]: Moving major tag is v0 (not v1) — matches v0.x versioning; action.yml uses: voke-sh/voke@v0
+- [Phase 05]: @voke/core removed from runtime dependencies (moved to devDependencies) — tsup bundles it via noExternal; leaving as runtime dep would 404 on npm install
+- [Phase 05]: publish.yml uses contents:write (not contents:read) — v0 tag force-push requires write access
 
 ### Pending Todos
 
@@ -130,6 +135,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-13T18:31:12.776Z
-Stopped at: Phase 05-03: checkpoint:human-action (Task 3 — Enable GitHub Pages + DNS)
+Last session: 2026-06-13T18:32:11.383Z
+Stopped at: Completed 05-02: Tasks 1-2 done; Task 3 is human-action checkpoint awaiting npm org + NPM_TOKEN
 Resume file: None
