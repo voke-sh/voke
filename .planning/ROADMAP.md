@@ -85,13 +85,18 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Goal**: The linter ingests stdio MCP servers (hermetic CI + local dev loop), is usable from a GitHub Action with a one-line YAML config, the MTQS spec is publicly versioned at voke.sh/spec, and the repo is ready for external contribution before going public
 **Depends on**: Phase 4
 **Requirements**: ING-06, CI-01, CI-02, PUB-01, PUB-02
+**Note**: Published npm name is `@voke-sh/voke` (unscoped `voke` is taken on npm v1.0.2). GitHub Action reference stays `uses: voke-sh/voke@v0`.
 **Success Criteria** (what must be TRUE):
   1. `voke lint -- <cmd>` launches a stdio MCP server as a subprocess, retrieves the same canonicalized tool surface as live/offline modes, and tears the subprocess down deterministically (no orphan process, byte-identical output x3)
-  2. A GitHub Action workflow using `uses: voke-sh/voke` with a `min-score` input runs `voke lint` in CI and fails the build when the score falls below threshold
+  2. A GitHub Action workflow using `uses: voke-sh/voke@v0` with a `min-score` input runs `voke lint` in CI and fails the build when the score falls below threshold
   3. Copy-pasting the README's quickstart snippet into a new repo's workflow file produces a working CI lint job without modification
   4. MTQS v0.1 spec is live at voke.sh/spec (or its public repo equivalent), versioned, and accepts pull requests
   5. CONTRIBUTING.md and a rule PR template exist in the repo; both are linked from the README; SCOPE.md is linked from CONTRIBUTING.md
-**Plans**: TBD
+**Plans**: 4 plans
+- [ ] 05-01-PLAN.md — stdio ingestion: StdioClientTransport + dash-dash/--env + exit codes 8/9 + byte-identical x3 (Wave 1; ING-06)
+- [ ] 05-02-PLAN.md — npm publish prep (@voke-sh/voke) + composite action.yml + publish/ci workflows (Wave 1; CI-01)
+- [ ] 05-03-PLAN.md — VitePress spec site at voke.sh/spec + GitHub Pages deploy workflow (Wave 1; PUB-01)
+- [ ] 05-04-PLAN.md — Apache-2.0 LICENSE + Action-first README + CONTRIBUTING + rule PR template (Wave 2; CI-02, PUB-02)
 
 ### Phase 6: Launch
 **Goal**: `voke lint https://mcp.apideck.dev/mcp` runs green and reproducibly against the Apideck MCP server (4-tool proxy surface) and at least one other public MCP server; the launch blog post is live
@@ -113,5 +118,5 @@ Decimal phases appear between their surrounding integers in numeric order.
 | 2. Engine + Ingestion + Determinism | 4/4 | Complete   | 2026-06-12 |
 | 3. Rule Implementations | 4/5 | In Progress|  |
 | 4. Scoring + Output + CLI | 3/3 | Complete   | 2026-06-13 |
-| 5. CI + Publication | 0/TBD | Not started | - |
+| 5. CI + Publication | 0/4 | Not started | - |
 | 6. Launch | 0/TBD | Not started | - |
