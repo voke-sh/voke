@@ -9,7 +9,7 @@
  */
 import { describe, it, expect } from 'vitest';
 import { resolve } from 'node:path';
-import { loadRegistryFile } from '../../packages/core/dist/index.js';
+import { loadRegistryFile } from '@voke/core';
 import { createDefaultRegistry } from '../../packages/linter/src/engine/registry.js';
 
 // ────────────────────────────────────────────────────────────────────────────
