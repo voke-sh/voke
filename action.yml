@@ -1,0 +1,49 @@
+name: 'Voke MCP Linter'
+description: 'Run voke lint on an MCP server and fail the build below a score threshold'
+author: 'voke-sh'
+
+inputs:
+  target:
+    description: >
+      MCP server URL, snapshot file path, or '--' for stdio mode.
+      For stdio, set target to '--' and put the launch command in `args`
+      (e.g. target: '--', args: 'node server.js' runs `lint -- node server.js`).
+    required: true
+  min-score:
+    description: 'Fail the build if server score is below this threshold (0-100).'
+    required: false
+    default: '0'
+  format:
+    description: 'Output format: human | json'
+    required: false
+    default: 'human'
+  args:
+    description: >
+      Extra verbatim CLI args appended after the flags (expands to multiple tokens).
+      Examples: --header 'Authorization: Bearer $TOKEN', or for stdio mode
+      'node server.js' (combined with target '--' gives lint -- node server.js).
+    required: false
+    default: ''
+  version:
+    description: 'Voke version to use (e.g. latest or 0.1.0)'
+    required: false
+    default: 'latest'
+
+outputs:
+  score:
+    description: 'The server score (0-100) produced by voke lint (best-effort; build-fail gate uses exit code from --min-score).'
+    value: ${{ steps.lint.outputs.score }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+
+    - name: Run voke lint
+      id: lint
+      shell: bash
+      run: |
+        npx @voke-sh/voke@"${{ inputs.version }}" lint "${{ inputs.target }}" --min-score "${{ inputs.min-score }}" --output "${{ inputs.format }}" --ci ${{ inputs.args }}
