@@ -17,12 +17,12 @@ Voke is an open-source observability platform for MCP servers, built as a layere
 - [x] Tool-surface ingestion: connect via MCP SDK + pull `tools/list`; also read a saved tool dump; target JSON Schema 2020-12 — **Validated in Phase 2: Engine + Ingestion + Determinism.** Streamable-HTTP + SSE fallback, paginated `fetchAllTools` (fail-fast on partial page), header auth + masking; offline snapshot reader with zero SDK/network; Ajv2020 validity + depth cap (32) + external-`$ref` detection with no IO; canonicalize (sorted-key JSON, SHA-256 content hash). Determinism proof: byte-identical x3 + shuffle-invariant on Apideck fixture (`tests/engine/determinism.test.ts`). 163 tests green (ENG-04, ING-01..05, D-12)
 - [x] Implement MTQS rules as the reference linter — **Validated in Phase 3: Rule Implementations.** All 22 v0.1 rules as pure synchronous `(ctx)=>Finding[]` functions across 5 dimension modules (S01–S08, D01–D03, N01–N03, P01–P02, A01–A06); each with positive + negative fixtures; `createDefaultRegistry()` seals exactly 22 rules with bidirectional doc↔registry parity vs `spec/mtqs-v0.1.yaml`; full surface reproduces spec §4.4 worked-example (search=38/F, crm_search_contacts=100/A, server=69/D); N03 sole server-scoped rule; A06 cross-constraint; network blocked in all rule tests, no IO. 500 tests green (RULE-01..06)
 - [x] `voke lint` CLI: per-rule findings + per-tool + server score + tier; `--min-score` exit code — **Validated in Phase 4: Scoring + Output + CLI.** Full pipeline `resolveTarget → ingest(live|file) → runRules(createDefaultRegistry()) → buildReport → format`; commander program with `--min-score`/`--output`/`--ci`/`--header`/`--timeout`, D-13 exit-code map (gate 0/1, ingest 2/4/6, usage 3, internal 70), header/token masking (D-15/16); human formatter (uncolored banner, fixed-order weights, below-A tool table) + canonical JSON (D-10); self-contained `dist/cli/index.js` binary (tsup bundles @voke/core). Live `voke lint https://mcp.apideck.dev/mcp` → 62/100 Tier D, byte-identical across runs. 604 tests green (SCORE-01/02, OUT-01/02, CLI-01/02/03)
+- [x] GitHub Action wrapper + README that doubles as the demo — **Validated in Phase 5: CI + Publication.** Root composite `action.yml` (`uses: voke-sh/voke@v0`, Node 22, `npx @voke-sh/voke lint` + `min-score` gate); Action-first copy-paste README; `publish.yml` (npm publish-on-release with OIDC provenance + v0 tag move), `ci.yml` (test+typecheck+build). Package renamed `@voke-sh/voke` (unscoped `voke` taken). Also: stdio transport `voke lint -- <cmd>` via `StdioClientTransport` with `--env` masking + exit codes 8/9 (ING-06, CI-01, CI-02). 617 tests green
+- [x] Publish spec as versioned static docs site — **Validated in Phase 5: CI + Publication.** VitePress site + GitHub Pages deploy (`docs.yml`); `spec/MTQS-v0.1.md` stays immutable source, copied to `docs/spec/v0.1/` at build time; versions independently citable (D-08/09/10); Apache-2.0 LICENSE, CONTRIBUTING + rule-PR template enforcing primary-source (never-Glama) citation (PUB-01, PUB-02). Serves at `voke-sh.github.io/voke/spec/` (base `/voke/`); custom domain voke.sh deferred to DNS
 
 ### Active
 
 <!-- L1 scope. Building toward these. -->
-- [ ] GitHub Action wrapper + YAML config + README that doubles as the demo
-- [ ] Publish spec at voke.sh/spec (versioned, public repo, PRs open); linter declares which MTQS version it implements
 - [ ] Launch blog post: run live against the Apideck MCP server (4-tool proxy surface) + ≥1 other public server
 
 ### Out of Scope
@@ -71,6 +71,8 @@ Voke is an open-source observability platform for MCP servers, built as a layere
 | Determinism proven by byte-identical x3 + shuffle-invariant test on a committed real-server fixture | The wedge vs Glama must be demonstrable, not asserted; sort-on-run + meta-strip + canonicalJson is the mechanism | ✓ Realized — Phase 2 (`tests/engine/determinism.test.ts`) |
 | Target JSON Schema 2020-12 from day one | 2026-07-28 RC tailwind; avoids rework | — Pending |
 | Spectral-style rule format | Native to API-spec linters; clean custom-rule path | — Pending |
+| Publish as `@voke-sh/voke` (scoped); Action `voke-sh/voke@v0` | Unscoped `voke` taken on npm; org `voke-sh` matches GitHub | ✓ Phase 5 |
+| Spec site at github.io project path (`base:/voke/`), voke.sh deferred | DNS not configured at phase close; one-commit switch when domain is live | ✓ Phase 5 |
 
 ## Evolution
 
@@ -90,4 +92,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-06-13 after Phase 4 (Scoring + Output + CLI) completion*
+*Last updated: 2026-06-13 after Phase 5 (CI + Publication) completion*
