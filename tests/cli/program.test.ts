@@ -12,6 +12,7 @@ import { describe, expect, it, afterEach, beforeEach } from 'vitest';
 import { resolveLintOpts } from '../../packages/linter/src/cli/program.js';
 import { UsageError } from '../../packages/linter/src/cli/resolve-target.js';
 
+
 describe('resolveLintOpts — color flag resolution', () => {
   it('--ci forces color off regardless of color flag value', () => {
     const opts = resolveLintOpts('x.json', {
@@ -310,5 +311,67 @@ describe('resolveLintOpts — other options', () => {
       saveSnapshot: '/tmp/snap.json',
     });
     expect(opts.saveSnapshot).toBe('/tmp/snap.json');
+  });
+});
+
+describe('resolveLintOpts — --env parsing (ING-06)', () => {
+  it('parses valid KEY=VAL env entries into extraEnv record', () => {
+    const opts = resolveLintOpts('x.json', {
+      output: 'human',
+      ci: false,
+      color: true,
+      header: [],
+      timeout: '30000',
+      env: ['A=1', 'B=2'],
+    });
+    expect(opts.extraEnv).toEqual({ A: '1', B: '2' });
+  });
+
+  it('handles values that contain = (splits only on first =)', () => {
+    const opts = resolveLintOpts('x.json', {
+      output: 'human',
+      ci: false,
+      color: true,
+      header: [],
+      timeout: '30000',
+      env: ['TOKEN=abc=xyz=='],
+    });
+    expect(opts.extraEnv).toEqual({ TOKEN: 'abc=xyz==' });
+  });
+
+  it('throws UsageError for --env entry without = separator', () => {
+    expect(() =>
+      resolveLintOpts('x.json', {
+        output: 'human',
+        ci: false,
+        color: true,
+        header: [],
+        timeout: '30000',
+        env: ['NOEQUALS'],
+      }),
+    ).toThrow(UsageError);
+  });
+
+  it('extraEnv is undefined when --env is not provided', () => {
+    const opts = resolveLintOpts('x.json', {
+      output: 'human',
+      ci: false,
+      color: true,
+      header: [],
+      timeout: '30000',
+    });
+    expect(opts.extraEnv).toBeUndefined();
+  });
+
+  it('extraEnv is undefined when --env is empty array', () => {
+    const opts = resolveLintOpts('x.json', {
+      output: 'human',
+      ci: false,
+      color: true,
+      header: [],
+      timeout: '30000',
+      env: [],
+    });
+    expect(opts.extraEnv).toBeUndefined();
   });
 });

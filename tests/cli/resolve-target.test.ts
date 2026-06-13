@@ -127,9 +127,10 @@ describe('resolveTarget — unknown scheme', () => {
 });
 
 describe('TransportKind type', () => {
-  it('kind is either live or file', () => {
-    const kinds: TransportKind[] = ['live', 'file'];
+  it('kind is either live, file, or stdio', () => {
+    const kinds: TransportKind[] = ['live', 'file', 'stdio'];
     expect(kinds).toContain('live');
     expect(kinds).toContain('file');
+    expect(kinds).toContain('stdio');
   });
 });

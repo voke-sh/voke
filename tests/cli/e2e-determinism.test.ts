@@ -89,3 +89,37 @@ describe('SC#2: byte-identical x3 CLI determinism (Apideck fixture, offline)', (
     expect(parsed.meta?.generatedAt).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/);
   });
 });
+
+const STDIO_FIXTURE = join(import.meta.dirname, '../fixtures/stdio-server.mjs');
+
+/** Run the CLI with stdio subprocess: node BIN lint --ci -- node STDIO_FIXTURE */
+const runStdio = (extraArgs: string[] = [], extraEnv: Record<string, string> = {}): string =>
+  execFileSync('node', [BIN, 'lint', '--ci', ...extraArgs, '--', 'node', STDIO_FIXTURE], {
+    encoding: 'utf8',
+    env: { ...process.env, NO_COLOR: '1', ...extraEnv },
+  });
+
+describe('SC#2: byte-identical x3 stdio determinism (stdio fixture, subprocess)', () => {
+  it('stdio human output is byte-identical across 3 consecutive runs', () => {
+    const out1 = runStdio();
+    const out2 = runStdio();
+    const out3 = runStdio();
+
+    // The SC#2 stdio proof: three subprocess runs must produce the exact same bytes
+    expect(out1).toBe(out2);
+    expect(out2).toBe(out3);
+  }, 30000);
+
+  it('stdio human output does not contain ANSI escape sequences', () => {
+    const out = runStdio();
+    // eslint-disable-next-line no-control-regex
+    expect(out).not.toMatch(/\x1b\[/);
+    expect(out).not.toContain('\x1b');
+  }, 15000);
+
+  it('--env SECRET=topsecret: the value topsecret never appears in stdout', () => {
+    const SECRET = 'topsecret-unique-value-xyz987';
+    const out = runStdio(['--env', `SECRET=${SECRET}`]);
+    expect(out).not.toContain(SECRET);
+  }, 15000);
+});
