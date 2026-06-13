@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v0.1
 milestone_name: milestone
 status: unknown
-stopped_at: "Completed 05-02: Tasks 1-2 done; Task 3 is human-action checkpoint awaiting npm org + NPM_TOKEN"
-last_updated: "2026-06-13T18:32:11.386Z"
+stopped_at: Completed 05-ci-publication-01-PLAN.md (ING-06 stdio ingestion)
+last_updated: "2026-06-13T18:38:16.283Z"
 progress:
   total_phases: 6
   completed_phases: 4
   total_plans: 20
-  completed_plans: 18
+  completed_plans: 19
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-06-12)
 ## Current Position
 
 Phase: 05 (ci-publication) — EXECUTING
-Plan: 2 of 4
+Plan: 3 of 4
 
 ## Performance Metrics
 
@@ -64,6 +64,7 @@ Plan: 2 of 4
 | Phase 04-scoring-output-cli P03 | 10 | 3 tasks | 2 files |
 | Phase 05-ci-publication P03 | 3 | 2 tasks | 8 files |
 | Phase 05 P02 | 3 | 2 tasks | 5 files |
+| Phase 05-ci-publication P01 | 9m | 3 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -115,6 +116,9 @@ Recent decisions affecting current work:
 - [Phase 05]: Moving major tag is v0 (not v1) — matches v0.x versioning; action.yml uses: voke-sh/voke@v0
 - [Phase 05]: @voke/core removed from runtime dependencies (moved to devDependencies) — tsup bundles it via noExternal; leaving as runtime dep would 404 on npm install
 - [Phase 05]: publish.yml uses contents:write (not contents:read) — v0 tag force-push requires write access
+- [Phase 05-ci-publication]: Pre-split process.argv at '--' before commander sees it — simpler than passThroughOptions; avoids scheme misdetection
+- [Phase 05-ci-publication]: StdioClientTransport receives only opts.extraEnv, not process.env — SDK merges getDefaultEnvironment() automatically (Pitfall 3 guard)
+- [Phase 05-ci-publication]: server.url=null for stdio ingestion — no URL available for subprocess transport
 
 ### Pending Todos
 
@@ -135,6 +139,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-13T18:32:11.383Z
-Stopped at: Completed 05-02: Tasks 1-2 done; Task 3 is human-action checkpoint awaiting npm org + NPM_TOKEN
+Last session: 2026-06-13T18:38:16.281Z
+Stopped at: Completed 05-ci-publication-01-PLAN.md (ING-06 stdio ingestion)
 Resume file: None

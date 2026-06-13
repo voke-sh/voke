@@ -29,7 +29,7 @@ L1 milestone. Each maps to a roadmap phase. v1 ships the 20 P1 (table-stakes) MT
 - [x] **ING-03**: Read a saved tool dump (snapshot) offline instead of connecting
 - [x] **ING-04**: Ingested surface is canonicalized — tools sorted by stable `toolId`, per-tool `contentHash` (SHA-256 of canonical JSON) computed — leaving the data model L2-diff-ready
 - [x] **ING-05**: External `$ref` is never auto-dereferenced (no outbound HTTP); schema depth is bounded; full JSON Schema 2020-12 (`oneOf`/`anyOf`/`allOf`/conditionals) is accepted
-- [ ] **ING-06**: Ingest from a stdio MCP server launched as a subprocess (`voke lint -- <cmd>`) — enables hermetic CI and the local dev loop for stdio-only servers; same canonicalized surface as live/offline modes; subprocess torn down deterministically
+- [x] **ING-06**: Ingest from a stdio MCP server launched as a subprocess (`voke lint -- <cmd>`) — enables hermetic CI and the local dev loop for stdio-only servers; same canonicalized surface as live/offline modes; subprocess torn down deterministically
 
 ### Rules
 
@@ -52,7 +52,7 @@ L1 milestone. Each maps to a roadmap phase. v1 ships the 20 P1 (table-stakes) MT
 - [x] **CLI-01**: `voke lint <server-url-or-file>` runs the full ruleset and prints findings + scores
 - [x] **CLI-02**: `--min-score <threshold>` sets the exit code so a build fails below threshold
 - [x] **CLI-03**: CLI supports `--header`, `--timeout`, and reading from a saved dump; bearer tokens are masked in output
-- [ ] **CI-01**: A GitHub Action wrapper + YAML config runs `voke lint` in CI and fails the build below threshold
+- [x] **CI-01**: A GitHub Action wrapper + YAML config runs `voke lint` in CI and fails the build below threshold
 - [ ] **CI-02**: README doubles as the demo (copy-paste runnable)
 
 ### Publication & Launch
@@ -112,7 +112,7 @@ Explicitly excluded (with reasoning) to prevent scope creep.
 | ING-03 | Phase 2 | Complete |
 | ING-04 | Phase 2 | Complete |
 | ING-05 | Phase 2 | Complete |
-| ING-06 | Phase 5 | Pending |
+| ING-06 | Phase 5 | Complete |
 | RULE-01 | Phase 3 | Complete |
 | RULE-02 | Phase 3 | Complete |
 | RULE-03 | Phase 3 | Complete |
@@ -126,7 +126,7 @@ Explicitly excluded (with reasoning) to prevent scope creep.
 | CLI-01 | Phase 4 | Complete |
 | CLI-02 | Phase 4 | Complete |
 | CLI-03 | Phase 4 | Complete |
-| CI-01 | Phase 5 | Pending |
+| CI-01 | Phase 5 | Complete |
 | CI-02 | Phase 5 | Pending |
 | PUB-01 | Phase 5 | Complete |
 | PUB-02 | Phase 5 | Pending |
