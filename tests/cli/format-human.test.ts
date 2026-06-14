@@ -254,3 +254,134 @@ describe('formatHuman — verbose mode (D-02)', () => {
     expect(output).not.toContain('Description is too short');
   });
 });
+
+describe('formatHuman — verbose layout (D-02)', () => {
+  it('renders ruleId exactly once when message is prefixed with ruleId', () => {
+    // Message begins with "MTQS-A01 [info] ..." — the prefix must be stripped so ruleId
+    // appears only once (in the header line), not duplicated into the message line.
+    const finding = makeFinding(
+      'MTQS-A01',
+      'info',
+      'MTQS-A01 [info] annotations object is absent: tool defaults to the most-risky posture',
+      ['annotations'],
+      'Add an annotations block.',
+    );
+    const report = {
+      ...baseReport(),
+      tools: [makeToolReport('no-annotations', 60, 'D', [finding])],
+      serverScore: 60,
+      serverTier: 'D' as const,
+    };
+    const output = formatHuman(report, opts({ verbose: true, color: false }));
+
+    // Extract only the finding block (lines after the tool row)
+    const findingBlock = output.split('\n').filter(l => l.startsWith('    ') || l.startsWith('      '));
+
+    const blockText = findingBlock.join('\n');
+
+    // ruleId appears exactly once
+    const ruleIdOccurrences = (blockText.match(/MTQS-A01/g) ?? []).length;
+    expect(ruleIdOccurrences).toBe(1);
+
+    // The literal "[info]" token must NOT appear (it was in the stripped prefix)
+    expect(blockText).not.toContain('[info]');
+  });
+
+  it('renders the message text after stripping the MTQS prefix', () => {
+    const finding = makeFinding(
+      'MTQS-A01',
+      'info',
+      'MTQS-A01 [info] annotations object is absent: tool defaults to the most-risky posture',
+      ['annotations'],
+    );
+    const report = {
+      ...baseReport(),
+      tools: [makeToolReport('no-annotations', 60, 'D', [finding])],
+      serverScore: 60,
+      serverTier: 'D' as const,
+    };
+    const output = formatHuman(report, opts({ verbose: true, color: false }));
+    expect(output).toContain('annotations object is absent');
+  });
+
+  it('renders fixHint on a line starting with "fix:" (no " -> " joiner)', () => {
+    const finding = makeFinding(
+      'MTQS-A01',
+      'info',
+      'MTQS-A01 [info] annotations object is absent',
+      [],
+      'Add a better description.',
+    );
+    const report = {
+      ...baseReport(),
+      tools: [makeToolReport('no-annotations', 60, 'D', [finding])],
+      serverScore: 60,
+      serverTier: 'D' as const,
+    };
+    const output = formatHuman(report, opts({ verbose: true, color: false }));
+
+    // A line should start (after indentation) with "fix:" and include the hint text
+    expect(output).toMatch(/^\s+fix: Add a better description\./m);
+
+    // The old " -> " joiner must be gone
+    expect(output).not.toContain(' -> ');
+  });
+
+  it('renders a header line containing severity, ruleId, and path', () => {
+    const finding = makeFinding(
+      'MTQS-A01',
+      'info',
+      'MTQS-A01 [info] annotations object is absent',
+      ['annotations'],
+    );
+    const report = {
+      ...baseReport(),
+      tools: [makeToolReport('no-annotations', 60, 'D', [finding])],
+      serverScore: 60,
+      serverTier: 'D' as const,
+    };
+    const output = formatHuman(report, opts({ verbose: true, color: false }));
+
+    // One header line matches: severity word + ruleId + path
+    expect(output).toMatch(/info.*MTQS-A01.*annotations/);
+  });
+
+  it('uses "(root)" in the header when path is empty', () => {
+    const finding = makeFinding(
+      'MTQS-A01',
+      'info',
+      'MTQS-A01 [info] annotations object is absent',
+      [],
+    );
+    const report = {
+      ...baseReport(),
+      tools: [makeToolReport('no-annotations', 60, 'D', [finding])],
+      serverScore: 60,
+      serverTier: 'D' as const,
+    };
+    const output = formatHuman(report, opts({ verbose: true, color: false }));
+    expect(output).toContain('(root)');
+  });
+
+  it('renders a message without the MTQS prefix verbatim (fallback, no throw)', () => {
+    const finding = makeFinding(
+      'MTQS-D01',
+      'warning',
+      'Plain message no prefix',
+      [],
+      'Fix it.',
+    );
+    const report = {
+      ...baseReport(),
+      tools: [makeToolReport('some-tool', 60, 'D', [finding])],
+      serverScore: 60,
+      serverTier: 'D' as const,
+    };
+    // Must not throw
+    let output: string;
+    expect(() => {
+      output = formatHuman(report, opts({ verbose: true, color: false }));
+    }).not.toThrow();
+    expect(output!).toContain('Plain message no prefix');
+  });
+});

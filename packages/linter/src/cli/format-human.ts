@@ -5,7 +5,11 @@
  *
  * D-01: Server score+tier banner; per-dimension weight breakdown (fixed order); table of
  *       below-A tools sorted by score ascending (tier-A tools are omitted as they pass).
- * D-02: verbose mode adds per-finding details (ruleId, path, message, fixHint).
+ * D-02: verbose mode renders per-finding details as three lines:
+ *         header: `    {severity} {ruleId}  ({path})`
+ *         message: `      {cleanMessage}` (MTQS-XXX [severity] prefix stripped via anchored
+ *                  regex at display time only — verbatim fallback when no prefix is present)
+ *         fix hint: `      fix: {fixHint}` (replaces the old ` -> ` joiner)
  * D-03: the score line is NEVER colorized — it must be machine-parseable under any terminal.
  *       ANSI codes are conditional on opts.color and are NEVER applied to the score line.
  *
@@ -31,6 +35,12 @@ type DimKey = (typeof DIMENSION_ORDER)[number];
 
 /** Pad a string to a minimum width. */
 const pad = (s: string, width: number): string => s.padEnd(width);
+
+// Rule messages are stored prefixed with `MTQS-XXX [severity] ` for JSON/data consumers.
+// Strip that prefix for human display ONLY — anchored, deterministic, never throws.
+const MESSAGE_PREFIX = /^MTQS-[A-Za-z0-9]+ \[(?:error|warning|info|hint)\] /;
+const stripMessagePrefix = (message: string): string =>
+  message.replace(MESSAGE_PREFIX, '');
 
 /** Colorize a severity label when color is enabled. Score line is never passed here. */
 const colorSeverity = (severity: Finding['severity'], color: boolean): string => {
@@ -113,7 +123,13 @@ export const formatHuman = (report: LintReport, opts: HumanFormatOpts): string =
           finding.location.path.length > 0
             ? finding.location.path.join('.')
             : '(root)';
-        lines.push(`    ${severityLabel} ${finding.ruleId} at ${path}: ${finding.message} -> ${finding.fixHint}`);
+        const cleanMessage = stripMessagePrefix(finding.message);
+        // Header: severity + ruleId + location (no message — avoids the doubled prefix).
+        lines.push(`    ${severityLabel} ${finding.ruleId}  (${path})`);
+        // Message body, indented under the header.
+        lines.push(`      ${cleanMessage}`);
+        // Fix hint on its own indented line (replaces the ` -> ` joiner).
+        lines.push(`      fix: ${finding.fixHint}`);
       }
     }
   }
