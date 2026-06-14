@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v0.1
 milestone_name: milestone
 status: unknown
-stopped_at: Phase 6 context gathered
-last_updated: "2026-06-14T14:45:59.031Z"
+stopped_at: Completed 06-launch 06-01-PLAN.md
+last_updated: "2026-06-14T16:57:18.265Z"
 progress:
   total_phases: 6
   completed_phases: 5
-  total_plans: 20
-  completed_plans: 20
+  total_plans: 23
+  completed_plans: 21
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-12)
 
 **Core value:** `voke lint <server>` produces deterministic per-rule findings + a stable score against an explicit published ruleset — same input always yields same output
-**Current focus:** Phase 05 — ci-publication
+**Current focus:** Phase 06 — launch
 
 ## Current Position
 
-Phase: 6
-Plan: Not started
+Phase: 06 (launch) — EXECUTING
+Plan: 2 of 3
 
 ## Performance Metrics
 
@@ -66,6 +66,7 @@ Plan: Not started
 | Phase 05 P02 | 3 | 2 tasks | 5 files |
 | Phase 05-ci-publication P01 | 9m | 3 tasks | 8 files |
 | Phase 05-ci-publication P04 | 4 | 2 tasks | 4 files |
+| Phase 06-launch P01 | 4 | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -123,6 +124,9 @@ Recent decisions affecting current work:
 - [Phase 05-ci-publication]: README uses @v0 tag (not @v1) -- v0.x releases move the v0 moving tag; @v1 does not exist until 1.0.0 release
 - [Phase 05-ci-publication]: Rule PR template makes NOT-Glama a checkbox item -- impossible to overlook vs prose
 - [Phase 05-ci-publication]: Spec URL in README uses voke-sh.github.io/voke/spec/ interim with voke.sh/spec noted as target domain
+- [Phase 06-launch]: Apideck live score 62/100 Tier D confirmed from captured fixture (matches D-08 blog number)
+- [Phase 06-launch]: DeepWiki live score 92/100 Tier A confirmed — strong second-server proof for PUB-04
+- [Phase 06-launch]: Committed snapshots are reproducibility gate (not live network) — decouples DoD from server availability
 
 ### Pending Todos
 
@@ -143,6 +147,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-06-14T14:45:59.028Z
-Stopped at: Phase 6 context gathered
-Resume file: .planning/phases/06-launch/06-CONTEXT.md
+Last session: 2026-06-14T16:57:18.262Z
+Stopped at: Completed 06-launch 06-01-PLAN.md
+Resume file: None

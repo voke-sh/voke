@@ -107,7 +107,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. `voke lint` runs successfully against at least one other public MCP server and produces a valid score
   3. The launch blog post is published and tells the "no open standard for MCP tool quality â here is one" story with the live Apideck run as the proof artifact
 **Plans**: 3 plans
-- [ ] 06-01-PLAN.md - Capture live Apideck + DeepWiki fixtures + byte-identical x3 determinism test (Wave 1; PUB-04)
+- [x] 06-01-PLAN.md - Capture live Apideck + DeepWiki fixtures + byte-identical x3 determinism test (Wave 1; PUB-04)
 - [ ] 06-02-PLAN.md - npm release @voke-sh/voke@0.1.0 via publish.yml + npx end-to-end verification (Wave 2; PUB-04)
 - [ ] 06-03-PLAN.md - dev.to launch blog post (D-05 shape, real scores, stop-slop pass) (Wave 3; PUB-03)
 
@@ -122,4 +122,4 @@ Decimal phases appear between their surrounding integers in numeric order.
 | 3. Rule Implementations | 4/5 | In Progress|  |
 | 4. Scoring + Output + CLI | 3/3 | Complete   | 2026-06-13 |
 | 5. CI + Publication | 4/4 | Complete   | 2026-06-13 |
-| 6. Launch | 0/3 | Not started | - |
+| 6. Launch | 1/3 | In Progress|  |
