@@ -126,7 +126,7 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-None yet.
+- [2026-06-14] Provide score badge for repository README (area: general) — embeddable MTQS score/grade badge like Glama; lean static SVG for L1
 
 ### Blockers/Concerns
 
