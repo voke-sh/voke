@@ -36,7 +36,9 @@ vi.mock('@modelcontextprotocol/sdk/client/index.js', () => {
       connect = vi.fn().mockImplementation(async () => {
         if (currentMockClient) await currentMockClient.connect();
       });
-      close = vi.fn().mockResolvedValue(undefined);
+      close = vi.fn().mockImplementation(async () => {
+        if (currentMockClient) await currentMockClient.close();
+      });
       getServerVersion = vi.fn().mockImplementation(() => {
         return currentMockClient?.getServerVersion() ?? null;
       });
@@ -273,6 +275,36 @@ describe('ingestLive — depth exceeded', () => {
     await expect(ingestLive({ url: 'http://localhost:3000/mcp' })).rejects.toMatchObject({
       exitCode: 6,
     });
+  });
+});
+
+// ---------------------------------------------------------------------------
+// ingestLive — transport teardown (D-11: CLI must exit cleanly, not hang)
+//
+// Regression for the 0.1.0 launch bug: ingestLive connected but never closed
+// the client/transport, keeping the Node event loop alive so `voke lint <url>`
+// hung after printing and exited non-zero. The fix closes the client in a
+// finally; these tests assert that contract on both the success and error paths.
+// ---------------------------------------------------------------------------
+describe('ingestLive — closes the client/transport', () => {
+  it('closes the client after a successful ingest', async () => {
+    currentMockClient = buildMockClient([
+      { tools: [{ name: 'tool_a', inputSchema: { type: 'object' } }], nextCursor: undefined },
+    ]);
+
+    await ingestLive({ url: 'http://localhost:3000/mcp' });
+
+    expect(currentMockClient.close).toHaveBeenCalledTimes(1);
+  });
+
+  it('closes the client even when ingest throws (partial-page failure)', async () => {
+    currentMockClient = buildFailingClient();
+
+    await expect(ingestLive({ url: 'http://localhost:3000/mcp' })).rejects.toThrow(
+      PartialPageError,
+    );
+
+    expect(currentMockClient.close).toHaveBeenCalledTimes(1);
   });
 });
 

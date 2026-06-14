@@ -193,6 +193,11 @@ export const ingestLive = async (opts: IngestLiveOptions): Promise<VokeSnapshot>
   const connectResult = await connectWithFallback(serverUrl, headers);
   const { client } = connectResult;
 
+  // Always close the client (and its transport) before returning. The open
+  // StreamableHTTP/SSE connection keeps the Node event loop alive; without this
+  // the CLI hangs after printing and exits non-zero on eventual teardown,
+  // breaking `voke lint <url>` exit codes in CI (D-11).
+  try {
   // Read server identity from SDK initialize result.
   // getServerVersion() returns Implementation (name + version only; no protocolVersion).
   // The transport exposes protocolVersion via a getter after connect.
@@ -251,4 +256,9 @@ export const ingestLive = async (opts: IngestLiveOptions): Promise<VokeSnapshot>
     meta: { capturedAt },
     tools: sortedTools,
   };
+  } finally {
+    // Closing the client closes the underlying transport and releases the
+    // event-loop handle, letting the process exit cleanly with its set exitCode.
+    await client.close();
+  }
 };

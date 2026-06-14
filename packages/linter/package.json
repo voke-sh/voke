@@ -1,6 +1,6 @@
 {
   "name": "@voke-sh/voke",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Deterministic MCP tool quality linter — MTQS v0.1 reference implementation",
   "type": "module",
   "private": false,
@@ -11,15 +11,32 @@
     "url": "https://github.com/voke-sh/voke.git",
     "directory": "packages/linter"
   },
-  "keywords": ["mcp", "linter", "mtqs", "tool-quality", "ci"],
-  "engines": { "node": ">=22" },
+  "keywords": [
+    "mcp",
+    "linter",
+    "mtqs",
+    "tool-quality",
+    "ci"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
   "publishConfig": {
     "access": "public",
     "provenance": true
   },
-  "exports": { ".": { "types": "./src/index.ts", "import": "./src/index.ts" } },
-  "bin": { "voke": "./dist/cli/index.js" },
-  "files": ["dist"],
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts"
+    }
+  },
+  "bin": {
+    "voke": "./dist/cli/index.js"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "typecheck": "tsc --noEmit"

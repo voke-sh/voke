@@ -12,7 +12,7 @@
  */
 
 /** The current linter package version. Update when package.json version changes. */
-export const VOKE_VERSION = '0.1.0';
+export const VOKE_VERSION = '0.1.1';
 
 /** The MTQS spec version implemented by this linter. */
 export const MTQS_VERSION = '0.1';
