@@ -11,6 +11,8 @@
     "node": ">=22"
   },
   "scripts": {
+    "build": "npm run build -w @voke-sh/voke",
+    "voke": "npm run build && node packages/linter/dist/cli/index.js",
     "test": "vitest run",
     "test:spec": "vitest run tests/spec/",
     "typecheck": "tsc --build",
