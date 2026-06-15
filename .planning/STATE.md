@@ -1,36 +1,34 @@
 ---
 gsd_state_version: 1.0
 milestone: v0.1
-milestone_name: milestone
-status: blocked
-stopped_at: "06-launch 06-03 PARTIAL — blog draft + stop-slop done; dev.to publish DEFERRED by user (PUB-03 unmet)"
-last_updated: "2026-06-14T21:10:00.000Z"
+milestone_name: MTQS + Reference Linter
+status: milestone-complete
+stopped_at: v0.1 milestone shipped and archived — tag v0.1
+last_updated: "2026-06-16T00:00:00.000Z"
 progress:
   total_phases: 6
-  completed_phases: 5
+  completed_phases: 6
   total_plans: 23
-  completed_plans: 22
+  completed_plans: 23
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-06-12)
+See: .planning/PROJECT.md (updated 2026-06-16)
 
 **Core value:** `voke lint <server>` produces deterministic per-rule findings + a stable score against an explicit published ruleset — same input always yields same output
-**Current focus:** Phase 06 — launch
+**Current focus:** Planning next milestone (`/gsd:new-milestone`)
 
 ## Current Position
 
-Phase: 06 (launch) — EXECUTING
-Plan: 3 of 3 — PARTIAL (Tasks 1-2 done; Task 3 dev.to publish DEFERRED by user)
+**v0.1 MTQS + Reference Linter — SHIPPED 2026-06-15.** All 6 phases / 23 plans complete; archived to
+`.planning/milestones/`. Tag `v0.1`. `@voke-sh/voke@0.1.1` live on npm.
 
-**06-03 status:** Blog launch post drafted and stop-slop-cleaned (41/50, zero em dashes) at
-`.planning/phases/06-launch/blog-launch-post.md`. Task 3 (manual dev.to publish) was deferred
-by the user to focus on other features. PUB-03 remains UNMET until the post is live and its URL
-is recorded. PUB-04 already satisfied by Plans 01/02. Recoverable publish steps are in
-`06-03-SUMMARY.md` under "Recoverable Publish Steps". Do NOT mark 06-03 complete in ROADMAP.
+**Carried forward:** PUB-03 launch blog post — draft ready at `06-launch/blog-launch-post.md`
+(stop-slop 41/50, zero em dashes); dev.to publish deferred by user. Recoverable publish steps in
+`06-03-SUMMARY.md`. Tech debt logged in `MILESTONES.md`.
 
 ## Performance Metrics
 
@@ -145,8 +143,7 @@ Recent decisions affecting current work:
 
 ### Blockers/Concerns
 
-- Phase 2 research flag: depth-bound algorithm + oneOf-branch threshold for 2020-12 constraints needs a short spike before implementing ING-05
-- Phase 2 research flag: confirm ajv Ajv2020 handles unevaluatedProperties/unevaluatedItems correctly
+- None open. (Phase 2 depth-bound / Ajv2020 research flags resolved during ING-05 implementation.)
 
 ### Quick Tasks Completed
 
