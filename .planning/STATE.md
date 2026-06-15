@@ -156,9 +156,10 @@ Recent decisions affecting current work:
 | 260612-pd7 | Remove all em dashes from spec/MTQS-v0.1.md, prose editorial pass | 2026-06-12 | 212acf0 | [260612-pd7-remove-em-dashes-from-spec-mtqs-v0-1-md-](./quick/260612-pd7-remove-em-dashes-from-spec-mtqs-v0-1-md-/) |
 | 260612-rm8 | Restructure §4 scoring formula: §4.0 formula-first, §4.3/§4.4 plain-English leads, §4.4 Rounding/Evaluation Order subheads | 2026-06-12 | ff1f9a0 | [260612-rm8-restructure-scoring-formula-section-of-s](./quick/260612-rm8-restructure-scoring-formula-section-of-s/) |
 | 260614-x3w | Improve verbose mode output: multi-line renderer with MTQS prefix stripping, eliminates doubled ruleId/severity | 2026-06-14 | 14ab295 | [260614-x3w-improve-verbose-mode-output-of-voke-lint](./quick/260614-x3w-improve-verbose-mode-output-of-voke-lint/) |
+| 260615-egi | Improve MTQS-S03/S06 error messages: surface specific ajv failure (keyword + schemaPath + reason), prefix preserved, deterministic cap at 3 | 2026-06-15 | 9752b32 | [260615-egi-improve-mtqs-s03-error-messages-with-spe](./quick/260615-egi-improve-mtqs-s03-error-messages-with-spe/) |
 
 ## Session Continuity
 
-Last session: 2026-06-14T22:54:00.000Z
-Stopped at: quick-260614-x3w complete — verbose finding renderer multi-line layout, 636 tests pass
-Resume file: .planning/quick/260614-x3w-improve-verbose-mode-output-of-voke-lint/260614-x3w-SUMMARY.md
+Last session: 2026-06-15T10:32:00.000Z
+Stopped at: quick-260615-egi complete — S03/S06 findings surface specific ajv failures, 648 tests pass
+Resume file: .planning/quick/260615-egi-improve-mtqs-s03-error-messages-with-spe/260615-egi-SUMMARY.md
