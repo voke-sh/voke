@@ -240,6 +240,19 @@ describe('MTQS-S03: inputSchema structural validity', () => {
     expect(findings[0].location.path).toEqual(['inputSchema']);
   });
 
+  it('preserves the greppable prefix and appends specific ajv failure detail', () => {
+    const prefix = 'MTQS-S03 [error] inputSchema fails JSON Schema 2020-12 validation';
+    const tool = makeTool({
+      inputSchema: { type: 42 as unknown as string, properties: {} },
+    });
+    const findings = runRule(getRule('MTQS-S03'), tool);
+    expect(findings[0].message.startsWith(prefix)).toBe(true);
+    // Specifics appended after the prefix via the formatter's ': ' separator
+    expect(findings[0].message.length).toBeGreaterThan(prefix.length);
+    expect(findings[0].message).toContain(': ');
+    expect(findings[0].message).toContain('type');
+  });
+
   it('fires on the schema-fail.json fixture for invalid schema', () => {
     const findings = runRule(getRule('MTQS-S03'), failTools['invalidInputSchema']);
     expect(findings).toHaveLength(1);
@@ -383,6 +396,25 @@ describe('MTQS-S06: outputSchema structural validity', () => {
     expect(findings[0].ruleId).toBe('MTQS-S06');
     expect(findings[0].severity).toBe('error');
     expect(findings[0].location.path).toEqual(['outputSchema']);
+  });
+
+  it('preserves the greppable prefix and appends specific ajv failure detail', () => {
+    const prefix = 'MTQS-S06 [error] outputSchema fails JSON Schema 2020-12 validation';
+    const tool = makeTool({
+      outputSchema: {
+        type: 'object',
+        properties: {},
+        required: 'must-be-array' as unknown as string[],
+      },
+    });
+    const findings = runRule(getRule('MTQS-S06'), tool);
+    expect(findings[0].message.startsWith(prefix)).toBe(true);
+    expect(findings[0].message.length).toBeGreaterThan(prefix.length);
+    expect(findings[0].message).toContain(': ');
+    // ajv reports the meta-schema failure as a `type` keyword violation at the
+    // user-schema instancePath `/required` (required:'must-be-array' must be an
+    // array) — assert on the keyword token and the user-facing instancePath.
+    expect(findings[0].message).toContain('type at /required');
   });
 
   it('fires on the schema-fail.json fixture for invalid outputSchema', () => {

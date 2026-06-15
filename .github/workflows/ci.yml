@@ -23,11 +23,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Build
+        run: npm --workspace @voke-sh/voke run build
+
       - name: Run tests
         run: npm test
 
       - name: Type check
-        run: npx tsc --noEmit -p packages/linter
-
-      - name: Build
-        run: npm --workspace @voke-sh/voke run build
+        run: npm run typecheck

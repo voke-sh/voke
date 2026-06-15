@@ -13,13 +13,17 @@
  * - No IO anywhere in this module.
  */
 import Ajv2020 from 'ajv/dist/2020';
+import type { ErrorObject } from 'ajv/dist/2020';
 import addFormats from 'ajv-formats';
 
 // ---------------------------------------------------------------------------
 // Ajv2020 singleton — instantiated once per module load (D-06)
 // NEVER pass loadSchema — no network, no SSRF, determinism preserved
 // ---------------------------------------------------------------------------
-const ajv = new Ajv2020({ strict: false });
+// allErrors:true so validateSchema reports EVERY meta-schema violation, not just
+// the first — formatSchemaErrors surfaces the full list (capped). Deterministic:
+// ajv emits errors in a stable order for a given input.
+const ajv = new Ajv2020({ strict: false, allErrors: true });
 addFormats(ajv);
 
 /**
@@ -31,12 +35,88 @@ addFormats(ajv);
  * rejected by ajv's own strictness mode — they may still get MTQS findings
  * from Phase 3 rules.
  */
-export const isValidJsonSchema2020 = (schema: unknown): boolean => {
+/**
+ * Result of validating a schema against the JSON Schema 2020-12 meta-schema.
+ * `errors` is a SNAPSHOT (own array) — never the live ajv.errors reference.
+ */
+export interface SchemaValidationResult {
+  valid: boolean;
+  errors: ErrorObject[];
+}
+
+/**
+ * Validates a schema against JSON Schema 2020-12 and returns the specific
+ * meta-schema errors ajv produced. Never throws; never makes IO.
+ *
+ * Determinism guarantees:
+ * - ajv error order is a stable function of the input; we preserve ajv's
+ *   emission order (no sort, no reorder).
+ * - ajv.errors is overwritten on every validateSchema call on the shared
+ *   singleton. Because rules are synchronous and single-threaded, we snapshot
+ *   ajv.errors into a NEW array IMMEDIATELY after the call, so the returned
+ *   array can never be mutated by a later re-entrant call.
+ * - No Date, no Math.random, no network — pure given the singleton config.
+ */
+export const validateJsonSchema2020 = (schema: unknown): SchemaValidationResult => {
   try {
-    return ajv.validateSchema(schema as object) === true;
+    const valid = ajv.validateSchema(schema as object) === true;
+    // Snapshot immediately — spread into a fresh array so the shared singleton's
+    // live `errors` cannot leak out or be mutated by a subsequent call.
+    const errors = valid ? [] : [...(ajv.errors ?? [])];
+    return { valid, errors };
   } catch {
-    return false;
+    return { valid: false, errors: [] };
   }
+};
+
+export const isValidJsonSchema2020 = (schema: unknown): boolean =>
+  validateJsonSchema2020(schema).valid;
+
+/**
+ * Maximum number of individual schema errors rendered in a finding message.
+ * Determinism cap: bounds message length without introducing nondeterminism
+ * (we always show the FIRST N in ajv's stable emission order).
+ */
+const MAX_SHOWN = 3;
+
+/**
+ * Formats ajv schema errors into a single deterministic, human-readable string.
+ *
+ * These come from `validateSchema` (the user's schema validated AGAINST the
+ * 2020-12 meta-schema), so:
+ * - `instancePath` is the location WITHIN THE USER'S SCHEMA — what they must fix
+ *   (e.g. `/properties/limit/type`). This is the user-facing location.
+ * - `schemaPath` points into the meta-schema (e.g. `#/$defs/...`) and is useless
+ *   to the user, so it is NOT shown.
+ *
+ * With `allErrors:true`, ajv explores every anyOf/oneOf branch of the meta-schema
+ * and emits redundant errors (the same instancePath+message many times). We dedup
+ * by the rendered string, preserving ajv's stable first-seen order, then cap.
+ *
+ * - Empty array → '' (caller falls back to the generic prefix).
+ * - Each error renders as `${keyword} at ${instancePath}: ${message}`, where an
+ *   empty instancePath (root failure) renders as `#`.
+ * - Shows the FIRST MAX_SHOWN distinct errors; appends ` (+N more)` for the rest.
+ * - Pure: no Date, no Math.random, no IO — output is a function of the input only.
+ */
+export const formatSchemaErrors = (errors: ReadonlyArray<ErrorObject>): string => {
+  if (errors.length === 0) return '';
+
+  // Dedup by rendered string, keeping ajv's stable first-seen order.
+  const seen = new Set<string>();
+  const rendered: string[] = [];
+  for (const e of errors) {
+    const location = e.instancePath.length > 0 ? e.instancePath : '#';
+    const line = `${e.keyword} at ${location}: ${e.message ?? 'invalid'}`;
+    if (!seen.has(line)) {
+      seen.add(line);
+      rendered.push(line);
+    }
+  }
+
+  const shown = rendered.slice(0, MAX_SHOWN).join('; ');
+  const overflow = rendered.length - MAX_SHOWN;
+  return overflow > 0 ? `${shown} (+${overflow} more)` : shown;
 };
 
 // ---------------------------------------------------------------------------

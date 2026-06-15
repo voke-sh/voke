@@ -19,6 +19,19 @@ declare module 'ajv/dist/2020' {
     [key: string]: unknown;
   }
 
+  /**
+   * Subset of ajv's ErrorObject used by schema-checks.ts to surface
+   * specific validation failures (keyword + schemaPath + human reason).
+   * Other ajv fields exist but are intentionally not declared here.
+   */
+  export interface ErrorObject {
+    keyword: string;
+    instancePath: string;
+    schemaPath: string;
+    message?: string;
+    params: Record<string, unknown>;
+  }
+
   /** Ajv2020 — JSON Schema 2020-12 validator (strict:false, no loadSchema). */
   class Ajv2020 {
     constructor(opts?: AjvOptions);
@@ -26,6 +39,8 @@ declare module 'ajv/dist/2020' {
     compile(schema: object): (data: unknown) => boolean;
     validate(schema: object | string, data: unknown): boolean;
     addFormat(name: string, format: unknown): this;
+    /** Populated by ajv after a failed validateSchema/validate call. */
+    errors?: ErrorObject[] | null;
   }
 
   export default Ajv2020;

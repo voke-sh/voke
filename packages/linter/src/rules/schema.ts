@@ -11,13 +11,14 @@
  * - pure synchronous functions with ZERO IO (no fetch, no Date.now, no Math.random)
  *
  * Helpers from schema-checks.ts are REUSED (never reimplemented):
- * - isValidJsonSchema2020: S03, S06
+ * - validateJsonSchema2020 + formatSchemaErrors: S03, S06 (specific failure detail)
  * - hasExternalRef: S04
  * - schemaDepth: S05
  */
 import type { RuleDefinition, Finding, RuleContext } from '../engine/types.js';
 import {
-  isValidJsonSchema2020,
+  validateJsonSchema2020,
+  formatSchemaErrors,
   hasExternalRef,
   schemaDepth,
 } from '../ingestion/schema-checks.js';
@@ -144,15 +145,15 @@ const s03: RuleDefinition = {
     const tool = ctx.tool!;
     // S01 handles the absent case — S03 is a no-op when inputSchema is absent
     if (isAbsent(tool.inputSchema)) return [];
-    if (isValidJsonSchema2020(tool.inputSchema)) return [];
-    return [
-      makeFinding(
-        s03,
-        tool.toolId,
-        ['inputSchema'],
-        'MTQS-S03 [error] inputSchema fails JSON Schema 2020-12 validation',
-      ),
-    ];
+    const result = validateJsonSchema2020(tool.inputSchema);
+    if (result.valid) return [];
+    // Append ajv specifics (keyword + schemaPath + reason) while preserving the
+    // EXACT greppable prefix. Falls back byte-for-byte to the prefix when ajv
+    // returns no errors on a false result. fixHint stays STATIC (see below).
+    const specifics = formatSchemaErrors(result.errors);
+    const prefix = 'MTQS-S03 [error] inputSchema fails JSON Schema 2020-12 validation';
+    const message = specifics ? `${prefix}: ${specifics}` : prefix;
+    return [makeFinding(s03, tool.toolId, ['inputSchema'], message)];
   },
 };
 
@@ -250,15 +251,14 @@ const s06: RuleDefinition = {
     const tool = ctx.tool!;
     // Rule only fires when outputSchema is present
     if (tool.outputSchema === undefined || tool.outputSchema === null) return [];
-    if (isValidJsonSchema2020(tool.outputSchema)) return [];
-    return [
-      makeFinding(
-        s06,
-        tool.toolId,
-        ['outputSchema'],
-        'MTQS-S06 [error] outputSchema fails JSON Schema 2020-12 validation',
-      ),
-    ];
+    const result = validateJsonSchema2020(tool.outputSchema);
+    if (result.valid) return [];
+    // fixHint stays STATIC (points users at the meta-schema); the dynamic ajv
+    // specifics live in `message` so the greppable prefix is never disturbed.
+    const specifics = formatSchemaErrors(result.errors);
+    const prefix = 'MTQS-S06 [error] outputSchema fails JSON Schema 2020-12 validation';
+    const message = specifics ? `${prefix}: ${specifics}` : prefix;
+    return [makeFinding(s06, tool.toolId, ['outputSchema'], message)];
   },
 };
 
