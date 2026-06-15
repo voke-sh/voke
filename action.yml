@@ -46,4 +46,4 @@ runs:
       id: lint
       shell: bash
       run: |
-        npx @voke-sh/voke@"${{ inputs.version }}" lint "${{ inputs.target }}" --min-score "${{ inputs.min-score }}" --output "${{ inputs.format }}" --ci ${{ inputs.args }}
+        npx @voke-sh/voke@"${{ inputs.version }}" lint --min-score "${{ inputs.min-score }}" --output "${{ inputs.format }}" --ci "${{ inputs.target }}" ${{ inputs.args }}
