@@ -11,3 +11,4 @@ docs/spec/v0.1/
 # GSD planning internals + local agent config (kept private)
 .planning/
 .claude/
+.superpowers/
