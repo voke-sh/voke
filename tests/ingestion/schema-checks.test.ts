@@ -6,10 +6,13 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import {
   isValidJsonSchema2020,
+  validateJsonSchema2020,
+  formatSchemaErrors,
   schemaDepth,
   hasExternalRef,
   DEPTH_HARD_CAP,
 } from '../../packages/linter/src/ingestion/schema-checks.js';
+import type { ErrorObject } from 'ajv/dist/2020';
 
 beforeEach(() => {
   // Block network to prove no fetch call is made during schema checks
@@ -92,6 +95,111 @@ describe('isValidJsonSchema2020', () => {
         properties: { x: { type: 'string' } },
       }),
     ).not.toThrow();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// validateJsonSchema2020 — error-returning variant
+// ---------------------------------------------------------------------------
+describe('validateJsonSchema2020', () => {
+  it('returns { valid: true, errors: [] } for a valid schema', () => {
+    const result = validateJsonSchema2020({
+      type: 'object',
+      properties: { x: { type: 'string' } },
+    });
+    expect(result.valid).toBe(true);
+    expect(result.errors).toEqual([]);
+  });
+
+  it('returns { valid: false } with at least one error for an invalid type field', () => {
+    const result = validateJsonSchema2020({ type: 42 });
+    expect(result.valid).toBe(false);
+    expect(result.errors.length).toBeGreaterThanOrEqual(1);
+    expect(result.errors[0].keyword.length).toBeGreaterThan(0);
+    expect(result.errors[0].schemaPath.length).toBeGreaterThan(0);
+  });
+
+  it('returns { valid: false } with at least one error for invalid required (string)', () => {
+    const result = validateJsonSchema2020({ type: 'object', required: 'name' });
+    expect(result.valid).toBe(false);
+    expect(result.errors.length).toBeGreaterThanOrEqual(1);
+  });
+
+  it('never throws for null / string / number inputs and returns valid:false', () => {
+    expect(() => validateJsonSchema2020(null)).not.toThrow();
+    expect(() => validateJsonSchema2020('string')).not.toThrow();
+    expect(() => validateJsonSchema2020(42)).not.toThrow();
+    expect(validateJsonSchema2020(42).valid).toBe(false);
+  });
+
+  it('returns a snapshot — a later call on a different schema does not mutate the first call errors', () => {
+    const first = validateJsonSchema2020({ type: 42 });
+    const firstLengthBefore = first.errors.length;
+    const firstFirstError = first.errors[0];
+    // Re-enter with a different invalid schema (mutates the shared singleton's live errors)
+    validateJsonSchema2020({ type: 'object', required: 'name' });
+    expect(first.errors.length).toBe(firstLengthBefore);
+    expect(first.errors[0]).toBe(firstFirstError);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// formatSchemaErrors — deterministic, capped formatter
+// ---------------------------------------------------------------------------
+describe('formatSchemaErrors', () => {
+  const makeErr = (keyword: string, schemaPath: string, message: string): ErrorObject => ({
+    keyword,
+    instancePath: '',
+    schemaPath,
+    message,
+    params: {},
+  });
+
+  it('returns an empty string for an empty errors array', () => {
+    expect(formatSchemaErrors([])).toBe('');
+  });
+
+  it('formats a single error containing its keyword, schemaPath and message', () => {
+    const out = formatSchemaErrors([makeErr('type', '#/properties/type/type', 'must be string')]);
+    expect(out).toContain('type');
+    expect(out).toContain('#/properties/type/type');
+    expect(out).toContain('must be string');
+  });
+
+  it('names the FIRST 3 of 5 errors in original order and appends "(+2 more)"', () => {
+    const errs = [
+      makeErr('a', '#/a', 'msg a'),
+      makeErr('b', '#/b', 'msg b'),
+      makeErr('c', '#/c', 'msg c'),
+      makeErr('d', '#/d', 'msg d'),
+      makeErr('e', '#/e', 'msg e'),
+    ];
+    const out = formatSchemaErrors(errs);
+    expect(out).toContain('#/a');
+    expect(out).toContain('#/b');
+    expect(out).toContain('#/c');
+    expect(out).not.toContain('#/d');
+    expect(out).not.toContain('#/e');
+    expect(out).toContain('(+2 more)');
+    // Order preserved: a before b before c
+    expect(out.indexOf('#/a')).toBeLessThan(out.indexOf('#/b'));
+    expect(out.indexOf('#/b')).toBeLessThan(out.indexOf('#/c'));
+  });
+
+  it('names all 3 with NO "(+N more)" suffix for exactly 3 errors', () => {
+    const errs = [
+      makeErr('a', '#/a', 'msg a'),
+      makeErr('b', '#/b', 'msg b'),
+      makeErr('c', '#/c', 'msg c'),
+    ];
+    const out = formatSchemaErrors(errs);
+    expect(out).toContain('#/c');
+    expect(out).not.toContain('more)');
+  });
+
+  it('is deterministic — same errors array formatted twice yields identical output', () => {
+    const errs = [makeErr('type', '#/x', 'must be string')];
+    expect(formatSchemaErrors(errs)).toBe(formatSchemaErrors(errs));
   });
 });
 
