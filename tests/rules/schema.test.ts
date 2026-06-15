@@ -411,10 +411,10 @@ describe('MTQS-S06: outputSchema structural validity', () => {
     expect(findings[0].message.startsWith(prefix)).toBe(true);
     expect(findings[0].message.length).toBeGreaterThan(prefix.length);
     expect(findings[0].message).toContain(': ');
-    // ajv reports the meta-schema failure as a `type` keyword violation at a
-    // schemaPath (required:'must-be-array' must be an array) — assert on the
-    // formatter's keyword token and the '#' schemaPath fragment it emits.
-    expect(findings[0].message).toContain('type at #');
+    // ajv reports the meta-schema failure as a `type` keyword violation at the
+    // user-schema instancePath `/required` (required:'must-be-array' must be an
+    // array) — assert on the keyword token and the user-facing instancePath.
+    expect(findings[0].message).toContain('type at /required');
   });
 
   it('fires on the schema-fail.json fixture for invalid outputSchema', () => {

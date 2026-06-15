@@ -20,7 +20,10 @@ import addFormats from 'ajv-formats';
 // Ajv2020 singleton — instantiated once per module load (D-06)
 // NEVER pass loadSchema — no network, no SSRF, determinism preserved
 // ---------------------------------------------------------------------------
-const ajv = new Ajv2020({ strict: false });
+// allErrors:true so validateSchema reports EVERY meta-schema violation, not just
+// the first — formatSchemaErrors surfaces the full list (capped). Deterministic:
+// ajv emits errors in a stable order for a given input.
+const ajv = new Ajv2020({ strict: false, allErrors: true });
 addFormats(ajv);
 
 /**
@@ -79,24 +82,40 @@ const MAX_SHOWN = 3;
 /**
  * Formats ajv schema errors into a single deterministic, human-readable string.
  *
+ * These come from `validateSchema` (the user's schema validated AGAINST the
+ * 2020-12 meta-schema), so:
+ * - `instancePath` is the location WITHIN THE USER'S SCHEMA — what they must fix
+ *   (e.g. `/properties/limit/type`). This is the user-facing location.
+ * - `schemaPath` points into the meta-schema (e.g. `#/$defs/...`) and is useless
+ *   to the user, so it is NOT shown.
+ *
+ * With `allErrors:true`, ajv explores every anyOf/oneOf branch of the meta-schema
+ * and emits redundant errors (the same instancePath+message many times). We dedup
+ * by the rendered string, preserving ajv's stable first-seen order, then cap.
+ *
  * - Empty array → '' (caller falls back to the generic prefix).
- * - Shows the FIRST MAX_SHOWN errors in ajv's original emission order (no sort).
- * - Each error renders as `${keyword} at ${schemaPath}: ${message}`.
- * - When more than MAX_SHOWN errors exist, appends ` (+N more)`.
+ * - Each error renders as `${keyword} at ${instancePath}: ${message}`, where an
+ *   empty instancePath (root failure) renders as `#`.
+ * - Shows the FIRST MAX_SHOWN distinct errors; appends ` (+N more)` for the rest.
  * - Pure: no Date, no Math.random, no IO — output is a function of the input only.
  */
 export const formatSchemaErrors = (errors: ReadonlyArray<ErrorObject>): string => {
   if (errors.length === 0) return '';
 
-  const shown = errors
-    .slice(0, MAX_SHOWN)
-    .map(e => {
-      const location = e.schemaPath.length > 0 ? e.schemaPath : e.instancePath;
-      return `${e.keyword} at ${location}: ${e.message ?? 'invalid'}`;
-    })
-    .join('; ');
+  // Dedup by rendered string, keeping ajv's stable first-seen order.
+  const seen = new Set<string>();
+  const rendered: string[] = [];
+  for (const e of errors) {
+    const location = e.instancePath.length > 0 ? e.instancePath : '#';
+    const line = `${e.keyword} at ${location}: ${e.message ?? 'invalid'}`;
+    if (!seen.has(line)) {
+      seen.add(line);
+      rendered.push(line);
+    }
+  }
 
-  const overflow = errors.length - MAX_SHOWN;
+  const shown = rendered.slice(0, MAX_SHOWN).join('; ');
+  const overflow = rendered.length - MAX_SHOWN;
   return overflow > 0 ? `${shown} (+${overflow} more)` : shown;
 };
 

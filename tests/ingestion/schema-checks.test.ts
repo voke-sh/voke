@@ -157,10 +157,12 @@ describe('validateJsonSchema2020', () => {
 // formatSchemaErrors — deterministic, capped formatter
 // ---------------------------------------------------------------------------
 describe('formatSchemaErrors', () => {
-  const makeErr = (keyword: string, schemaPath: string, message: string): ErrorObject => ({
+  // instancePath is the location WITHIN THE USER'S SCHEMA — the user-facing
+  // location the formatter renders. schemaPath (into the meta-schema) is ignored.
+  const makeErr = (keyword: string, instancePath: string, message: string): ErrorObject => ({
     keyword,
-    instancePath: '',
-    schemaPath,
+    instancePath,
+    schemaPath: '#/ignored/meta/path',
     message,
     params: {},
   });
@@ -169,46 +171,61 @@ describe('formatSchemaErrors', () => {
     expect(formatSchemaErrors([])).toBe('');
   });
 
-  it('formats a single error containing its keyword, schemaPath and message', () => {
-    const out = formatSchemaErrors([makeErr('type', '#/properties/type/type', 'must be string')]);
+  it('formats a single error with its keyword, instancePath and message', () => {
+    const out = formatSchemaErrors([makeErr('type', '/properties/limit/type', 'must be string')]);
     expect(out).toContain('type');
-    expect(out).toContain('#/properties/type/type');
+    expect(out).toContain('/properties/limit/type');
     expect(out).toContain('must be string');
+    // schemaPath (meta-schema location) must NOT leak into the message
+    expect(out).not.toContain('/ignored/meta/path');
+  });
+
+  it('renders a root-level failure (empty instancePath) as "#"', () => {
+    const out = formatSchemaErrors([makeErr('type', '', 'must be object,boolean')]);
+    expect(out).toContain('type at #: must be object,boolean');
   });
 
   it('names the FIRST 3 of 5 errors in original order and appends "(+2 more)"', () => {
     const errs = [
-      makeErr('a', '#/a', 'msg a'),
-      makeErr('b', '#/b', 'msg b'),
-      makeErr('c', '#/c', 'msg c'),
-      makeErr('d', '#/d', 'msg d'),
-      makeErr('e', '#/e', 'msg e'),
+      makeErr('a', '/a', 'msg a'),
+      makeErr('b', '/b', 'msg b'),
+      makeErr('c', '/c', 'msg c'),
+      makeErr('d', '/d', 'msg d'),
+      makeErr('e', '/e', 'msg e'),
     ];
     const out = formatSchemaErrors(errs);
-    expect(out).toContain('#/a');
-    expect(out).toContain('#/b');
-    expect(out).toContain('#/c');
-    expect(out).not.toContain('#/d');
-    expect(out).not.toContain('#/e');
+    expect(out).toContain('/a');
+    expect(out).toContain('/b');
+    expect(out).toContain('/c');
+    expect(out).not.toContain('/d');
+    expect(out).not.toContain('/e');
     expect(out).toContain('(+2 more)');
     // Order preserved: a before b before c
-    expect(out.indexOf('#/a')).toBeLessThan(out.indexOf('#/b'));
-    expect(out.indexOf('#/b')).toBeLessThan(out.indexOf('#/c'));
+    expect(out.indexOf('/a')).toBeLessThan(out.indexOf('/b'));
+    expect(out.indexOf('/b')).toBeLessThan(out.indexOf('/c'));
   });
 
   it('names all 3 with NO "(+N more)" suffix for exactly 3 errors', () => {
     const errs = [
-      makeErr('a', '#/a', 'msg a'),
-      makeErr('b', '#/b', 'msg b'),
-      makeErr('c', '#/c', 'msg c'),
+      makeErr('a', '/a', 'msg a'),
+      makeErr('b', '/b', 'msg b'),
+      makeErr('c', '/c', 'msg c'),
     ];
     const out = formatSchemaErrors(errs);
-    expect(out).toContain('#/c');
+    expect(out).toContain('/c');
+    expect(out).not.toContain('more)');
+  });
+
+  it('dedupes identical rendered errors (ajv allErrors emits anyOf-branch repeats)', () => {
+    // Same instancePath+keyword+message many times → collapses to ONE line, no overflow.
+    const dupe = makeErr('type', '/additionalProperties', 'must be object,boolean');
+    const out = formatSchemaErrors([dupe, dupe, dupe, dupe, dupe]);
+    expect(out).toBe('type at /additionalProperties: must be object,boolean');
     expect(out).not.toContain('more)');
   });
 
   it('is deterministic — same errors array formatted twice yields identical output', () => {
-    const errs = [makeErr('type', '#/x', 'must be string')];
+    const errs = [makeErr('type', '/x', 'must be string')];
     expect(formatSchemaErrors(errs)).toBe(formatSchemaErrors(errs));
   });
 });
