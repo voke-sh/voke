@@ -12,7 +12,17 @@ import {
   hasExternalRef,
   DEPTH_HARD_CAP,
 } from '../../packages/linter/src/ingestion/schema-checks.js';
-import type { ErrorObject } from 'ajv/dist/2020';
+
+// Local structural mirror of ajv's ErrorObject (the fields the formatter reads).
+// Declared here rather than imported from 'ajv/dist/2020' so the test compiles
+// under the root tsconfig, which does not carry the linter's ambient ajv shim.
+interface ErrorObject {
+  keyword: string;
+  instancePath: string;
+  schemaPath: string;
+  message?: string;
+  params: Record<string, unknown>;
+}
 
 beforeEach(() => {
   // Block network to prove no fetch call is made during schema checks
