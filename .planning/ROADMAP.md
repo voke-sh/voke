@@ -23,7 +23,7 @@ Full detail: [milestones/v0.1-ROADMAP.md](milestones/v0.1-ROADMAP.md) · Audit: 
 
 ### v0.2 Doctor Badge (L1.1)
 
-- [ ] **Phase 7: MTQS Score Badge** - Deterministic self-contained SVG badge via `voke lint --badge <path>`
+- [x] **Phase 7: MTQS Score Badge** - Deterministic self-contained SVG badge via `voke lint --badge <path>` (completed 2026-06-16)
 
 ## Phase Details
 
@@ -39,7 +39,7 @@ Full detail: [milestones/v0.1-ROADMAP.md](milestones/v0.1-ROADMAP.md) · Audit: 
   5. After writing the badge, the CLI prints a markdown snippet (`![MTQS badge](badge.svg)`) to the console (stderr per D-06), while `--format`, `--min-score`, and exit codes behave identically to a run without `--badge`
 **Plans**: 2 plans (2 waves)
 - [x] 07-01-PLAN.md — Pure deterministic formatBadge SVG builder + unit test scaffold (BADGE-02,03,04,05,06) [wave 1]
-- [ ] 07-02-PLAN.md — Wire --badge side output: badge-writer + CLI threading + e2e test (BADGE-01,07,08) [wave 2]
+- [x] 07-02-PLAN.md — Wire --badge side output: badge-writer + CLI threading + e2e test (BADGE-01,07,08) [wave 2]
 
 **Research flag (resolved in plans):** GitHub's Camo proxy is a passthrough image proxy that does NOT sanitize SVG — use SVG presentation attributes (no `style=""`, no external refs). Confirmed in 07-RESEARCH.md.
 
@@ -53,7 +53,7 @@ Full detail: [milestones/v0.1-ROADMAP.md](milestones/v0.1-ROADMAP.md) · Audit: 
 | 4. Scoring + Output + CLI | v0.1 | 3/3 | Complete | 2026-06-13 |
 | 5. CI + Publication | v0.1 | 4/4 | Complete | 2026-06-13 |
 | 6. Launch | v0.1 | 3/3 | Complete | 2026-06-15 |
-| 7. MTQS Score Badge | v0.2 | 1/2 | In Progress|  |
+| 7. MTQS Score Badge | v0.2 | 2/2 | Complete   | 2026-06-16 |
 
 ---
 *Last updated: 2026-06-16 — Phase 7 planned (2 plans, 2 waves)*

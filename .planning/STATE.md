@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v0.2
 milestone_name: Doctor Badge
 status: unknown
-stopped_at: Completed 07-01-PLAN.md
-last_updated: "2026-06-16T22:12:24.412Z"
+stopped_at: Completed 07-02-PLAN.md
+last_updated: "2026-06-16T22:19:59.572Z"
 progress:
   total_phases: 1
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 2
-  completed_plans: 1
+  completed_plans: 2
 ---
 
 # Project State
@@ -69,6 +69,7 @@ Plan: 2 of 2
 | Phase 06-launch P01 | 4 | 3 tasks | 3 files |
 | Phase 06-launch P02 | 30m | 3 tasks | 1 files |
 | Phase 07 P01 | 4 | 2 tasks | 2 files |
+| Phase 07 P02 | 5 | 3 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -139,6 +140,9 @@ Recent decisions affecting current work:
 - [Phase 07]: SVG xmlns namespace URI (http://www.w3.org/2000/svg) is a required namespace declaration not a network reference — BADGE-02 constraint satisfied despite grep for http flagging it
 - [Phase 07]: Used cicirello flat badge pattern (shadow via fill-opacity=.3, no Gaussian blur filter) — cleaner diff, fewer bytes, RESEARCH Open Question 1 resolved
 - [Phase 07]: TIER_COLORS exported as public const for potential future use by badge-writer tests or other modules
+- [Phase 07]: writeBadge call lives in program.ts AFTER process.stdout.write (D-10): guarantees lint result printed before badge write error; runLint stays IO-free
+- [Phase 07]: Used spawnSync (not execFileSync) for e2e runCapture: captures both stdout and stderr on all exit codes including 0
+- [Phase 07]: BADGE-08a JSON equality uses meta-stripped deepEqual: generatedAt in meta differs by wall-clock design (mirrors e2e-determinism.test.ts)
 
 ### Pending Todos
 
@@ -161,6 +165,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-06-16T22:12:24.410Z
-Stopped at: Completed 07-01-PLAN.md
+Last session: 2026-06-16T22:19:59.570Z
+Stopped at: Completed 07-02-PLAN.md
 Resume file: None
