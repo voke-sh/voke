@@ -163,9 +163,13 @@ describe('BADGE-02: SVG is self-contained with no external references', () => {
     expect(svg).not.toContain('style=');
   });
 
-  it('does NOT contain "http" (no external URL)', () => {
+  it('does NOT contain external "http" URLs (beyond the required xmlns namespace)', () => {
     const svg = formatBadge(mkReport(85, 'B'));
-    expect(svg).not.toContain('http');
+    // The xmlns namespace "http://www.w3.org/2000/svg" is required for valid SVG and is NOT
+    // a network reference (it's a namespace URI). Check that no other http:// URL appears.
+    // Strip the xmlns declaration then verify no http references remain.
+    const withoutXmlns = svg.replace(/xmlns="http:\/\/www\.w3\.org\/2000\/svg"/g, '');
+    expect(withoutXmlns).not.toContain('http');
   });
 
   it('does NOT contain "href" (no external link)', () => {
