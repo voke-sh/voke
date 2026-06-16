@@ -20,6 +20,7 @@ import { versionString } from '../version.js';
 import { runLint } from './run-lint.js';
 import { UsageError } from './resolve-target.js';
 import { maskHeaders, buildHeaders } from '../ingestion/mcp-client.js';
+import { writeBadge } from './badge-writer.js';
 import type { RunLintOpts } from './run-lint.js';
 
 // ---------------------------------------------------------------------------
@@ -105,6 +106,7 @@ export const resolveLintOpts = (
     verbose: Boolean(opts['verbose']),
     color,
     saveSnapshot: opts['saveSnapshot'] as string | undefined,
+    badgePath: opts['badge'] as string | undefined,
     extraEnv,
   };
 };
@@ -154,6 +156,7 @@ export const buildProgram = (stdioArgs?: string[]): Command => {
     .option('--ci', 'CI mode: disable color (deterministic plain-text output)', false)
     .option('--no-color', 'disable color output')
     .option('--save-snapshot <path>', 'also write the raw VokeSnapshot (re-lint input) to this path')
+    .option('--badge <path>', 'write a deterministic SVG MTQS score badge to this path')
     .option('--verbose', 'print full per-finding detail under each failing tool', false)
     .option(
       '--env <KEY=VAL>',
@@ -190,6 +193,15 @@ export const buildProgram = (stdioArgs?: string[]): Command => {
 
       // Set process.exitCode (does not hard-exit; main().catch handles errors)
       process.exitCode = result.exitCode;
+
+      // D-10: badge write happens AFTER stdout is written (lint result is never masked)
+      // D-06: snippet and confirmation go to stderr only (stdout stays pipe-clean)
+      // D-07: path used verbatim (no normalization)
+      if (runLintOpts.badgePath !== undefined) {
+        writeBadge(runLintOpts.badgePath, result.report); // throws UsageError -> exit 3 (does NOT mask stdout)
+        process.stderr.write(`![MTQS](${runLintOpts.badgePath})\n`);
+        process.stderr.write(`wrote ${runLintOpts.badgePath}\n`);
+      }
     });
 
   return program;

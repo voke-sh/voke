@@ -57,6 +57,8 @@ export interface RunLintOpts {
    * Values are NEVER echoed in output (D-09/Pitfall 4).
    */
   extraEnv?: Record<string, string>;
+  /** If set: write a deterministic SVG score badge to this path AFTER stdout (D-06/08/10). */
+  badgePath?: string;
 }
 
 /**
