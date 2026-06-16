@@ -1,15 +1,15 @@
 ---
 gsd_state_version: 1.0
-milestone: v0.1
-milestone_name: MTQS + Reference Linter
-status: milestone-complete
-stopped_at: v0.1 milestone shipped and archived — tag v0.1
-last_updated: "2026-06-16T00:00:00.000Z"
+milestone: v0.2
+milestone_name: Doctor Badge
+status: unknown
+stopped_at: Completed 07-01-PLAN.md
+last_updated: "2026-06-16T22:12:24.412Z"
 progress:
-  total_phases: 6
-  completed_phases: 6
-  total_plans: 23
-  completed_plans: 23
+  total_phases: 1
+  completed_phases: 0
+  total_plans: 2
+  completed_plans: 1
 ---
 
 # Project State
@@ -19,16 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-16)
 
 **Core value:** `voke lint <server>` produces deterministic per-rule findings + a stable score against an explicit published ruleset — same input always yields same output
-**Current focus:** Planning next milestone (`/gsd:new-milestone`)
+**Current focus:** Phase 07 — mtqs-score-badge
 
 ## Current Position
 
-**v0.1 MTQS + Reference Linter — SHIPPED 2026-06-15.** All 6 phases / 23 plans complete; archived to
-`.planning/milestones/`. Tag `v0.1`. `@voke-sh/voke@0.1.1` live on npm.
-
-**Carried forward:** PUB-03 launch blog post — draft ready at `06-launch/blog-launch-post.md`
-(stop-slop 41/50, zero em dashes); dev.to publish deferred by user. Recoverable publish steps in
-`06-03-SUMMARY.md`. Tech debt logged in `MILESTONES.md`.
+Phase: 07 (mtqs-score-badge) — EXECUTING
+Plan: 2 of 2
 
 ## Performance Metrics
 
@@ -72,6 +68,7 @@ See: .planning/PROJECT.md (updated 2026-06-16)
 | Phase 05-ci-publication P04 | 4 | 2 tasks | 4 files |
 | Phase 06-launch P01 | 4 | 3 tasks | 3 files |
 | Phase 06-launch P02 | 30m | 3 tasks | 1 files |
+| Phase 07 P01 | 4 | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -136,10 +133,17 @@ Recent decisions affecting current work:
 - [Phase 06-launch]: Live Apideck published verification: 62/100 Tier D, exit 0, zero drift from Plan 01 fixture (D-11 gate satisfied)
 - [Phase 06-launch]: Root-cause fix: ingestLive now closes MCP transport in finally (commit 34d0e6f) — live lint no longer hangs / exits non-zero
 - [Phase 06-launch]: 06-03 blog draft complete + stop-slop 41/50 (zero em dashes); dev.to publish DEFERRED by user — PUB-03 unmet, draft ready at blog-launch-post.md awaiting manual publish + live URL
+- [Roadmap v0.2]: Badge SVG uses tierFor() from @voke/core as the single source of truth for A/B/C/D/F color thresholds (A>=90 green, B>=80 teal, C>=70 yellow, D>=60 orange, F<60 red)
+- [Roadmap v0.2]: formatBadge(report) is a pure function analogous to existing formatHuman/formatJson — same side-effect-free formatter pattern; no Date/Math.random in the SVG output path
+- [Roadmap v0.2]: --badge is a side output — does not alter --format stdout, --min-score gate, or exit codes; only error is a clear usage/write error (exit 3) if the path cannot be written
+- [Phase 07]: SVG xmlns namespace URI (http://www.w3.org/2000/svg) is a required namespace declaration not a network reference — BADGE-02 constraint satisfied despite grep for http flagging it
+- [Phase 07]: Used cicirello flat badge pattern (shadow via fill-opacity=.3, no Gaussian blur filter) — cleaner diff, fewer bytes, RESEARCH Open Question 1 resolved
+- [Phase 07]: TIER_COLORS exported as public const for potential future use by badge-writer tests or other modules
 
 ### Pending Todos
 
 - [2026-06-14] Provide score badge for repository README (area: general) — embeddable MTQS score/grade badge like Glama; lean static SVG for L1
+- [2026-06-16] Research: GitHub Camo image proxy SVG sanitization — confirm inline-style SVG with system fonts survives proxy; affects Phase 7 BADGE-02 implementation approach
 
 ### Blockers/Concerns
 
@@ -157,6 +161,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-06-15T10:32:00.000Z
-Stopped at: quick-260615-egi complete — S03/S06 findings surface specific ajv failures, 648 tests pass
-Resume file: .planning/quick/260615-egi-improve-mtqs-s03-error-messages-with-spe/260615-egi-SUMMARY.md
+Last session: 2026-06-16T22:12:24.410Z
+Stopped at: Completed 07-01-PLAN.md
+Resume file: None
