@@ -110,6 +110,71 @@ Header values are masked in all output.
 
 ---
 
+## Badge
+
+Generate a deterministic SVG score badge and commit it to your repo so your README always
+shows the current MTQS grade.
+
+### Generate the badge
+
+```bash
+npx @voke-sh/voke lint https://your-mcp-server.example.com/mcp --badge badge.svg
+```
+
+`--badge <path>` writes a self-contained SVG to the given path. It creates any missing parent
+directories and overwrites an existing file silently. The SVG is deterministic -- same lint
+input always produces byte-identical output. Color reflects the server tier (A green through F
+red), exactly matching the tier logic used for the score.
+
+After a successful write, voke prints the ready-to-paste markdown snippet and a confirmation
+line to **stderr**:
+
+```
+![MTQS](badge.svg)
+wrote badge.svg
+```
+
+### Side output -- does not change lint results
+
+`--badge` is a pure side output. It does NOT alter:
+
+- stdout or `--output json` content
+- the `--min-score` gate or exit code
+
+Because the snippet and confirmation go to stderr, stdout stays pure and pipeable. For example,
+`--output json` output remains valid JSON even when `--badge` is set alongside it.
+
+The only badge-specific failure is exit code 3 if the path cannot be written (permissions, path
+is a directory, etc.). Even then, the lint result is printed first -- the write failure never
+masks the score.
+
+### Embed in a GitHub README
+
+Commit `badge.svg` into the repo, then reference it in your README. Two forms work:
+
+**Repo-relative path** (simplest -- works on GitHub and any Markdown renderer that serves from
+the same origin):
+
+```markdown
+![MTQS](badge.svg)
+```
+
+**Full raw URL** (works from anywhere -- another repo, a docs site, a blog post):
+
+```markdown
+![MTQS](https://raw.githubusercontent.com/<owner>/<repo>/<branch>/badge.svg)
+```
+
+GitHub serves committed SVGs as `image/svg+xml` through its Camo proxy unchanged -- no
+`?sanitize=true` query param is needed. The `![MTQS](badge.svg)` snippet that voke prints to
+stderr after a successful write is exactly the repo-relative form, so you can copy it directly.
+
+**CI tip:** run `--badge badge.svg` in the same workflow step that enforces `--min-score`, then
+commit the regenerated file. That keeps the README badge in sync with the latest score
+automatically.
+
+---
+
 ## Exit Codes
 
 | Code | Meaning |
